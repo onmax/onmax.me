@@ -4,9 +4,9 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   routeRules: { '/': { prerender: true } },
   compatibilityDate: '2025-01-15',
-  icon: { serverBundle: 'remote' },
-  nitro: { preset: 'cloudflare-pages' },
+  nitro: { preset: 'cloudflare' },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }
-  }
+  },
+  icon: { serverBundle: 'remote' }
 })

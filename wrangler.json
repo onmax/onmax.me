@@ -1,5 +1,5 @@
 {
-  "name": "onmax-me",
+  "name": "onmax",
   "compatibility_date": "2025-01-15",
   "main": ".output/server/index.mjs",
   "assets": { "directory": ".output/public" }

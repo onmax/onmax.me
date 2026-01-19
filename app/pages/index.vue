@@ -2,9 +2,11 @@
 </script>
 
 <template>
-  <div class="max-w-[644px] mx-auto px-6">
+  <div class="px-6">
     <Hero />
     <Projects />
+    <BlogPosts />
+    <About />
     <ContactForm />
     <SiteFooter />
   </div>

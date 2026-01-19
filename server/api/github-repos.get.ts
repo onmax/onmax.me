@@ -19,7 +19,7 @@ export default defineCachedEventHandler(async () => {
 
   return {
     current: filtered.filter(r => now - new Date(r.pushed_at).getTime() < 30 * DAY),
-    recent: filtered.filter(r => {
+    recent: filtered.filter((r) => {
       const age = now - new Date(r.pushed_at).getTime()
       return age >= 30 * DAY && age < 90 * DAY
     }),

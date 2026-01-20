@@ -2,5 +2,6 @@
   "name": "onmax",
   "compatibility_date": "2025-01-15",
   "main": ".output/server/index.mjs",
-  "assets": { "directory": ".output/public" }
+  "assets": { "directory": ".output/public" },
+  "d1_databases": [{ "binding": "DB", "database_name": "onmax-new-db", "database_id": "5a113631-37db-48a6-8520-e93358d2889d" }]
 }

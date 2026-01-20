@@ -13,10 +13,14 @@
   "dependencies": {
     "@iconify-json/lucide": "^1.2.82",
     "@iconify-json/simple-icons": "^1.2.63",
+    "@libsql/client": "^0.17.0",
     "@nuxt/content": "^3.11.0",
     "@nuxt/icon": "^2.2.0",
     "@nuxt/ui": "^4.3.0",
+    "@nuxthub/core": "^0.10.4",
     "better-sqlite3": "^12.6.2",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1",
     "motion-v": "^1.9.0",
     "nuxt": "^4.2.2"
   },

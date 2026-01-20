@@ -4,7 +4,7 @@ description: 'Building an automated icon pipeline from Figma to npm'
 publishedAt: 2024-06-15
 ---
 
-> This post is a continuation of the [Nimiq UI](/posts/the-evolution-of-nimiq-UI) post. If you haven't read it yet, I recommend you to do so before continuing.
+> This post is a continuation of the [Nimiq UI](/posts/the-evolution-of-nimiq-ui) post. If you haven't read it yet, I recommend you to do so before continuing.
 
 At Nimiq we have our own icon set to make the interface more consistent and have a unique style. It's a great thing.
 

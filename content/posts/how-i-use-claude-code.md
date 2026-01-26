@@ -4,15 +4,15 @@ description: 'A comprehensive system for AI-assisted development: philosophy, sk
 publishedAt: 2025-01-23
 ---
 
-Most developers treat AI tools like advanced autocomplete or a magic wand. I treat them as a system component that requires engineering. By shifting from unstructured "chats" to a rigorous workflow of constraints, context injection, and specialized processes, I have moved from sporadic assistance to a predictable pipeline.
+Most developers treat AI tools like advanced autocomplete or a magic wand. I treat them as a system component that requires engineering. By replacing unstructured "chats" with a rigorous workflow of constraints, context injection, and specialized processes, I have moved from sporadic assistance to a predictable pipeline.
 
-Here is the system I use to turn LLM capabilities into reliable software engineering: from high-level philosophy to specific configuration, including how I use voice input to inject complex context faster than I can type.
+Here is the system I use to turn LLM capabilities into reliable software engineering: from high-level philosophy to specific configurations, including how I use voice input to inject complex context faster than I can type.
 
 ## Philosophy: Debug Your Setup, Not the AI
 
-When Claude fails to deliver what I expect, my first instinct used to be frustration. Now, I treat it like debugging a junior engineer's environment: the problem is rarely their raw capability. It's usually missing context or broken tooling.
+When Claude failed to deliver what I expected, my first instinct used to be frustration. Now, I treat it like debugging a junior engineer's environment: the problem is rarely their raw capability. It is usually missing context or broken tooling.
 
-**Start with native Claude Code.** I avoid complex plugins. Opus 4.5 can handle virtually any software engineering task when given the right environment. The question isn't "can the AI do this?" but "have I given it what it needs?"
+**Start with native Claude Code.** I avoid complex plugins. Opus 4.5 can handle virtually any software engineering task when given the right environment. The question isn't "Can the AI do this?" but "Have I given it what it needs?"
 
 When something goes wrong, I run through a debugging checklist:
 
@@ -51,7 +51,7 @@ In all interactions, be extremely concise and sacrifice grammar for clarity.
 
 ## Giving Source Code to the AI
 
-Skills provide knowledge, but sometimes Claude needs the actual source code. I maintain dedicated folders for this:
+Skills provide general knowledge, but sometimes Claude needs access to raw source code. I maintain dedicated folders for this purpose:
 
 ```
 ~/repros/      Bug reproductions (git repo)
@@ -62,7 +62,7 @@ Skills provide knowledge, but sometimes Claude needs the actual source code. I m
 
 **~/references/** contains cloned repositories of libraries I work with frequently. When debugging an issue in Nuxt, Claude can read the actual implementation in `~/references/nuxt-core/`. When integrating better-auth, it reads `~/references/better-auth/` to understand the internals. This is more reliable than skills for complex debugging because Claude sees the real code, not a summary.
 
-**~/templates/** holds starter projects. Instead of explaining "create a Nuxt app with Nuxt UI and auth", I say "copy ~/templates/nuxt-ui as the base". Claude gets the exact configuration, dependencies, and patterns I expect.
+**~/templates/** holds starter projects. Instead of explaining "create a Nuxt app with Nuxt UI and auth," I say "copy ~/templates/nuxt-ui as the base." Claude gets the exact configuration, dependencies, and patterns I expect.
 
 **[~/repros/](https://github.com/onmax/repros)** is a git repository for bug reproductions. Each issue gets its own folder with a minimal reproduction case. This isolates problems and makes them shareable via StackBlitz.
 
@@ -72,7 +72,7 @@ For libraries I only need once, I skip the permanent folders:
 cd /tmp && git clone https://github.com/some/library
 ```
 
-Claude can explore it, I get my answer, and it disappears on reboot. No clutter.
+Claude can explore it, I get my answer, and the folder disappears on reboot. No clutter.
 
 ## Skills: Progressive Context Loading
 
@@ -84,11 +84,11 @@ An AI model is only as effective as the context you fit into its window. Rather 
 2.  **SKILL.md body**: Core patterns and APIs.
 3.  **references/**: Detailed documentation loaded only when specifically requested.
 
-This works like a dependency chain. If I'm working on a Nuxt UI component, Claude loads `vue` → `nuxt-ui` → `reka-ui` progressively, only consuming tokens for what is relevant to the immediate task.
+This works like a dependency chain. If I'm working on a Nuxt UI component, Claude loads `vue` → `nuxt-ui` → `reka-ui` progressively, only consuming tokens relevant to the immediate task.
 
 My Nuxt ecosystem skills include: `nuxthub`, `motion`, `vue`, `nuxt-ui`, `reka-ui`, `nuxt-modules`, `nuxt-content`, `nuxt-better-auth`, `vueuse`, and more.
 
-Skills usually need to be fetched manually. After Claude finishes a plan or completes a task, I ask it to review the work with the relevant skills: "use the vue skill to check this component" or "load nuxthub skill and verify the database schema". This explicit invocation ensures Claude applies domain-specific patterns during review, not just during implementation.
+Skills usually need to be fetched manually. After Claude finishes a plan or completes a task, I explicitly ask it to review the work using relevant skills: "use the vue skill to check this component" or "load nuxthub skill and verify the database schema." This ensures Claude applies domain-specific patterns during review, not just during implementation.
 
 You can install them via:
 
@@ -152,13 +152,13 @@ For testing web applications, I use browser automation via the Playwright MCP. T
 
 -   **Problem**: Need to test deployed apps, fill forms, or verify UI states.
 -   **Solution**: [`agent-browser`](https://github.com/onmax/claude-config/tree/master/skills/agent-browser) skill with Playwright integration.
--   **Pattern**: Snapshot-first, always capture page state before interacting.
+-   **Pattern**: Snapshot-first; always capture page state before interacting.
 
 I use this for testing authentication flows on staging and automating repetitive form submissions.
 
 ### Frontend Design
 
-For UI work, I use the [`frontend-design`](https://github.com/onmax/claude-config/tree/master/skills/frontend-design) skill. It guides Claude to create distinctive, production-grade interfaces that avoid generic AI aesthetics. Useful for landing pages, dashboards, and components that need actual design quality, not just functional markup.
+For UI work, I use the [`frontend-design`](https://github.com/onmax/claude-config/tree/master/skills/frontend-design) skill. It guides Claude to create distinctive, production-grade interfaces that avoid generic AI aesthetics. It is useful for landing pages, dashboards, and components that need genuine design quality, not just functional markup.
 
 ## Reproductions & Testing (The "AI Tax")
 
@@ -166,7 +166,7 @@ AI-generated code requires rigorous verification. I pay what I call the "AI Tax"
 
 ### The pnpm pack Workflow
 
-When contributing to a library, running tests locally isn't enough. Your fix might work in the dev environment but break when users install the published package. The issue: dev mode has access to source files, but published packages only include what's in the `dist/` folder and `exports` field.
+When contributing to a library, running tests locally isn't enough. Your fix might work in the dev environment but break when users install the published package. The issue is that dev mode has access to source files, but published packages only include what is in the `dist/` folder and the `exports` field.
 
 `pnpm pack` creates a `.tgz` file exactly like npm would publish. I install this tarball in a fresh project to simulate what users will experience:
 
@@ -183,7 +183,7 @@ pnpm init && pnpm add ~/projects/my-lib/my-lib-1.0.0.tgz
 # Are the types correct? Does the runtime code work?
 ```
 
-This catches: missing files in package.json `exports`, forgotten build steps, incorrect entry points, missing dependencies, and type declaration issues. If it works after `pnpm pack`, it will work for users.
+This catches missing files in package.json `exports`, forgotten build steps, incorrect entry points, missing dependencies, and type declaration issues. If it works after `pnpm pack`, it will work for users.
 
 ### The Repros Workflow
 
@@ -196,11 +196,11 @@ Each reproduction follows a strict structure:
 
 Example for `nuxthub-727`:
 
-1.  Create `~/repros/nuxthub-727/` with minimal reproduction.
+1.  Create `~/repros/nuxthub-727/` with a minimal reproduction.
 2.  Verify the bug exists.
-3.  Create `~/repros/nuxthub-727-fix/` with pnpm patch.
+3.  Create `~/repros/nuxthub-727-fix/` with a pnpm patch.
 4.  Verify the fix works.
-5.  Create PR with StackBlitz links to both.
+5.  Create a PR with StackBlitz links to both.
 
 See the full workflow at [github.com/onmax/claude-config](https://github.com/onmax/claude-config).
 
@@ -208,16 +208,16 @@ See the full workflow at [github.com/onmax/claude-config](https://github.com/onm
 
 I use SuperWhisper for voice-to-text input. This is not just for convenience; it connects directly to the "Context Injection" philosophy.
 
-Voice allows me to "dump" my brain, describing architectural decisions, explaining bug reproduction steps, or providing detailed nuance, faster than I can type. My "conciseness" config in `CLAUDE.md` pairs perfectly with this: I speak naturally and verbose, the transcription captures everything, and Claude extracts only the relevant technical requirements.
+Voice allows me to "dump" my brain, describing architectural decisions, explaining bug reproduction steps, or providing detailed nuance, faster than I can type. My "conciseness" config in `CLAUDE.md` pairs perfectly with this: I speak naturally and loosely, the transcription captures everything, and Claude extracts only the relevant technical requirements.
 
 ## Conclusion
 
-This system requires upfront investment. You need to maintain your skills library, write thoughtful `CLAUDE.md` constraints, and discipline yourself to plan before coding. The return is a shift from typing syntax to directing architecture.
+This system requires upfront investment. You need to maintain your skills library, write thoughtful `CLAUDE.md` constraints, and discipline yourself to plan before coding. However, the return is a shift from typing syntax to directing architecture.
 
 The key principles:
 
 1.  **Debug your setup, not the AI**: When things fail, check your tools, constraints, and context.
-2.  **Plan before code**: Agreement on approach prevents wasted implementation cycles.
+2.  **Plan before code**: Agreeing on an approach prevents wasted implementation cycles.
 3.  **Skills over MCP**: Use lightweight text files to provide domain expertise without complexity.
 4.  **Verify everything**: The AI Tax (rigorous testing) is non-negotiable.
 

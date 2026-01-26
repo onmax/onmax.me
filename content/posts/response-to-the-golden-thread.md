@@ -1,7 +1,7 @@
 ---
 title: "The Golden Thread: A Different Perspective"
 description: "A response to Daniel Roe's post about AI, effort, and staying vigilant"
-publishedAt: 2025-01-18
+publishedAt: 2026-01-18
 ---
 
 Hola Daniel,

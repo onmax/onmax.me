@@ -156,6 +156,47 @@ Writing quality content is often slower than coding. I built a multi-agent writi
 
 This very blog post was produced using this workflow.
 
+### Document Writer
+
+For documentation and README files, I use the [`document-writer`](https://github.com/onmax/nuxt-skills/tree/master/skills/document-writer) skill. It provides writing style guidance extracted from official Nuxt documentation patterns:
+
+-   **Writing style**: Active voice (85%+), present tense, subject-first sentences.
+-   **Sentence patterns**: Subject-first declarative (60%), imperative instructions (25%), contextual openers (15%).
+-   **Modal verb precision**: `can` (optional), `should` (recommended), `must` (required).
+-   **Content structure**: Blog frontmatter, section patterns, appropriate callout types.
+
+This skill explicitly **overrides the brevity rules** in my `CLAUDE.md`. Documentation must be grammatically correct and use complete sentences, even when my global config sacrifices grammar for conciseness.
+
+The skill chains with `nuxt-content` for MDC syntax and `nuxt-ui` for component props. When writing docs for a Nuxt project, Claude loads `document-writer` → `nuxt-content` → `nuxt-ui` progressively.
+
+I use this for coworker documentation, library READMEs, and contribution guides where clarity matters more than brevity.
+
+### TypeScript Library
+
+The [`ts-library`](https://github.com/onmax/nuxt-skills/tree/master/skills/ts-library) skill encodes patterns I extracted from studying 20+ high-quality libraries: unocss, shiki, unplugin, vite, vitest, vueuse, zod, trpc, and drizzle-orm.
+
+It covers the full library authoring lifecycle:
+
+-   **Package exports**: Dual CJS/ESM setup, `moduleResolution: "Bundler"`, proper `sideEffects: false`.
+-   **Build tooling**: When to use tsdown vs unbuild.
+-   **Type inference**: Advanced TypeScript patterns for type-safe APIs (builder, factory, plugin patterns).
+-   **Release workflow**: CI/CD setup, changelogs, semantic versioning.
+
+When I start a new library, Claude loads this skill and applies battle-tested patterns instead of generic boilerplate. The references are split by concern (project-setup, package-exports, type-patterns, release), so only relevant sections consume tokens.
+
+### Skill Creator
+
+The [`skill-creator`](https://github.com/onmax/claude-config/tree/master/skills/skill-creator) skill is meta: it documents how to create skills. This is where I codified the philosophy behind the entire system.
+
+Key concepts it teaches Claude:
+
+-   **Progressive disclosure**: Metadata (~100 tokens) → SKILL.md body (<5k words) → references (unlimited). Only load what's needed.
+-   **Degrees of freedom**: High freedom for flexible tasks (text instructions), low freedom for fragile operations (specific scripts).
+-   **Skill anatomy**: SKILL.md (required), plus optional `scripts/`, `references/`, and `assets/` directories.
+-   **Conciseness principle**: "The context window is a public good." Only add context the model doesn't already have.
+
+When I need a new skill, I invoke this and Claude scaffolds it following the same patterns I use everywhere else. It's dogfooding: using the skills system to document the skills system.
+
 ### Agent-Browser
 
 For testing web applications, I use browser automation via the Playwright MCP. This solves the "blindness" of the LLM:

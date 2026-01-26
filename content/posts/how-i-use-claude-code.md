@@ -1,114 +1,194 @@
 ---
 title: 'How I Use Claude Code'
-description: 'The journey from AI skeptic to system builder'
+description: 'A comprehensive system for AI-assisted development: philosophy, skills, workflows, and real-world results'
 publishedAt: 2025-01-23
 ---
 
-For years, my professional life was a Sisyphean struggle, caught between intense effort and inevitable burnout. I would push myself to the limit, recover just enough, and then begin the arduous process all over again. Then, I fundamentally changed how I approached writing software.
+Most developers treat AI tools like advanced autocomplete or a magic wand. I treat them as a system component that requires engineering. By shifting from unstructured "chats" to a rigorous workflow of constraints, context injection, and specialized processes, I have moved from sporadic assistance to a predictable pipeline. This system has produced over 50 merged PRs in recent months.
 
-My journey into AI-assisted development began conservatively with GitHub Copilot, which served as a safe and predictable, albeit faster, autocomplete. I later graduated to Cursor, an AI-native IDE that offered deeper integration but felt heavy and often fought against years of ingrained muscle memory. The breakthrough came when I discovered Claude Code, a command-line interface that was fast, text-based, and completely free of UI overhead. It felt like I was finally escaping the gravity that had held my productivity down.
+Here is the system I use to turn LLM capabilities into reliable software engineering—from high-level philosophy to specific configuration, including how I use voice input to inject complex context faster than I can type.
 
-## The Wrong Approach: AI as a Magic Wand
+## Philosophy: Debug Your Setup, Not the AI
 
-Initially, I made the classic mistake of treating the AI like a magic wand rather than a sophisticated tool. I would issue vague, high-level commands like "refactor this file" or "fix the bug," hoping for an instant, perfect solution. The results were often chaotic, producing code that looked plausible on the surface but contained silent failures, missing imports, or subtle deviations from established project patterns. I incorrectly blamed the tool for these shortcomings.
+When Claude fails to deliver what I expect, my first instinct used to be frustration. Now, I treat it like debugging a junior engineer's environment: the problem is rarely their raw capability—it's usually missing context or broken tooling.
 
-The reality was that I was the problem. An AI doesn't read your mind; it meticulously interprets your prompts. Feeding it ambiguous requests is a surefire way to get unreliable output. I realized I needed to stop asking for magic and start engineering my interactions with the model.
+**Start with native Claude Code.** I avoid complex plugins. Opus 4.5 can handle virtually any software engineering task when given the right environment. The question isn't "can the AI do this?" but "have I given it what it needs?"
 
-## Engineering a Better Interaction
+When something goes wrong, I run through a debugging checklist:
 
-The first pivot was to establish a clear contract with the AI through a system prompt. I configured it to prioritize clarity over conversational fluff, which immediately improved the signal-to-noise ratio of its responses.
+1.  **Missing CLI tools?** Does Claude have access to standard tools like `gh` (GitHub), `vercel`, and my package manager aliases (like `ni` for install or `nr` for run, using `@antfu/ni`)?
+2.  **Missing CLAUDE.md constraints?** Did I forget to specify project conventions or safety rules?
+3.  **Missing domain skills?** Does Claude know the specific framework patterns for this codebase?
+4.  **Missing MCP?** Am I asking it to do something it lacks the tool for? (Note: I mostly use "Skills" for knowledge; I only use the Figma MCP for design tasks).
 
-```
-In all interactions, be extremely concise.
-Sacrifice grammar for clarity.
-Omit conversational filler.
-```
+This mindset shift—from "the AI is broken" to "what am I missing?"—transformed my productivity. Like any tool, Claude reflects the quality of its inputs.
 
-Next, I granted it access to the GitHub (`gh`) command-line tool. This was a transformative step, as the AI was no longer just suggesting code but could now actively participate in the development lifecycle by creating pull requests and checking on issues. However, with this newfound agency came the potential for significant destruction.
+## The Foundation: CLAUDE.md
 
-## Hard-Learned Lessons from Git Disasters
-
-I have to be transparent about the failures, as they were my most valuable teachers. In one instance, I asked for a "clean git history" on a feature branch, and the AI proceeded to rebase it into oblivion, creating a cascade of merge conflicts that resulted in lost work. Another time, it became confused about branch naming conventions and opened five duplicate pull requests for the same change, leaving me to spend an hour cleaning up the mess I had instructed it to make.
-
-These disasters taught me the most crucial lesson: AI requires strict, explicit constraints. Now, my global configuration file (`~/.claude/CLAUDE.md`), which governs every session, contains unambiguous rules of engagement to prevent such errors.
+Every session loads my global configuration from `~/.claude/CLAUDE.md`. Think of this file as the employment contract between me and Claude, prioritizing consistency and safety over flexibility. It forces the AI to adhere to my specific command-line aliases and git habits.
 
 ```markdown
-# Git Safety Rules
-- NEVER force push (`git push --force`).
-- NEVER amend a commit unless explicitly asked with `--amend`.
-- NEVER skip git hooks (`--no-verify`).
-- Always stage specific files; NEVER use `git add -A` or `git add .`.
-- Confirm the current branch name before creating a pull request.
+# Conciseness
+In all interactions, be extremely concise and sacrifice grammar for clarity.
+
+# Package Managers
+- Prefer pnpm over npm or yarn
+- Aliases: `ni` (install), `b` (build), `nr` (run), `lf` (lint fix), `tp` (typecheck)
+
+# Git Safety
+- NEVER amend unless explicitly asked
+- Stage specific files; NEVER use `git add -A` or `git add .`
+- Confirm branch before creating PR
+
+# CLI
+- Primary GitHub interaction: `gh` cli
+- Primary Vercel interaction: `vercel` cli
+- NuxtHub CLI is DEPRECATED - deploy via git push
+
+# Subagents
+- Always use `model: "opus"` when spawning subagents
 ```
 
-It still makes mistakes, but they are far less catastrophic because I no longer allow it to guess in high-stakes situations.
+I also maintain a structured project hierarchy that Claude understands. This allows me to issue high-level commands like "create a repro for nuxthub-727" without specifying paths:
 
-## Building a System of Context and Skills
+```
+~/repros/     - Bug reproductions (git repo)
+~/templates/  - Starter templates (antfu, atinux, nuxt-ui, supersaas)
+~/references/ - Source code refs (better-auth, h3, nitro, nuxt-core, vitest)
+~/nuxt/skills/ - Published skills for the Nuxt ecosystem
+```
 
-I discovered that the real power of an AI model isn't just its raw intelligence, but the quality of the context you provide. To manage this, I built a library of "Skills," which are lightweight, on-demand text instructions that inform the AI about specific project conventions, APIs, or architectural patterns. Unlike heavier solutions like Model Context Protocol (MCP) that require local servers, these Skills are simple text files that can be loaded into any session, making them universally compatible with tools like Claude Code, Cursor, and others.
+## Skills: Progressive Context Loading
 
-I currently maintain over two dozen Skills tailored to different tasks. For example, if I'm working on animations, Claude automatically loads the `motion` skill. If I touch the database, it loads the `nuxthub` skill. This system ensures the AI already understands the relevant patterns before I even write a line of code, leading to more consistent and accurate contributions.
+An AI model is only as effective as the context you fit into its window. Rather than relying on heavy integrations like the Model Context Protocol (MCP) for everything, I distinguish between **Tools** (MCP) and **Knowledge** (Skills).
 
-## Workflows That Deliver Results
+**Skills** are lightweight text files that inject specific domain knowledge on demand. The architecture is designed for token efficiency:
 
-With this system in place, I no longer have unstructured "chats" with the AI. Instead, I execute specific, custom commands that leverage these pre-defined skills to accomplish complex tasks.
+1.  **Metadata** (~100 tokens): Name, description, and trigger rules.
+2.  **SKILL.md body**: Core patterns and APIs.
+3.  **references/**: Detailed documentation loaded only when specifically requested.
 
-**Plan Mode.** For any non-trivial feature, I first forbid the AI from writing code. We enter a "Plan Mode" where we collaboratively explore the codebase, discuss potential architectures, and agree on a file-by-file implementation strategy. This process was instrumental in successfully landing a [major refactor of the NuxtHub DevTools](https://github.com/nuxt-hub/core/pull/776), preventing an unnecessary rewrite by getting the structure right from the start.
+This works like a dependency chain. If I'm working on a Nuxt UI component, Claude loads `vue` → `nuxt-ui` → `reka-ui` progressively, only consuming tokens for what is relevant to the immediate task.
 
-**The Hunt.** I created a custom `/hunt` skill that automates finding and fixing good first issues. It searches a repository for unassigned issues, creates a local reproduction case, applies a fix, and drafts a pull request. This workflow is how [fuzzy search was added to the Nuxt CLI](https://github.com/nuxt/cli/pull/1180), with zero human intervention required until the final review.
+My Nuxt ecosystem skills include: `nuxthub`, `motion`, `vue`, `nuxt-ui`, `reka-ui`, `nuxt-modules`, `nuxt-content`, `nuxt-better-auth`, `vueuse`, and more.
 
-**The Review Swarm.** My `/review` command spawns multiple, specialized AI agents in parallel to analyze a pull request. One agent acts as a security expert, another checks for accessibility issues, and a third enforces Vue-specific patterns. They report back with their findings, and this collective intelligence consistently catches subtle issues that a single reviewer (human or AI) might miss.
-
-## Paying the AI Tax: The Necessity of Rigorous Testing
-
-Here is the truth that is often glossed over: using AI requires *more* disciplined testing, not less. AI excels at generating plausible code that compiles and runs, but it can make dangerous assumptions about edge cases. I call this the "AI Tax"—the mandatory, upfront investment in verification and testing to ensure AI-generated code is not just plausible, but robust.
-
-I learned this the hard way after letting Claude add a caching layer to an API endpoint. The code looked perfect, but in production, it began caching `404 Not Found` responses. Users were locked out of resources for minutes at a time because the AI-generated logic cached the result of the `fetch` call without first checking if `response.ok` was true. The fix was a single line of code, but diagnosing the bug took hours.
-
-Now, I pay the AI Tax by enforcing a strictly isolated testing workflow. The AI must write tests that prove its code works, not in a linked local environment, but as it would be consumed by an end-user.
+You can install them via:
 
 ```bash
-# 1. Create a distributable package from the library
-pnpm pack
-
-# 2. Create a fresh, disposable test environment
-cd /tmp && mkdir test-project && cd test-project
-pnpm init
-
-# 3. Install the packed library from its tarball
-pnpm add ~/projects/my-lib/my-lib-1.0.0.tgz
-
-# 4. Write and run tests against the installed package
+npx skills add onmax/nuxt-skills
 ```
 
-This process forces the AI to account for packaging issues and write tests for the unhappy paths: null states, network failures, and invalid inputs.
+See the full library at [github.com/onmax/nuxt-skills](https://github.com/onmax/nuxt-skills).
 
-## Where AI Still Falls Short
+## Plan Mode: Design Before Code
 
-Despite its power, AI is not a panacea. I still perform several critical tasks manually, because they require a level of nuance or creativity the models currently lack.
+This is the most critical workflow in my system. I call it "Plan is God."
 
-**Complex Git Operations.** Interactive rebases, complex cherry-picking, and multi-branch conflict resolution are all tasks I handle myself. The risk of an AI misunderstanding the context and corrupting the repository is too high.
+For any non-trivial feature, I forbid Claude from writing code initially. We enter **Plan Mode** to explore the codebase together, understand existing patterns, and agree on a file-by-file strategy before touching anything.
 
-**Novel Architecture.** AI is a masterful follower of existing patterns, but it does not invent new ones. When a project requires a genuinely novel architectural solution, the initial design and vision must come from a human.
+The process:
 
-**UI and Design Taste.** An AI can implement any design you describe, but it cannot exercise aesthetic judgment. It lacks the subjective "taste" to decide what looks good or feels right to a user.
+1.  **Forbid code**: "Don't write code yet. Let's plan first."
+2.  **Explore together**: Read existing files to verify the current architecture.
+3.  **Agree on strategy**: Define which files to modify, the order of operations, and the exact changes.
+4.  **Implement**: Only after alignment do we write code.
 
-## Your Path to AI Adoption
+This was instrumental in the [major refactor of NuxtHub DevTools](https://github.com/nuxt-hub/core/pull/776). The PR touched dozens of files with architectural changes. Without planning, Claude would have guessed at implementation details, requiring endless correction cycles. Instead, we mapped every file change before writing a single line.
 
-Adopting this systematic approach can feel daunting, so I recommend building it in layers.
+Planning prevents the biggest waste in AI-assisted development: confidently implementing the wrong thing.
 
-**Day 1: The Foundation.** Install Claude Code and create your global `~/.claude/CLAUDE.md` file. Start by defining simple aliases for your most common commands (`ni` for `npm install`, `b` for `pnpm build`, etc.) to save keystrokes.
+## Advanced Workflows
 
-**Week 1: Your First Skill.** Identify your primary framework or library and create a single "Skill" for it. Document your team's specific conventions, component structures, or data-fetching patterns. Apply this skill while working on one real ticket to see the effect.
+With constraints, skills, and planning in place, I have built specialized workflows for complex tasks.
 
-**Week 2: The Critic.** Build a `/review` skill tailored to your project's coding standards. Before you push your own code, run it through your AI critic and observe what it catches. This is one of the fastest ways to learn its strengths and weaknesses.
+### The Review Swarm
 
-**Month 1: The First Automation.** Try setting up a simple automated task. I use a script called `/ralph-setup` that runs database migrations or data-seeding tasks on a remote server overnight. I wake up to a completed task and a PR ready for review.
+My `/review` command spawns 22 parallel agents. Unlike a generic "review this code" prompt, this swarm uses pattern-matching to activate specific experts:
 
-## The Mental Shift
+-   **Security & Auth**: `security-reviewer`, `auth-reviewer` (activates on auth files)
+-   **Accessibility**: `a11y-reviewer` (activates on UI components)
+-   **Framework Patterns**: `vue-reviewer`, `nuxt-reviewer`, `nuxthub-reviewer`
+-   **Code Quality**: `typescript-reviewer`, `code-quality`, `performance`
+-   **Infrastructure**: `db-reviewer`, `config-reviewer`, `api-reviewer`, `ci-reviewer`
+-   **Testing**: `test-analyzer`, `deps-reviewer`
+-   **Context**: `git-validator`, `context-explorer`, `github-api`
+-   **Documentation**: `documentation`, `i18n-reviewer`
+-   **Strategic**: `maintainer-mindset`, `drawbacks-analyzer`
 
-In a previous post, I wrote about the [Clock of Life](/posts/the-clock-of-life), a metaphor for the different phases of work. For five years, I was stuck grinding between the pain of failure and the sheer effort of progress. This system has moved me into a state of flow.
+This collective intelligence catches subtle issues—like a missing accessibility attribute or a database migration conflict—that a single generalist pass would miss.
 
-I am no longer bogged down by syntax, boilerplate, or searching for API documentation. The tedious work of implementation is largely handled, freeing me to operate at the level of intent. My mental energy has shifted from "How do I build this?" to "Is this the right thing to build?"
+### The Writer Skill
 
-The results are tangible, with over 50 merged PRs in recent months, including [critical asyncData fixes in the Nuxt core](https://github.com/nuxt/nuxt/pull/34079) and foundational features in major CLI tools. The system isn't perfect, and it still requires human judgment at every turn. But for the first time in my career, the work feels less like a grind and more like play.
+Writing quality content is often slower than coding. I built a multi-agent writing loop to automate the drafting process:
+
+1.  **Gemini 3 Pro** writes the initial draft.
+2.  **Claude** reviews autonomously for accuracy, clarity, and completeness.
+3.  **Loop** until approved (up to 15 iterations).
+4.  **DeepL** polishes grammar and style.
+
+This very blog post was produced using this workflow.
+
+### Agent-Browser
+
+For testing web applications, I use browser automation via the Playwright MCP. This solves the "blindness" of the LLM:
+
+-   **Problem**: Need to test deployed apps, fill forms, or verify UI states.
+-   **Solution**: `agent-browser` skill with Playwright integration.
+-   **Pattern**: Snapshot-first—always capture page state before interacting.
+
+I use this for testing authentication flows on staging and automating repetitive form submissions.
+
+## Reproductions & Testing (The "AI Tax")
+
+AI-generated code requires rigorous verification. I pay what I call the "AI Tax"—a mandatory investment of time into testing to ensure reliability.
+
+### The pnpm pack Workflow
+
+To avoid "it works on my machine" issues, I verify fixes in a packaged environment before trusting them:
+
+```bash
+pnpm pack
+cd /tmp && mkdir test-env && cd test-env
+pnpm add ~/projects/my-lib/my-lib-1.0.0.tgz
+# Run integration tests against the packed build
+```
+
+This catches packaging issues, missing exports, and edge cases that work in dev but fail in production.
+
+### The ~/repros/ Workflow
+
+I maintain a strictly organized repository for bug reproductions. This provides a clean slate for the AI to isolate issues:
+
+-   **Folder naming**: `{library}-{issue}` for the bug, `{library}-{issue}-fix` for the fix.
+-   **StackBlitz links**: Every PR body includes instant-verification links.
+-   **Structured README**: Problem → Verify → Expected → Actual → Fix.
+-   **pnpm patch**: We test fixes locally via patch before creating PRs.
+
+Example workflow for `nuxthub-727`:
+
+1.  Create `~/repros/nuxthub-727/` with minimal reproduction.
+2.  Verify the bug exists.
+3.  Create `~/repros/nuxthub-727-fix/` with pnpm patch.
+4.  Verify the fix works.
+5.  Create PR with StackBlitz links to both.
+
+See the full workflow documentation at [github.com/onmax/claude-config](https://github.com/onmax/claude-config).
+
+## Voice Input: SuperWhisper
+
+I use SuperWhisper for voice-to-text input. This is not just for convenience; it connects directly to the "Context Injection" philosophy.
+
+Voice allows me to "dump" my brain—describing architectural decisions, explaining bug reproduction steps, or providing detailed nuance—faster than I can type. My "conciseness" config in `CLAUDE.md` pairs perfectly with this: I speak naturally and verbose, the transcription captures everything, and Claude extracts only the relevant technical requirements.
+
+## Conclusion
+
+This system requires upfront investment. You need to maintain your skills library, write thoughtful `CLAUDE.md` constraints, and discipline yourself to plan before coding. The return is a shift from typing syntax to directing architecture.
+
+The key principles:
+
+1.  **Debug your setup, not the AI**: When things fail, check your tools, constraints, and context.
+2.  **Plan before code**: Agreement on approach prevents wasted implementation cycles.
+3.  **Skills over MCP**: Use lightweight text files to provide domain expertise without complexity.
+4.  **Verify everything**: The AI Tax—rigorous testing—is non-negotiable.
+
+By applying these patterns, I've tackled complex issues like [critical asyncData fixes in Nuxt core](https://github.com/nuxt/nuxt/pull/34079) and major refactors like the [NuxtHub DevTools overhaul](https://github.com/nuxt-hub/core/pull/776). The goal isn't to replace the engineer—it's to automate the friction of engineering while keeping humans in control of architecture and quality.

@@ -1,7 +1,7 @@
 ---
 title: 'How I Use Claude Code'
 description: 'A comprehensive system for AI-assisted development: philosophy, skills, workflows, and real-world results'
-publishedAt: 2026-01-23
+publishedAt: 2026-01-26
 ---
 
 Most developers treat AI tools like advanced autocomplete or a magic wand. I treat them as a system component that requires engineering. By replacing unstructured "chats" with a rigorous workflow of constraints, context injection, and specialized processes, I have moved from sporadic assistance to a predictable pipeline.

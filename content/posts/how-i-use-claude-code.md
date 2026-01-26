@@ -28,25 +28,35 @@ This mindset shift, from "the AI is broken" to "what am I missing?", transformed
 Every session loads my global configuration from `~/.claude/CLAUDE.md`. Think of this file as the employment contract between me and Claude, prioritizing consistency and safety over flexibility. It forces the AI to adhere to my specific command-line aliases and git habits.
 
 ```markdown
-# Conciseness
-In all interactions, be extremely concise and sacrifice grammar for clarity.
+In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of clarity.
 
-# Package Managers
+# Bash commands
 - Prefer pnpm over npm or yarn
-- Aliases: `ni` (install), `b` (build), `nr` (run), `lf` (lint fix), `tp` (typecheck)
+  - If the project has a package-lock.json, use npm
+  - If the project has a yarn.lock, use yarn
+- Aliases that automatically use the right package manager:
+  - `ni` for installing packages
+  - `b` for running build scripts
+  - `nr <script-name>` to run any other build script
+  - `lf` to run lint fix
+  - `tp` to run typecheck
 
-# Git Safety
-- NEVER amend unless explicitly asked
-- Stage specific files; NEVER use `git add -A` or `git add .`
-- Confirm branch before creating PR
+- Commit messages: one line, less than 50 chars
+- Everytime you need to interact with a repo use the gh cli
 
 # CLI
 - Primary GitHub interaction: `gh` cli
 - Primary Vercel interaction: `vercel` cli
-- NuxtHub CLI is DEPRECATED: deploy via git push
+- NuxtHub CLI is DEPRECATED. Deployments happen via git push
 
 # Subagents
-- Always use `model: "opus"` when spawning subagents
+- Always use `model: "opus"` when spawning subagents via Task tool
+
+# Project Folders
+- `~/repros/` - Bug reproductions (git repo)
+- `~/templates/` - Starter templates (antfu, atinux, nuxt-ui, supersaas)
+- `~/references/` - Source code refs (better-auth, h3, nitro, nuxt-core, vitest)
+- `~/nuxt/skills/` - Claude skills for Nuxt ecosystem
 ```
 
 ## Giving Source Code to the AI

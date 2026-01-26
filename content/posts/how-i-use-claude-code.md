@@ -64,7 +64,7 @@ Skills provide knowledge, but sometimes Claude needs the actual source code. I m
 
 **~/templates/** holds starter projects. Instead of explaining "create a Nuxt app with Nuxt UI and auth", I say "copy ~/templates/nuxt-ui as the base". Claude gets the exact configuration, dependencies, and patterns I expect.
 
-**~/repros/** is a git repository for bug reproductions. Each issue gets its own folder with a minimal reproduction case. This isolates problems and makes them shareable via StackBlitz.
+**[~/repros/](https://github.com/onmax/repros)** is a git repository for bug reproductions. Each issue gets its own folder with a minimal reproduction case. This isolates problems and makes them shareable via StackBlitz.
 
 For libraries I only need once, I skip the permanent folders:
 
@@ -151,10 +151,14 @@ This very blog post was produced using this workflow.
 For testing web applications, I use browser automation via the Playwright MCP. This solves the "blindness" of the LLM:
 
 -   **Problem**: Need to test deployed apps, fill forms, or verify UI states.
--   **Solution**: `agent-browser` skill with Playwright integration.
+-   **Solution**: [`agent-browser`](https://github.com/onmax/claude-config/tree/master/skills/agent-browser) skill with Playwright integration.
 -   **Pattern**: Snapshot-first, always capture page state before interacting.
 
 I use this for testing authentication flows on staging and automating repetitive form submissions.
+
+### Frontend Design
+
+For UI work, I use the [`frontend-design`](https://github.com/onmax/claude-config/tree/master/skills/frontend-design) skill. It guides Claude to create distinctive, production-grade interfaces that avoid generic AI aesthetics. Useful for landing pages, dashboards, and components that need actual design quality, not just functional markup.
 
 ## Reproductions & Testing (The "AI Tax")
 
@@ -162,16 +166,24 @@ AI-generated code requires rigorous verification. I pay what I call the "AI Tax"
 
 ### The pnpm pack Workflow
 
-To avoid "it works on my machine" issues, I verify fixes in a packaged environment before trusting them:
+When contributing to a library, running tests locally isn't enough. Your fix might work in the dev environment but break when users install the published package. The issue: dev mode has access to source files, but published packages only include what's in the `dist/` folder and `exports` field.
+
+`pnpm pack` creates a `.tgz` file exactly like npm would publish. I install this tarball in a fresh project to simulate what users will experience:
 
 ```bash
+# In the library you're fixing
 pnpm pack
+# Creates my-lib-1.0.0.tgz
+
+# In a test project
 cd /tmp && mkdir test-env && cd test-env
-pnpm add ~/projects/my-lib/my-lib-1.0.0.tgz
-# Run integration tests against the packed build
+pnpm init && pnpm add ~/projects/my-lib/my-lib-1.0.0.tgz
+
+# Now test: can you import what you expect?
+# Are the types correct? Does the runtime code work?
 ```
 
-This catches packaging issues, missing exports, and edge cases that work in dev but fail in production.
+This catches: missing files in package.json `exports`, forgotten build steps, incorrect entry points, missing dependencies, and type declaration issues. If it works after `pnpm pack`, it will work for users.
 
 ### The Repros Workflow
 

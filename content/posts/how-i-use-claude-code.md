@@ -10,6 +10,8 @@ Here is the system I use to turn LLM capabilities into reliable software enginee
 
 ## Philosophy: Debug Your Setup, Not the AI
 
+AI writes 100% of my code. For most developers, it should be at least 90%. The implication is clear: our energy belongs in testing and verification, not in typing syntax. The bottleneck has shifted from "can I write this?" to "does this actually work?"
+
 When Claude failed to deliver what I expected, my first instinct used to be frustration. Now, I treat it like debugging a junior engineer's environment: the problem is rarely their raw capability. It is usually missing context or broken tooling.
 
 **Start with native Claude Code.** I avoid complex plugins. Opus 4.5 can handle virtually any software engineering task when given the right environment. The question isn't "Can the AI do this?" but "Have I given it what it needs?"

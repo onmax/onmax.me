@@ -18,10 +18,10 @@ When Claude failed to deliver what I expected, my first instinct used to be frus
 
 When something goes wrong, I run through a debugging checklist:
 
-1.  **Missing CLI tools?** Does Claude have access to standard tools like `gh` (GitHub), `vercel`, and my package manager aliases (like `ni` for install or `nr` for run, using `@antfu/ni`)?
+1.  **Missing CLI tools?** Does Claude have access to standard tools like `gh` (GitHub), `vercel`, and my package manager aliases (like `ni` for install or `nr` for run, using `@antfu/ni`)? CLI tools are the backbone—they're battle-tested, well-documented, and just work.
 2.  **Missing CLAUDE.md constraints?** Did I forget to specify project conventions or safety rules?
 3.  **Missing domain skills?** Does Claude know the specific framework patterns for this codebase?
-4.  **Missing MCP?** Am I asking it to do something it lacks the tool for? (Note: I mostly use "Skills" for knowledge; I only use the Figma MCP for design tasks).
+4.  **Missing MCP?** Only as a last resort—when no CLI exists for the task (I only use Figma MCP for design work).
 
 This mindset shift, from "the AI is broken" to "what am I missing?", transformed my productivity. Like any tool, Claude reflects the quality of its inputs.
 
@@ -46,7 +46,7 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 - Commit messages: one line, less than 50 chars
 - Everytime you need to interact with a repo use the gh cli
 
-# CLI
+# CLI (prefer CLI over MCP)
 - Primary GitHub interaction: `gh` cli
 - Primary Vercel interaction: `vercel` cli
 - NuxtHub CLI is DEPRECATED. Deployments happen via git push
@@ -88,7 +88,9 @@ Claude can explore it, I get my answer, and the folder disappears on reboot. No 
 
 ## Skills: Progressive Context Loading
 
-An AI model is only as effective as the context you fit into its window. Rather than relying on heavy integrations like the Model Context Protocol (MCP) for everything, I distinguish between **Tools** (MCP) and **Knowledge** (Skills).
+An AI model is only as effective as the context you fit into its window. Rather than relying on heavy integrations like the Model Context Protocol (MCP) for everything, I distinguish between **Tools** and **Knowledge** (Skills).
+
+For tools, **CLI trumps MCP**. Standard command-line tools like `gh`, `vercel`, and package managers are more reliable, better documented, and already installed. MCP adds complexity and failure points. I only reach for MCP when there's no CLI equivalent (like Figma for design work).
 
 **Skills** are lightweight text files that inject specific domain knowledge on demand. The architecture is designed for token efficiency:
 
@@ -112,7 +114,7 @@ See the full library at [github.com/onmax/nuxt-skills](https://github.com/onmax/
 
 ## Plan Mode: Design Before Code
 
-This is the most critical workflow in my system. I call it "Plan is God."
+This is the most critical workflow in my system.
 
 For any non-trivial feature, I forbid Claude from writing code initially. We enter **Plan Mode** to explore the codebase together, understand existing patterns, and agree on a file-by-file strategy before touching anything.
 
@@ -120,8 +122,11 @@ The process:
 
 1.  **Forbid code**: "Don't write code yet. Let's plan first."
 2.  **Explore together**: Read existing files to verify the current architecture.
-3.  **Agree on strategy**: Define which files to modify, the order of operations, and the exact changes.
-4.  **Implement**: Only after alignment do we write code.
+3.  **Surface open questions**: Claude must ask about anything unclear—edge cases, naming conventions, error handling strategies, scope boundaries. We fill every gap before moving forward.
+4.  **Agree on strategy**: Define which files to modify, the order of operations, and the exact changes.
+5.  **Implement**: Only after full alignment do we write code.
+
+The questioning step is crucial. Claude should challenge assumptions: "Should this handle the empty state?" "Do you want this to be backwards compatible?" "What happens when X fails?" These questions surface ambiguity that would otherwise become bugs or rework.
 
 This was instrumental in the [major refactor of NuxtHub DevTools](https://github.com/nuxt-hub/core/pull/776). The PR touched dozens of files with architectural changes. Without planning, Claude would have guessed at implementation details, requiring endless correction cycles. Instead, we mapped every file change before writing a single line.
 
@@ -271,7 +276,7 @@ The key principles:
 
 1.  **Debug your setup, not the AI**: When things fail, check your tools, constraints, and context.
 2.  **Plan before code**: Agreeing on an approach prevents wasted implementation cycles.
-3.  **Skills over MCP**: Use lightweight text files to provide domain expertise without complexity.
+3.  **CLI over MCP, Skills over both**: Prefer battle-tested CLI tools (`gh`, `vercel`, `ni`) for actions. Use lightweight text files (Skills) for knowledge. MCP is a last resort when no CLI exists.
 4.  **Verify everything**: The AI Tax (rigorous testing) is non-negotiable.
 
 By applying these patterns, I've tackled complex issues like [critical asyncData fixes in Nuxt core](https://github.com/nuxt/nuxt/pull/34079) and major refactors like the [NuxtHub DevTools overhaul](https://github.com/nuxt-hub/core/pull/776). The goal isn't to replace the engineer. It's to automate the friction of engineering while keeping humans in control of architecture and quality.

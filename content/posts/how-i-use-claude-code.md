@@ -25,7 +25,7 @@ When something goes wrong, I run through a debugging checklist:
 
 This mindset shift, from "the AI is broken" to "what am I missing?", transformed my productivity. Like any tool, Claude reflects the quality of its inputs.
 
-## The Foundation: CLAUDE.md
+## 1. The Foundation: CLAUDE.md
 
 Every session loads my global configuration from `~/.claude/CLAUDE.md`. Think of this file as the employment contract between me and Claude, prioritizing consistency and safety over flexibility. It forces the AI to adhere to my specific command-line aliases and git habits.
 
@@ -61,7 +61,7 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 - `~/nuxt/skills/` - Claude skills for Nuxt ecosystem
 ```
 
-## Giving Source Code to the AI
+## 2. Giving Source Code to the AI
 
 Skills provide general knowledge, but sometimes Claude needs access to raw source code. I maintain dedicated folders for this purpose:
 
@@ -86,7 +86,7 @@ cd /tmp && git clone https://github.com/some/library
 
 Claude can explore it, I get my answer, and the folder disappears on reboot. No clutter.
 
-## Skills: Progressive Context Loading
+## 3. Skills: Progressive Context Loading
 
 An AI model is only as effective as the context you fit into its window. Rather than relying on heavy integrations like the Model Context Protocol (MCP) for everything, I distinguish between **Tools** and **Knowledge** (Skills).
 
@@ -112,7 +112,7 @@ npx skills add onmax/nuxt-skills
 
 See the full library at [github.com/onmax/nuxt-skills](https://github.com/onmax/nuxt-skills).
 
-## Plan Mode: Design Before Code
+## 4. Plan Mode: Design Before Code
 
 This is the most critical workflow in my system.
 
@@ -132,7 +132,7 @@ This was instrumental in the [major refactor of NuxtHub DevTools](https://github
 
 Planning prevents the biggest waste in AI-assisted development: confidently implementing the wrong thing.
 
-## Advanced Workflows
+## 5. Advanced Workflows
 
 With constraints, skills, and planning in place, I have built specialized workflows for complex tasks.
 
@@ -218,7 +218,7 @@ I use this for testing authentication flows on staging and automating repetitive
 
 For UI work, I use the [`frontend-design`](https://github.com/onmax/claude-config/tree/master/skills/frontend-design) skill. It guides Claude to create distinctive, production-grade interfaces that avoid generic AI aesthetics. It is useful for landing pages, dashboards, and components that need genuine design quality, not just functional markup.
 
-## Reproductions & Testing (The "AI Tax")
+## 6. Reproductions & Testing (The "AI Tax")
 
 AI-generated code requires rigorous verification. I pay what I call the "AI Tax", a mandatory investment of time into testing to ensure reliability.
 
@@ -262,7 +262,7 @@ Example for `nuxthub-727`:
 
 See the full workflow at [github.com/onmax/claude-config](https://github.com/onmax/claude-config).
 
-## Voice Input: SuperWhisper
+## 7. Voice Input: SuperWhisper
 
 I use SuperWhisper for voice-to-text input. This is not just for convenience; it connects directly to the "Context Injection" philosophy.
 

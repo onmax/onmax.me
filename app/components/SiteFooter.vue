@@ -14,6 +14,12 @@
       />
       <span>onmax</span>
     </a>
+    <NuxtLink
+      to="/hire"
+      class="underline flex gap-2 opacity-50 saturate-0 transition-all hover:saturate-100 hover:opacity-100"
+    >
+      Hire
+    </NuxtLink>
     <a
       href="/maxi-garcia_cv.pdf"
       target="_blank"

@@ -1,5 +1,22 @@
 <script setup lang="ts">
-import { addon, availability, ctas, faq, fit, hero, howIWork, packages, proof } from '~/lib/hire'
+import {
+  addon,
+  aiSection,
+  availability,
+  ctas,
+  faq,
+  fit,
+  healthCheck,
+  hero,
+  painPoints,
+  proof,
+  proofMetrics,
+  scarcity,
+  testimonials,
+  trustBar,
+  howIWork,
+  packages
+} from '~/lib/hire'
 
 useHead({
   link: [
@@ -12,7 +29,8 @@ useHead({
   ]
 })
 
-const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', 'Contact']
+const proofMarqueeItems = computed(() => [...proof.items, ...proof.items])
+const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 'Proof', 'Process', 'AI', 'Fit', 'FAQ', 'Contact']
 </script>
 
 <template>
@@ -67,11 +85,26 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
         <p class="hero-note swiss-reveal swiss-reveal--d3">
           {{ hero.note }}
         </p>
+
+        <!-- TRUST BAR -->
+        <div class="trust-bar swiss-reveal swiss-reveal--d4">
+          <component
+            :is="item.href ? 'a' : 'span'"
+            v-for="item in trustBar.items"
+            :key="item.label"
+            :href="item.href || undefined"
+            class="trust-badge"
+            :target="item.href ? '_blank' : undefined"
+            :rel="item.href ? 'noreferrer' : undefined"
+          >
+            {{ item.label }}
+          </component>
+        </div>
       </section>
 
       <hr class="red-rule">
 
-      <!-- 01 PACKAGES -->
+      <!-- 01 SOUND FAMILIAR -->
       <section class="section">
         <span
           class="watermark"
@@ -79,6 +112,73 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
         >01</span>
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[0] }}
+        </h2>
+        <p class="section-lede swiss-reveal swiss-reveal--d1">
+          {{ painPoints.headline }}
+        </p>
+        <ul class="pain-list swiss-reveal swiss-reveal--d2">
+          <li
+            v-for="t in painPoints.items"
+            :key="t"
+            class="pain-item"
+          >
+            <span class="pain-mark">&times;</span>
+            <span>{{ t }}</span>
+          </li>
+        </ul>
+      </section>
+
+      <hr class="red-rule">
+
+      <!-- 02 HEALTH CHECK -->
+      <section class="section">
+        <span
+          class="watermark"
+          aria-hidden="true"
+        >02</span>
+        <h2 class="section-label swiss-reveal">
+          {{ sectionLabels[1] }}
+        </h2>
+        <article class="health-card swiss-reveal swiss-reveal--d1">
+          <div class="health-top">
+            <h3 class="health-title">
+              {{ healthCheck.title }}
+            </h3>
+            <span class="health-duration">{{ healthCheck.durationLabel }}</span>
+          </div>
+          <p class="health-best">
+            {{ healthCheck.bestFor }}
+          </p>
+          <ul class="health-deliverables">
+            <li
+              v-for="d in healthCheck.deliverables"
+              :key="d"
+            >
+              {{ d }}
+            </li>
+          </ul>
+          <div class="health-footer">
+            <span class="health-price">{{ healthCheck.priceLabel }}</span>
+            <a
+              :href="healthCheck.ctaHref"
+              class="btn btn--red"
+              target="_blank"
+              rel="noreferrer"
+            >{{ healthCheck.ctaLabel }} &nearr;</a>
+          </div>
+        </article>
+      </section>
+
+      <hr class="red-rule">
+
+      <!-- 03 PACKAGES -->
+      <section class="section">
+        <span
+          class="watermark"
+          aria-hidden="true"
+        >03</span>
+        <h2 class="section-label swiss-reveal">
+          {{ sectionLabels[2] }}
         </h2>
         <div class="pkg-grid">
           <article
@@ -105,6 +205,9 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
                 {{ d }}
               </li>
             </ul>
+            <p class="pkg-outcome">
+              {{ p.outcomeHint }}
+            </p>
             <div class="pkg-footer">
               <span class="pkg-price">{{ p.priceLabel }}</span>
               <a
@@ -120,14 +223,14 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
 
       <hr class="red-rule">
 
-      <!-- 02 ADD-ON -->
+      <!-- 04 ADD-ON -->
       <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >02</span>
+        >04</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[1] }}
+          {{ sectionLabels[3] }}
         </h2>
         <p class="addon-text swiss-reveal swiss-reveal--d1">
           {{ addon }}
@@ -136,20 +239,44 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
 
       <hr class="red-rule">
 
-      <!-- 03 PROOF (marquee) -->
+      <!-- 05 PROOF -->
       <section class="section section--proof">
         <span
           class="watermark"
           aria-hidden="true"
-        >03</span>
+        >05</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[2] }}
+          {{ sectionLabels[4] }}
         </h2>
-        <div class="marquee-wrap swiss-reveal swiss-reveal--d1">
+        <ul class="proof-metrics swiss-reveal swiss-reveal--d1">
+          <li
+            v-for="m in proofMetrics"
+            :key="m"
+          >
+            <span class="proof-mark">+</span> {{ m }}
+          </li>
+        </ul>
+
+        <div class="testimonials-grid swiss-reveal swiss-reveal--d2">
+          <article
+            v-for="t in testimonials"
+            :key="t.quote"
+            class="testimonial-card"
+          >
+            <p class="testimonial-quote">
+              “{{ t.quote }}”
+            </p>
+            <p class="testimonial-meta">
+              {{ t.name }} · {{ t.title }} · {{ t.company }}
+            </p>
+          </article>
+        </div>
+
+        <div class="marquee-wrap swiss-reveal swiss-reveal--d3">
           <div class="marquee-track">
             <a
-              v-for="item in [...proof.items, ...proof.items]"
-              :key="item.href + Math.random()"
+              v-for="(item, idx) in proofMarqueeItems"
+              :key="`${item.href}--${idx}`"
               :href="item.href"
               class="marquee-item"
               target="_blank"
@@ -165,14 +292,14 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
 
       <hr class="red-rule">
 
-      <!-- 04 HOW I WORK -->
+      <!-- 06 PROCESS -->
       <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >04</span>
+        >06</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[3] }}
+          {{ sectionLabels[5] }}
         </h2>
         <ol class="steps-grid">
           <li
@@ -192,21 +319,37 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
             </div>
           </li>
         </ol>
-        <p class="ai-line swiss-reveal swiss-reveal--d4">
-          {{ howIWork.aiLine }}
+      </section>
+
+      <hr class="red-rule">
+
+      <!-- 07 AI -->
+      <section class="section">
+        <span
+          class="watermark"
+          aria-hidden="true"
+        >07</span>
+        <h2 class="section-label swiss-reveal">
+          {{ sectionLabels[6] }}
+        </h2>
+        <h3 class="ai-heading swiss-reveal swiss-reveal--d1">
+          {{ aiSection.headline }}
+        </h3>
+        <p class="ai-body swiss-reveal swiss-reveal--d2">
+          {{ aiSection.body }}
         </p>
       </section>
 
       <hr class="red-rule">
 
-      <!-- 05 FIT -->
+      <!-- 08 FIT -->
       <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >05</span>
+        >08</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[4] }}
+          {{ sectionLabels[7] }}
         </h2>
         <div class="fit-grid">
           <div class="fit-col swiss-reveal swiss-reveal--d1">
@@ -240,14 +383,14 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
 
       <hr class="red-rule">
 
-      <!-- 06 FAQ -->
+      <!-- 09 FAQ -->
       <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >06</span>
+        >09</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[5] }}
+          {{ sectionLabels[8] }}
         </h2>
         <div class="faq-list">
           <details
@@ -273,6 +416,7 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
       <div class="avail-banner swiss-reveal">
         <span class="avail-label">{{ availability.label }}</span>
         <span class="avail-value">{{ availability.value }}</span>
+        <span class="avail-scarcity">{{ scarcity }}</span>
       </div>
 
       <!-- 07 FINAL CTA -->
@@ -280,9 +424,9 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
         <span
           class="watermark"
           aria-hidden="true"
-        >07</span>
+        >10</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[6] }}
+          {{ sectionLabels[9] }}
         </h2>
         <p class="cta-headline swiss-reveal swiss-reveal--d1">
           Ready to ship?
@@ -470,6 +614,37 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
   z-index: 1;
 }
 
+/* ── TRUST BAR ── */
+.trust-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: var(--border);
+  padding: 10px 12px;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--fg);
+  opacity: 0.9;
+}
+
+.trust-badge:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
 /* ── SECTION ── */
 .section {
   padding: 80px 0;
@@ -493,6 +668,49 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
 
 @media (min-width: 768px) {
   .section-label { margin-bottom: 56px; }
+}
+
+/* ── SECTION LEDE ── */
+.section-lede {
+  font-family: var(--ff-body);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.55;
+  max-width: 60ch;
+  margin: 0 0 18px;
+  position: relative;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+/* ── PAIN ── */
+.pain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  max-width: 72ch;
+  position: relative;
+  z-index: 1;
+}
+
+.pain-item {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.pain-mark {
+  font-family: var(--ff-mono);
+  font-weight: 600;
+  color: var(--red);
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
 }
 
 /* ── PACKAGES ── */
@@ -585,6 +803,16 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
   color: var(--red);
 }
 
+.pkg-outcome {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0.6;
+  border-left: var(--rule) solid var(--red);
+  padding-left: 16px;
+}
+
 .pkg-footer {
   margin-top: auto;
   padding-top: 20px;
@@ -653,6 +881,94 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
   z-index: 1;
 }
 
+/* ── HEALTH CHECK ── */
+.health-card {
+  border: 2px solid var(--red);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+}
+
+.health-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.health-title {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: 34px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.health-duration {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  opacity: 0.6;
+}
+
+.health-best {
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 1.55;
+  opacity: 0.75;
+  margin: 0;
+  max-width: 68ch;
+}
+
+.health-deliverables {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 18px;
+}
+
+.health-deliverables li {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 1.5;
+  padding-left: 20px;
+  position: relative;
+}
+
+.health-deliverables li::before {
+  content: '\2014';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+}
+
+.health-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 18px;
+}
+
+.health-price {
+  font-family: var(--ff-display);
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
 /* ── MARQUEE ── */
 .marquee-wrap {
   overflow: hidden;
@@ -718,6 +1034,76 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
   margin-top: auto;
 }
 
+/* ── PROOF METRICS ── */
+.proof-metrics {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  max-width: 72ch;
+  position: relative;
+  z-index: 1;
+}
+
+.proof-metrics li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.proof-mark {
+  font-family: var(--ff-mono);
+  font-weight: 600;
+  color: var(--red);
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .testimonials-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+
+.testimonial-card {
+  border: var(--border);
+  background: var(--bg);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.testimonial-quote {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.testimonial-meta {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
 /* ── STEPS ── */
 .steps-grid {
   list-style: none;
@@ -772,6 +1158,30 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
   opacity: 0.45;
   border-left: var(--rule) solid var(--red);
   padding-left: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── AI SECTION ── */
+.ai-heading {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 44px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  margin: 0 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-body {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.55;
+  max-width: 70ch;
+  opacity: 0.75;
   position: relative;
   z-index: 1;
 }
@@ -911,6 +1321,15 @@ const sectionLabels = ['Packages', 'Add-on', 'Proof', 'Process', 'Fit', 'FAQ', '
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 1;
+}
+
+.avail-scarcity {
+  width: 100%;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
 }
 
 /* ── FINAL CTA ── */

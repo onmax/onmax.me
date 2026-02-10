@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { getHireJsonLd, hero } from '~/lib/hire'
+import { getHireFaqJsonLd, getHireJsonLd, hero } from '~/lib/hire'
 
-const title = 'Hire Maxi Garcia | Nuxt Sprints'
+const title = 'Hire a Nuxt Consultant | Sprints (Performance, Migration, Shipping)'
 const description = hero.subhead
 
 useSeoMeta({
@@ -16,7 +16,10 @@ useSeoMeta({
 
 useHead({
   link: [{ rel: 'canonical', href: 'https://onmax.me/hire' }],
-  script: [{ type: 'application/ld+json', textContent: JSON.stringify(getHireJsonLd()) }]
+  script: [
+    { type: 'application/ld+json', textContent: JSON.stringify(getHireJsonLd()) },
+    { type: 'application/ld+json', textContent: JSON.stringify(getHireFaqJsonLd()) }
+  ]
 })
 </script>
 

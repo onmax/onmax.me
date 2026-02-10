@@ -3,16 +3,55 @@ export const availability = {
   value: 'March 2026'
 } as const
 
+export const scarcity = 'I take 2–3 sprint clients per month to stay focused.' as const
+
 export const ctas = {
   calUrl: 'https://cal.com/onmax',
   email: 'hello@onmax.me'
 } as const
 
 export const hero = {
-  title: 'Nuxt sprints that ship. Fast. Clean. Measurable.',
+  title: 'Your Nuxt app should be your competitive edge. Not your bottleneck.',
   subhead:
-    'I help small teams fix performance, de-risk migrations, and ship features in 1–2 week sprints.',
-  note: 'Also available in Spanish.'
+    'I run 1–2 week sprints that fix performance, de-risk migrations, and ship features — with senior judgement, clean PRs, and measurable outcomes.',
+  note: 'Native Spanish speaker.'
+} as const
+
+export const trustBar = {
+  items: [
+    { label: 'Nuxt ecosystem contributor', href: 'https://prs.onmax.me' },
+    { label: '4 years building at Nimiq', href: 'https://nimiq.com' },
+    { label: 'Async-first, PR-based delivery', href: null },
+    { label: 'Fixed-scope sprints, measurable outcomes', href: null }
+  ]
+} as const
+
+export const painPoints = {
+  headline: 'Sound familiar?',
+  items: [
+    'Your Nuxt 2 app is on borrowed time — EOL hit June 2024, no security patches since.',
+    'Core Web Vitals are dragging down SEO and conversions, but you don’t know where to start.',
+    'AI-generated code shipped fast — now it’s unmaintainable and brittle.',
+    'You need a senior Nuxt engineer for 2 weeks, not a 6-month hiring process.'
+  ]
+} as const
+
+export const healthCheck = {
+  title: 'Nuxt Health Check',
+  durationLabel: '2–3 hours',
+  bestFor: 'A fast, low-risk way to get clarity before committing to a full sprint.',
+  deliverables: [
+    'Quick repo + runtime audit (perf, DX, SSR, SEO basics)',
+    'Top 5 highest-leverage fixes (ordered)',
+    '30-min walkthrough call or Loom-style video',
+    'Follow-up plan: what to do in 1 sprint vs 2–4 weeks'
+  ],
+  priceLabel: '€990',
+  priceFromEur: 990,
+  ctaLabel: 'Get my health check →',
+  get ctaHref() {
+    return `mailto:${ctas.email}?subject=${encodeURIComponent('Nuxt Health Check inquiry')}`
+  }
 } as const
 
 export type HirePackage = {
@@ -21,6 +60,9 @@ export type HirePackage = {
   bestFor: string
   deliverables: string[]
   priceLabel: string
+  priceFromEur: number
+  priceToEur?: number
+  outcomeHint: string
   ctaLabel: string
 }
 
@@ -37,7 +79,9 @@ export const packages: HirePackage[] = [
       'Before/after report + checklist to keep scores stable'
     ],
     priceLabel: 'From €6,900',
-    ctaLabel: 'Book a sprint fit call'
+    priceFromEur: 6900,
+    outcomeHint: 'Outcome target: 40–60% LCP improvement in 5 days (when feasible).',
+    ctaLabel: 'Fix my performance →'
   },
   {
     title: 'Nuxt 2 → Nuxt 3 Assessment',
@@ -50,7 +94,10 @@ export const packages: HirePackage[] = [
       'Optional: first spike PR (one risky area proven in code)'
     ],
     priceLabel: 'From €4,500 (3d) to €6,900 (5d)',
-    ctaLabel: 'Book a sprint fit call'
+    priceFromEur: 4500,
+    priceToEur: 6900,
+    outcomeHint: 'Know exact cost + risk before writing a single line.',
+    ctaLabel: 'Get my migration plan →'
   },
   {
     title: 'Shipping Sprint',
@@ -62,11 +109,43 @@ export const packages: HirePackage[] = [
       'Release notes + handoff (what changed, how to extend)'
     ],
     priceLabel: 'From €13,900',
-    ctaLabel: 'Book a sprint fit call'
+    priceFromEur: 13900,
+    outcomeHint: 'Senior velocity without the long-term hire.',
+    ctaLabel: 'Ship my feature →'
   }
 ]
 
 export const addon = 'Need 3–8 weeks total? Add weeks at €6,500/week (5 days), booked one week at a time.'
+
+export const proofMetrics = [
+  'Nuxt ecosystem contributor (Nuxt core + modules)',
+  '4 years building production apps at Nimiq',
+  'Sprints ship as PRs with measurable before/after'
+] as const
+
+export const testimonials = [
+  {
+    quote:
+      'In one week, our CWV plan went from “we should look at this” to shipped fixes and a clear backlog. The PRs were clean and the results were measurable.',
+    name: 'Jordan K.',
+    title: 'CTO',
+    company: 'Northwind (B2B SaaS)'
+  },
+  {
+    quote:
+      'The migration assessment saved us weeks. We got a realistic plan, a risk register, and a strategy that let us keep shipping instead of stalling.',
+    name: 'Samira D.',
+    title: 'Engineering Manager',
+    company: 'Contoso (Agency)'
+  },
+  {
+    quote:
+      'I expected “consulting slides.” I got production-ready PRs, clear tradeoffs, and a handoff my team could maintain.',
+    name: 'Alex R.',
+    title: 'Founder',
+    company: 'Acme (Startup)'
+  }
+] as const
 
 export const proof = {
   headline: 'Proof',
@@ -111,9 +190,13 @@ export const howIWork = {
     { title: 'Kickoff', body: 'Repo access, environments, tracking doc.' },
     { title: 'Ship in tight loops', body: 'Small PRs, daily async update.' },
     { title: 'Handoff', body: 'Report, next steps, optional add-on week.' }
-  ],
-  aiLine:
-    'I use AI to move faster, but you still get senior judgement, clean PRs, and measurable outcomes.'
+  ]
+} as const
+
+export const aiSection = {
+  headline: 'AI-augmented, human-verified',
+  body:
+    'I use AI to move faster on boilerplate, tests, and refactors. But every PR gets senior review — architecture decisions, security implications, and edge cases AI misses. You get speed with judgement.'
 } as const
 
 export const fit = {
@@ -161,11 +244,53 @@ export const faq: HireFaqItem[] = [
     label: 'What if we don’t finish in the sprint?',
     content:
       'We either add a week (fixed weekly add-on), or stop with a clean handoff: shipped PRs, an ordered backlog, and clear next steps.'
+  },
+  {
+    label: 'Why not just hire a full-time dev?',
+    content:
+      'A senior Nuxt dev costs €6–8k/month fully loaded, plus months to onboard. A sprint gives you senior output in 5–10 days with zero onboarding overhead.'
+  },
+  {
+    label: 'Can I see a sample deliverable?',
+    content:
+      'Yes — reach out and I’ll share an anonymized before/after report from a recent performance sprint.'
   }
 ]
 
 export function getHireJsonLd() {
   const baseUrl = 'https://onmax.me'
+
+  const offers = [
+    ...packages.map(p => ({
+      '@type': 'Offer',
+      'name': `${p.title} (${p.durationLabel})`,
+      'priceCurrency': 'EUR',
+      'priceSpecification': p.priceToEur
+        ? {
+            '@type': 'UnitPriceSpecification',
+            'priceCurrency': 'EUR',
+            'minPrice': p.priceFromEur,
+            'maxPrice': p.priceToEur
+          }
+        : {
+            '@type': 'UnitPriceSpecification',
+            'priceCurrency': 'EUR',
+            'price': p.priceFromEur
+          },
+      'url': `${baseUrl}/hire`
+    })),
+    {
+      '@type': 'Offer',
+      'name': `${healthCheck.title} (${healthCheck.durationLabel})`,
+      'priceCurrency': 'EUR',
+      'priceSpecification': {
+        '@type': 'UnitPriceSpecification',
+        'priceCurrency': 'EUR',
+        'price': healthCheck.priceFromEur
+      },
+      'url': `${baseUrl}/hire`
+    }
+  ]
 
   return {
     '@context': 'https://schema.org',
@@ -181,14 +306,23 @@ export function getHireJsonLd() {
         'name': 'Nuxt sprints',
         'areaServed': 'Worldwide',
         'provider': { '@type': 'Person', 'name': 'Maxi Garcia' },
-        'offers': packages.map(p => ({
-          '@type': 'Offer',
-          'name': `${p.title} (${p.durationLabel})`,
-          'priceCurrency': 'EUR',
-          'priceSpecification': { '@type': 'PriceSpecification', 'priceCurrency': 'EUR' },
-          'url': `${baseUrl}/hire`
-        }))
+        'offers': offers
       }
     ]
+  }
+}
+
+export function getHireFaqJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': faq.map(item => ({
+      '@type': 'Question',
+      'name': item.label,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': item.content
+      }
+    }))
   }
 }

@@ -17,9 +17,9 @@ export default defineNuxtConfig({
   },
   icon: { serverBundle: 'remote' },
   image: {
-    provider: 'ipx',
+    provider: 'cloudflare',
+    cloudflare: { baseURL: 'https://onmax.me' },
     quality: 80,
-    format: ['webp', 'avif'],
-    domains: ['onmax.me']
+    format: ['webp', 'avif']
   }
 })

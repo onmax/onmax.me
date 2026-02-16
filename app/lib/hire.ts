@@ -11,9 +11,8 @@ export const ctas = {
 } as const
 
 export const hero = {
-  title: 'Your Nuxt app should be your competitive edge. Not your bottleneck.',
-  subhead:
-    'I run 1–2 week sprints that fix performance, de-risk migrations, and ship features — with senior judgement, clean PRs, and measurable outcomes.',
+  title: 'Senior Nuxt, on demand.',
+  subhead: 'I help you ship a faster Nuxt app in 1–2 week sprints. Measurable results, zero onboarding.',
   note: 'Native Spanish speaker.'
 } as const
 
@@ -27,19 +26,18 @@ export const trustBar = {
 } as const
 
 export const painPoints = {
-  headline: 'Sound familiar?',
   items: [
-    'Your Nuxt 2 app is on borrowed time — EOL hit June 2024, no security patches since.',
-    'Core Web Vitals are dragging down SEO and conversions, but you don’t know where to start.',
-    'AI-generated code shipped fast — now it’s unmaintainable and brittle.',
-    'You need a senior Nuxt engineer for 2 weeks, not a 6-month hiring process.'
+    'Your Nuxt 2 app has no security patches since June 2024. Every month you wait, the migration gets harder.',
+    'Core Web Vitals are red. You know it costs conversions, but nobody on the team owns performance.',
+    'AI-generated code shipped fast. Now every PR breaks something and reviews take twice as long.',
+    'You need a senior Nuxt dev for 2 weeks, not a 6-month hiring pipeline.'
   ]
 } as const
 
 export const healthCheck = {
   title: 'Nuxt Health Check',
   durationLabel: '2–3 hours',
-  bestFor: 'A fast, low-risk way to get clarity before committing to a full sprint.',
+  bestFor: 'Get a prioritized fix list before committing to a sprint.',
   deliverables: [
     'Quick repo + runtime audit (perf, DX, SSR, SEO basics)',
     'Top 5 highest-leverage fixes (ordered)',
@@ -70,8 +68,7 @@ export const packages: HirePackage[] = [
   {
     title: 'Performance + SEO Sprint',
     durationLabel: '5 days',
-    bestFor:
-      'Slow Nuxt apps, weak Core Web Vitals, SEO regressions, or teams who need a prioritized plan plus real implementation.',
+    bestFor: 'For slow Nuxt apps bleeding conversions and search rankings.',
     deliverables: [
       'Baseline: Lighthouse + CWV + key pages inventory',
       'Prioritized backlog: biggest wins first (perf, DX, SEO)',
@@ -80,17 +77,17 @@ export const packages: HirePackage[] = [
     ],
     priceLabel: 'From €6,900',
     priceFromEur: 6900,
-    outcomeHint: 'Outcome target: 40–60% LCP improvement in 5 days (when feasible).',
+    outcomeHint: '40–60% LCP improvement in 5 days.',
     ctaLabel: 'Fix my performance →'
   },
   {
     title: 'Nuxt 2 → Nuxt 3 Assessment',
     durationLabel: '3–5 days',
-    bestFor: 'Planning a migration without stalling shipping.',
+    bestFor: 'For teams planning a migration without stalling shipping.',
     deliverables: [
       'Compatibility map: modules, build, SSR, routing, auth, content, i18n',
       'Risk register + recommended migration strategy (incremental vs rewrite)',
-      'Timeline + costed plan (including “what we can do in 1 sprint”)',
+      'Timeline + costed plan (including "what we can do in 1 sprint")',
       'Optional: first spike PR (one risky area proven in code)'
     ],
     priceLabel: 'From €4,500 (3d) to €6,900 (5d)',
@@ -102,7 +99,7 @@ export const packages: HirePackage[] = [
   {
     title: 'Shipping Sprint',
     durationLabel: '10 days',
-    bestFor: 'Shipping 1–2 meaningful features end-to-end with senior execution.',
+    bestFor: 'For shipping 1–2 meaningful features end-to-end with senior execution.',
     deliverables: [
       'Scope lock: sprint goal + acceptance criteria',
       'PRs that ship (feature, tests where they matter, deployment support)',
@@ -115,7 +112,13 @@ export const packages: HirePackage[] = [
   }
 ]
 
-export const addon = 'Need 3–8 weeks total? Add weeks at €6,500/week (5 days), booked one week at a time.'
+export const proofNumbers = [
+  { value: 680, suffix: '+', label: 'PRs merged' },
+  { value: 90, suffix: '+', label: 'repos contributed to' },
+  { value: 4, suffix: ' yrs', label: 'building at Nimiq' }
+] as const
+
+export const addon = 'Need more than one sprint? Add weeks at €6,500/week, booked one at a time.'
 
 export const proofMetrics = [
   'Nuxt ecosystem contributor (Nuxt core + modules)',
@@ -126,7 +129,7 @@ export const proofMetrics = [
 export const testimonials = [
   {
     quote:
-      'In one week, our CWV plan went from “we should look at this” to shipped fixes and a clear backlog. The PRs were clean and the results were measurable.',
+      'In one week, our CWV plan went from "we should look at this" to shipped fixes and a clear backlog. The PRs were clean and the results were measurable.',
     name: 'Jordan K.',
     title: 'CTO',
     company: 'Northwind (B2B SaaS)'
@@ -140,7 +143,7 @@ export const testimonials = [
   },
   {
     quote:
-      'I expected “consulting slides.” I got production-ready PRs, clear tradeoffs, and a handoff my team could maintain.',
+      'I expected "consulting slides." I got production-ready PRs, clear tradeoffs, and a handoff my team could maintain.',
     name: 'Alex R.',
     title: 'Founder',
     company: 'Acme (Startup)'
@@ -148,7 +151,6 @@ export const testimonials = [
 ] as const
 
 export const proof = {
-  headline: 'Proof',
   items: [
     {
       title: 'Nuxt ecosystem contributions',
@@ -184,31 +186,23 @@ export const proof = {
 } as const
 
 export const howIWork = {
-  headline: 'How I work',
   steps: [
-    { title: 'Scope in 25 minutes', body: 'Goals, constraints, success metrics.' },
-    { title: 'Kickoff', body: 'Repo access, environments, tracking doc.' },
-    { title: 'Ship in tight loops', body: 'Small PRs, daily async update.' },
-    { title: 'Handoff', body: 'Report, next steps, optional add-on week.' }
+    { title: 'Scope call (25 min)', body: 'We define goals, constraints, and what "done" looks like.' },
+    { title: 'Kickoff (day 1)', body: 'Repo access, environments, tracking doc. I start shipping.' },
+    { title: 'Daily async updates', body: 'Small PRs, clear progress. AI speeds up boilerplate; I review every line.' },
+    { title: 'Handoff', body: 'Before/after report, ordered backlog, optional add-on week.' }
   ]
 } as const
 
-export const aiSection = {
-  headline: 'AI-augmented, human-verified',
-  body:
-    'I use AI to move faster on boilerplate, tests, and refactors. But every PR gets senior review — architecture decisions, security implications, and edge cases AI misses. You get speed with judgement.'
-} as const
-
 export const fit = {
-  headline: 'Fit',
   good: [
-    'Nuxt/Vue codebase, small team, you want momentum.',
-    'You value measurable performance and clean DX.',
+    'Nuxt/Vue codebase, small team, need momentum.',
+    'You value measurable perf and clean DX.',
     'You can give feedback within 24 hours.'
   ],
   not: [
-    'You want unlimited scope in a fixed sprint.',
-    'No access to repo/staging, or you can’t deploy changes.',
+    'Unlimited scope in a fixed sprint.',
+    'No repo/staging access, can\'t deploy changes.',
     'Design-only work with no engineering ownership.'
   ]
 } as const
@@ -219,29 +213,19 @@ export const faq: HireFaqItem[] = [
   {
     label: 'What do you need from us to start?',
     content:
-      'A repo link, a short problem statement, and access to staging (or a reproducible local setup). If it’s a performance sprint, we’ll also pick 1–3 key pages and define what “better” means.'
-  },
-  {
-    label: 'How do you communicate during the sprint?',
-    content:
-      'Async by default. You get a short daily update with what shipped, what’s next, and any blockers. We can do a brief sync mid-sprint if it helps.'
+      'A repo link, a short problem statement, and access to staging (or a reproducible local setup). If it\'s a performance sprint, we\'ll also pick 1–3 key pages and define what "better" means.'
   },
   {
     label: 'Do you work with agencies?',
     content:
-      'Yes. I’m comfortable joining an existing process and shipping PRs with clean handoff to your team.'
+      'Yes. I\'m comfortable joining an existing process and shipping PRs with clean handoff to your team.'
   },
   {
     label: 'Can you sign an NDA?',
-    content: 'Yes. Share your NDA and I’ll review it before kickoff.'
+    content: 'Yes. Share your NDA and I\'ll review it before kickoff.'
   },
   {
-    label: 'Do you do longer engagements?',
-    content:
-      'Yes. Most longer work starts with a sprint and then extends week-by-week if it’s a good fit.'
-  },
-  {
-    label: 'What if we don’t finish in the sprint?',
+    label: 'What if we don\'t finish in the sprint?',
     content:
       'We either add a week (fixed weekly add-on), or stop with a clean handoff: shipped PRs, an ordered backlog, and clear next steps.'
   },
@@ -249,13 +233,13 @@ export const faq: HireFaqItem[] = [
     label: 'Why not just hire a full-time dev?',
     content:
       'A senior Nuxt dev costs €6–8k/month fully loaded, plus months to onboard. A sprint gives you senior output in 5–10 days with zero onboarding overhead.'
-  },
-  {
-    label: 'Can I see a sample deliverable?',
-    content:
-      'Yes — reach out and I’ll share an anonymized before/after report from a recent performance sprint.'
   }
 ]
+
+export const finalCta = {
+  headline: 'Ship this month.',
+  ctaLabel: 'Book a 25-min scope call'
+} as const
 
 export function getHireJsonLd() {
   const baseUrl = 'https://onmax.me'

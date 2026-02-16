@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import {
   addon,
-  aiSection,
   availability,
   ctas,
   faq,
+  finalCta,
   fit,
   healthCheck,
   hero,
   painPoints,
   proof,
   proofMetrics,
+  proofNumbers,
   scarcity,
   testimonials,
   trustBar,
@@ -29,19 +30,28 @@ useHead({
   ]
 })
 
-const proofMarqueeItems = computed(() => [...proof.items, ...proof.items])
-const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 'Proof', 'Process', 'AI', 'Fit', 'FAQ', 'Contact']
+const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works', 'FAQ', 'Contact']
 </script>
 
 <template>
   <main class="swiss">
     <div class="swiss-inner">
-      <!-- HERO -->
+      <!-- 00 HERO -->
       <section class="hero-section">
         <span
           class="watermark"
           aria-hidden="true"
         >00</span>
+        <NuxtImg
+          src="/hire/hero.webp"
+          alt=""
+          aria-hidden="true"
+          class="illust-hero"
+          width="600"
+          height="400"
+          loading="eager"
+          format="webp"
+        />
         <header class="hero-header">
           <a
             href="/"
@@ -62,9 +72,20 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
             >Book a call &nearr;</a>
           </nav>
         </header>
-        <h1 class="hero-title swiss-reveal">
-          {{ hero.title }}
-        </h1>
+        <ClientOnly>
+          <VueBitsBlurText
+            :text="hero.title"
+            tag="h1"
+            class-name="hero-title"
+            :delay="80"
+            :step-duration="0.4"
+          />
+          <template #fallback>
+            <h1 class="hero-title">
+              {{ hero.title }}
+            </h1>
+          </template>
+        </ClientOnly>
         <p class="hero-subhead swiss-reveal swiss-reveal--d1">
           {{ hero.subhead }}
         </p>
@@ -105,18 +126,25 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
       <hr class="red-rule">
 
       <!-- 01 SOUND FAMILIAR -->
-      <section class="section">
+      <section class="section section--pain">
         <span
           class="watermark"
           aria-hidden="true"
         >01</span>
+        <NuxtImg
+          src="/hire/pain-points.webp"
+          alt=""
+          aria-hidden="true"
+          class="illust-pain"
+          width="400"
+          height="300"
+          loading="lazy"
+          format="webp"
+        />
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[0] }}
         </h2>
-        <p class="section-lede swiss-reveal swiss-reveal--d1">
-          {{ painPoints.headline }}
-        </p>
-        <ul class="pain-list swiss-reveal swiss-reveal--d2">
+        <ul class="pain-list swiss-reveal swiss-reveal--d1">
           <li
             v-for="t in painPoints.items"
             :key="t"
@@ -130,7 +158,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 
       <hr class="red-rule">
 
-      <!-- 02 HEALTH CHECK -->
+      <!-- 02 WHAT YOU GET -->
       <section class="section">
         <span
           class="watermark"
@@ -139,51 +167,48 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[1] }}
         </h2>
-        <article class="health-card swiss-reveal swiss-reveal--d1">
-          <div class="health-top">
-            <h3 class="health-title">
+
+        <!-- Health check compact strip -->
+        <div class="health-strip swiss-reveal swiss-reveal--d1">
+          <div class="health-strip-left">
+            <h3 class="health-strip-title">
               {{ healthCheck.title }}
             </h3>
-            <span class="health-duration">{{ healthCheck.durationLabel }}</span>
+            <p class="health-strip-desc">
+              {{ healthCheck.bestFor }}
+            </p>
           </div>
-          <p class="health-best">
-            {{ healthCheck.bestFor }}
-          </p>
-          <ul class="health-deliverables">
-            <li
-              v-for="d in healthCheck.deliverables"
-              :key="d"
-            >
-              {{ d }}
-            </li>
-          </ul>
-          <div class="health-footer">
-            <span class="health-price">{{ healthCheck.priceLabel }}</span>
+          <div class="health-strip-right">
+            <span class="health-strip-price">{{ healthCheck.priceLabel }}</span>
+            <span class="health-strip-duration">{{ healthCheck.durationLabel }}</span>
             <a
               :href="healthCheck.ctaHref"
-              class="btn btn--red"
+              class="btn btn--red btn--sm"
               target="_blank"
               rel="noreferrer"
             >{{ healthCheck.ctaLabel }} &nearr;</a>
           </div>
-        </article>
-      </section>
+          <details class="health-strip-details">
+            <summary class="health-strip-toggle">
+              What's included
+            </summary>
+            <ul class="health-strip-deliverables">
+              <li
+                v-for="d in healthCheck.deliverables"
+                :key="d"
+              >
+                {{ d }}
+              </li>
+            </ul>
+          </details>
+        </div>
 
-      <hr class="red-rule">
-
-      <!-- 03 PACKAGES -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >03</span>
-        <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[2] }}
-        </h2>
+        <!-- Packages -->
         <div class="pkg-grid">
-          <article
+          <VueBitsSpotlightCard
             v-for="(p, idx) in packages"
             :key="p.title"
+            spotlight-color="oklch(0.63 0.28 29 / 0.08)"
             class="pkg-card swiss-reveal"
             :class="`swiss-reveal--d${idx + 1}`"
             :style="{ '--stagger': `${idx * 40}px` }"
@@ -194,6 +219,9 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
               </h3>
               <span class="pkg-duration">{{ p.durationLabel }}</span>
             </div>
+            <p class="pkg-outcome">
+              {{ p.outcomeHint }}
+            </p>
             <p class="pkg-best">
               {{ p.bestFor }}
             </p>
@@ -205,9 +233,6 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
                 {{ d }}
               </li>
             </ul>
-            <p class="pkg-outcome">
-              {{ p.outcomeHint }}
-            </p>
             <div class="pkg-footer">
               <span class="pkg-price">{{ p.priceLabel }}</span>
               <a
@@ -217,38 +242,56 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
                 rel="noreferrer"
               >{{ p.ctaLabel }} &nearr;</a>
             </div>
-          </article>
+          </VueBitsSpotlightCard>
         </div>
-      </section>
 
-      <hr class="red-rule">
-
-      <!-- 04 ADD-ON -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >04</span>
-        <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[3] }}
-        </h2>
-        <p class="addon-text swiss-reveal swiss-reveal--d1">
+        <!-- Add-on footnote -->
+        <p class="addon-footnote swiss-reveal">
           {{ addon }}
         </p>
       </section>
 
       <hr class="red-rule">
 
-      <!-- 05 PROOF -->
-      <section class="section section--proof">
+      <!-- 03 PROOF -->
+      <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >05</span>
+        >03</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[4] }}
+          {{ sectionLabels[2] }}
         </h2>
-        <ul class="proof-metrics swiss-reveal swiss-reveal--d1">
+        <div class="proof-numbers swiss-reveal swiss-reveal--d1">
+          <div
+            v-for="n in proofNumbers"
+            :key="n.label"
+            class="proof-number-item"
+          >
+            <ClientOnly>
+              <span class="proof-number-value">
+                <VueBitsCountUp
+                  :value="n.value"
+                  :font-size="48"
+                  :padding="0"
+                  :gap="2"
+                  :horizontal-padding="0"
+                  :border-radius="0"
+                  text-color="var(--fg)"
+                  font-weight="400"
+                  :gradient-height="0"
+                />
+                <span class="proof-number-suffix">{{ n.suffix }}</span>
+              </span>
+              <template #fallback>
+                <span class="proof-number-value">{{ n.value }}{{ n.suffix }}</span>
+              </template>
+            </ClientOnly>
+            <span class="proof-number-label">{{ n.label }}</span>
+          </div>
+        </div>
+
+        <ul class="proof-metrics swiss-reveal swiss-reveal--d2">
           <li
             v-for="m in proofMetrics"
             :key="m"
@@ -258,48 +301,50 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
         </ul>
 
         <div class="testimonials-grid swiss-reveal swiss-reveal--d2">
-          <article
+          <VueBitsGlareHover
             v-for="t in testimonials"
             :key="t.quote"
             class="testimonial-card"
+            glare-color="#000000"
+            :glare-opacity="0.04"
+            border-radius="0"
           >
             <p class="testimonial-quote">
-              “{{ t.quote }}”
+              "{{ t.quote }}"
             </p>
             <p class="testimonial-meta">
               {{ t.name }} · {{ t.title }} · {{ t.company }}
             </p>
-          </article>
+          </VueBitsGlareHover>
         </div>
 
-        <div class="marquee-wrap swiss-reveal swiss-reveal--d3">
-          <div class="marquee-track">
-            <a
-              v-for="(item, idx) in proofMarqueeItems"
-              :key="`${item.href}--${idx}`"
-              :href="item.href"
-              class="marquee-item"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span class="marquee-title">{{ item.title }}</span>
-              <span class="marquee-desc">{{ item.description }}</span>
-              <span class="marquee-link">{{ item.label }} &nearr;</span>
-            </a>
-          </div>
+        <!-- Static 2-column link grid -->
+        <div class="proof-grid swiss-reveal swiss-reveal--d3">
+          <a
+            v-for="item in proof.items"
+            :key="item.href"
+            :href="item.href"
+            class="proof-link"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="proof-link-title">{{ item.title }}</span>
+            <span class="proof-link-desc">{{ item.description }}</span>
+            <span class="proof-link-url">{{ item.label }} &nearr;</span>
+          </a>
         </div>
       </section>
 
       <hr class="red-rule">
 
-      <!-- 06 PROCESS -->
+      <!-- 04 HOW IT WORKS -->
       <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >06</span>
+        >04</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[5] }}
+          {{ sectionLabels[3] }}
         </h2>
         <ol class="steps-grid">
           <li
@@ -319,78 +364,50 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
             </div>
           </li>
         </ol>
-      </section>
 
-      <hr class="red-rule">
-
-      <!-- 07 AI -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >07</span>
-        <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[6] }}
-        </h2>
-        <h3 class="ai-heading swiss-reveal swiss-reveal--d1">
-          {{ aiSection.headline }}
-        </h3>
-        <p class="ai-body swiss-reveal swiss-reveal--d2">
-          {{ aiSection.body }}
-        </p>
-      </section>
-
-      <hr class="red-rule">
-
-      <!-- 08 FIT -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >08</span>
-        <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[7] }}
-        </h2>
-        <div class="fit-grid">
-          <div class="fit-col swiss-reveal swiss-reveal--d1">
-            <h3 class="fit-heading">
-              Good fit
-            </h3>
-            <ul class="fit-list">
-              <li
-                v-for="t in fit.good"
-                :key="t"
-              >
-                <span class="fit-mark fit-mark--good">+</span> {{ t }}
-              </li>
-            </ul>
-          </div>
-          <div class="fit-col swiss-reveal swiss-reveal--d2">
-            <h3 class="fit-heading">
-              Not a fit
-            </h3>
-            <ul class="fit-list">
-              <li
-                v-for="t in fit.not"
-                :key="t"
-              >
-                <span class="fit-mark fit-mark--not">&times;</span> {{ t }}
-              </li>
-            </ul>
+        <!-- Fit sub-block -->
+        <div class="fit-block swiss-reveal swiss-reveal--d4">
+          <div class="fit-grid">
+            <div class="fit-col">
+              <h3 class="fit-heading">
+                Good fit
+              </h3>
+              <ul class="fit-list">
+                <li
+                  v-for="t in fit.good"
+                  :key="t"
+                >
+                  <span class="fit-mark fit-mark--good">+</span> {{ t }}
+                </li>
+              </ul>
+            </div>
+            <div class="fit-col">
+              <h3 class="fit-heading">
+                Not a fit
+              </h3>
+              <ul class="fit-list">
+                <li
+                  v-for="t in fit.not"
+                  :key="t"
+                >
+                  <span class="fit-mark fit-mark--not">&times;</span> {{ t }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       <hr class="red-rule">
 
-      <!-- 09 FAQ -->
+      <!-- 05 FAQ -->
       <section class="section">
         <span
           class="watermark"
           aria-hidden="true"
-        >09</span>
+        >05</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[8] }}
+          {{ sectionLabels[4] }}
         </h2>
         <div class="faq-list">
           <details
@@ -410,26 +427,47 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
         </div>
       </section>
 
-      <hr class="red-rule">
-
       <!-- AVAILABILITY BANNER -->
       <div class="avail-banner swiss-reveal">
         <span class="avail-label">{{ availability.label }}</span>
-        <span class="avail-value">{{ availability.value }}</span>
+        <ClientOnly>
+          <VueBitsDecryptedText
+            :text="availability.value"
+            animate-on="view"
+            :sequential="true"
+            reveal-direction="start"
+            characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            :speed="40"
+            class="avail-value"
+          />
+          <template #fallback>
+            <span class="avail-value">{{ availability.value }}</span>
+          </template>
+        </ClientOnly>
         <span class="avail-scarcity">{{ scarcity }}</span>
       </div>
 
-      <!-- 07 FINAL CTA -->
+      <!-- 06 CONTACT -->
       <section class="section section--cta">
         <span
           class="watermark"
           aria-hidden="true"
-        >10</span>
+        >06</span>
         <h2 class="section-label swiss-reveal">
-          {{ sectionLabels[9] }}
+          {{ sectionLabels[5] }}
         </h2>
+        <NuxtImg
+          src="/hire/contact.webp"
+          alt=""
+          aria-hidden="true"
+          class="illust-contact swiss-reveal"
+          width="500"
+          height="350"
+          loading="lazy"
+          format="webp"
+        />
         <p class="cta-headline swiss-reveal swiss-reveal--d1">
-          Ready to ship?
+          {{ finalCta.headline }}
         </p>
         <div class="cta-btns swiss-reveal swiss-reveal--d2">
           <a
@@ -437,7 +475,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
             class="btn btn--red btn--lg"
             target="_blank"
             rel="noreferrer"
-          >Book on Cal.com &nearr;</a>
+          >{{ finalCta.ctaLabel }} &nearr;</a>
           <a
             :href="`mailto:${ctas.email}`"
             class="btn btn--outline btn--lg"
@@ -481,7 +519,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .swiss-inner { padding: 0 48px 160px; }
+  .swiss-inner { padding: 0 clamp(48px, 6vw, 96px) 160px; }
 }
 
 /* ── RED RULE ── */
@@ -493,7 +531,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .red-rule { margin: 0 -48px; }
+  .red-rule { margin: 0 calc(-1 * clamp(48px, 6vw, 96px)); }
 }
 
 /* ── WATERMARK NUMBERS ── */
@@ -501,13 +539,6 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 .hero-section {
   position: relative;
   overflow: hidden;
-}
-
-.section--proof {
-  overflow: visible;
-  /* Clip only on Y (prevent watermark crossing the red rule) while allowing full-bleed X. */
-  -webkit-clip-path: inset(0 -100vw 0 -100vw);
-  clip-path: inset(0 -100vw 0 -100vw);
 }
 
 .watermark {
@@ -529,7 +560,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .hero-section { padding: 64px 0 96px; }
+  .hero-section { padding: 80px 0 140px; }
 }
 
 .hero-header {
@@ -542,7 +573,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .hero-header { margin-bottom: 80px; }
+  .hero-header { margin-bottom: 120px; }
 }
 
 .logo {
@@ -585,7 +616,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 .hero-subhead {
-  margin-top: 32px;
+  margin-top: 48px;
   font-family: var(--ff-body);
   font-size: clamp(18px, 2.2vw, 26px);
   font-weight: 400;
@@ -619,7 +650,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   display: flex;
   flex-wrap: wrap;
   gap: 10px 12px;
-  margin-top: 28px;
+  margin-top: 64px;
   position: relative;
   z-index: 1;
 }
@@ -651,7 +682,11 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .section { padding: 100px 0; }
+  .section { padding: 140px 0; }
+}
+
+@media (min-width: 1200px) {
+  .section { padding: 180px 0; }
 }
 
 .section-label {
@@ -667,19 +702,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .section-label { margin-bottom: 56px; }
-}
-
-/* ── SECTION LEDE ── */
-.section-lede {
-  font-family: var(--ff-body);
-  font-size: clamp(18px, 2vw, 22px);
-  line-height: 1.55;
-  max-width: 60ch;
-  margin: 0 0 18px;
-  position: relative;
-  z-index: 1;
-  opacity: 0.9;
+  .section-label { margin-bottom: 72px; }
 }
 
 /* ── PAIN ── */
@@ -713,6 +736,117 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   text-align: center;
 }
 
+/* ── HEALTH CHECK STRIP ── */
+.health-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--red);
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .health-strip {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 56px;
+  }
+}
+
+.health-strip-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.health-strip-title {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.health-strip-desc {
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.health-strip-right {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.health-strip-price {
+  font-family: var(--ff-display);
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.health-strip-duration {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+}
+
+.health-strip-details {
+  grid-column: 1 / -1;
+}
+
+.health-strip-toggle {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  opacity: 0.5;
+  list-style: none;
+}
+
+.health-strip-toggle::-webkit-details-marker { display: none; }
+.health-strip-toggle::marker { display: none; content: ''; }
+
+.health-strip-toggle:hover { opacity: 1; }
+
+.health-strip-deliverables {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.health-strip-deliverables li {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 1.5;
+  padding-left: 20px;
+  position: relative;
+  opacity: 0.7;
+}
+
+.health-strip-deliverables li::before {
+  content: '\2014';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+}
+
 /* ── PACKAGES ── */
 .pkg-grid {
   display: grid;
@@ -724,7 +858,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 @media (min-width: 768px) {
   .pkg-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 32px;
   }
 }
 
@@ -740,7 +874,10 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .pkg-card { margin-top: var(--stagger, 0px); }
+  .pkg-card {
+    padding: 40px 32px;
+    margin-top: var(--stagger, 0px);
+  }
 }
 
 .pkg-top {
@@ -768,6 +905,17 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   letter-spacing: 0.06em;
   white-space: nowrap;
   opacity: 0.5;
+}
+
+.pkg-outcome {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  border-left: var(--rule) solid var(--red);
+  padding-left: 16px;
+  color: var(--fg);
 }
 
 .pkg-best {
@@ -803,16 +951,6 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   color: var(--red);
 }
 
-.pkg-outcome {
-  margin: 0;
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  line-height: 1.6;
-  opacity: 0.6;
-  border-left: var(--rule) solid var(--red);
-  padding-left: 16px;
-}
-
 .pkg-footer {
   margin-top: auto;
   padding-top: 20px;
@@ -827,6 +965,17 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+}
+
+/* ── ADD-ON FOOTNOTE ── */
+.addon-footnote {
+  margin: 32px 0 0;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.5;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── BUTTONS ── */
@@ -871,167 +1020,53 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   font-size: 14px;
 }
 
-/* ── ADDON ── */
-.addon-text {
-  font-family: var(--ff-body);
-  font-size: clamp(18px, 2vw, 22px);
-  line-height: 1.55;
-  max-width: 60ch;
+.btn--sm {
+  padding: 10px 18px;
+  font-size: 12px;
+}
+
+/* ── PROOF NUMBERS (CountUp) ── */
+.proof-numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
   position: relative;
   z-index: 1;
 }
 
-/* ── HEALTH CHECK ── */
-.health-card {
-  border: 2px solid var(--red);
-  padding: 32px 28px;
+.proof-number-item {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  background: var(--bg);
-  position: relative;
-  z-index: 1;
+  gap: 4px;
 }
 
-.health-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.health-title {
+.proof-number-value {
   font-family: var(--ff-display);
-  font-weight: 400;
-  font-size: 34px;
-  text-transform: uppercase;
+  font-size: 48px;
+  line-height: 1;
   letter-spacing: 0.02em;
-  line-height: 1.05;
-  margin: 0;
+  display: flex;
+  align-items: baseline;
 }
 
-.health-duration {
+.proof-number-suffix {
+  font-family: var(--ff-display);
+  font-size: 48px;
+  line-height: 1;
+}
+
+.proof-number-label {
   font-family: var(--ff-mono);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  white-space: nowrap;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-.health-best {
-  font-family: var(--ff-body);
-  font-size: 15px;
-  line-height: 1.55;
-  opacity: 0.75;
-  margin: 0;
-  max-width: 68ch;
-}
-
-.health-deliverables {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  padding-top: 18px;
-}
-
-.health-deliverables li {
-  font-family: var(--ff-body);
-  font-size: 14px;
-  line-height: 1.5;
-  padding-left: 20px;
-  position: relative;
-}
-
-.health-deliverables li::before {
-  content: '\2014';
-  position: absolute;
-  left: 0;
-  color: var(--red);
-}
-
-.health-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  padding-top: 18px;
-}
-
-.health-price {
-  font-family: var(--ff-display);
-  font-size: 28px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-/* ── MARQUEE ── */
-.marquee-wrap {
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  margin: 0 -24px;
-}
-
-@media (min-width: 768px) {
-  .marquee-wrap { margin: 0 -48px; }
-}
-
-.marquee-track {
-  display: flex;
-  gap: 2px;
-  width: max-content;
-  animation: marquee 30s linear infinite;
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.marquee-item {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 28px 36px;
-  border: var(--border);
-  background: var(--bg);
-  text-decoration: none;
-  color: var(--fg);
-  min-width: 280px;
-  transition: background 150ms;
-}
-
-.marquee-item:hover {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.marquee-item:hover .marquee-link { color: var(--bg); opacity: 0.6; }
-
-.marquee-title {
-  font-family: var(--ff-display);
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.marquee-desc {
-  font-family: var(--ff-body);
-  font-size: 14px;
-  opacity: 0.6;
-}
-
-.marquee-link {
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  color: var(--red);
-  margin-top: auto;
+@media (max-width: 767px) {
+  .proof-numbers { grid-template-columns: 1fr; gap: 20px; }
 }
 
 /* ── PROOF METRICS ── */
@@ -1085,6 +1120,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   display: flex;
   flex-direction: column;
   gap: 16px;
+  align-items: stretch;
 }
 
 .testimonial-quote {
@@ -1102,6 +1138,57 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   letter-spacing: 0.02em;
   text-transform: uppercase;
   opacity: 0.55;
+}
+
+/* ── PROOF LINK GRID ── */
+.proof-grid {
+  display: grid;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .proof-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.proof-link {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px 24px;
+  border: var(--border);
+  background: var(--bg);
+  text-decoration: none;
+  color: var(--fg);
+  transition: background 150ms;
+}
+
+.proof-link:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.proof-link:hover .proof-link-url { color: var(--bg); opacity: 0.6; }
+
+.proof-link-title {
+  font-family: var(--ff-display);
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.proof-link-desc {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.proof-link-url {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  color: var(--red);
+  margin-top: auto;
 }
 
 /* ── STEPS ── */
@@ -1150,48 +1237,18 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   margin: 6px 0 0;
 }
 
-.ai-line {
-  margin-top: 32px;
-  font-family: var(--ff-mono);
-  font-size: 13px;
-  line-height: 1.6;
-  opacity: 0.45;
-  border-left: var(--rule) solid var(--red);
-  padding-left: 20px;
+/* ── FIT (sub-block under process) ── */
+.fit-block {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(0,0,0,0.1);
   position: relative;
   z-index: 1;
 }
 
-/* ── AI SECTION ── */
-.ai-heading {
-  font-family: var(--ff-display);
-  font-weight: 400;
-  font-size: clamp(28px, 4vw, 44px);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.05;
-  margin: 0 0 16px;
-  position: relative;
-  z-index: 1;
-}
-
-.ai-body {
-  margin: 0;
-  font-family: var(--ff-body);
-  font-size: clamp(18px, 2vw, 22px);
-  line-height: 1.55;
-  max-width: 70ch;
-  opacity: 0.75;
-  position: relative;
-  z-index: 1;
-}
-
-/* ── FIT ── */
 .fit-grid {
   display: grid;
   gap: 32px;
-  position: relative;
-  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -1303,7 +1360,7 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .avail-banner { margin: 0 -48px; padding: 32px 48px; }
+  .avail-banner { margin: 0 calc(-1 * clamp(48px, 6vw, 96px)); padding: 32px 48px; }
 }
 
 .avail-label {
@@ -1339,7 +1396,11 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
 }
 
 @media (min-width: 768px) {
-  .section--cta { padding-top: 120px; }
+  .section--cta { padding-top: 140px; }
+}
+
+@media (min-width: 1200px) {
+  .section--cta { padding-top: 180px; }
 }
 
 .cta-headline {
@@ -1359,6 +1420,62 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── ILLUSTRATIONS ── */
+.illust-hero {
+  position: absolute;
+  right: -2%;
+  bottom: 10%;
+  width: clamp(200px, 30vw, 500px);
+  height: auto;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+}
+
+@media (min-width: 768px) {
+  .illust-hero { opacity: 0.1; }
+}
+
+@media (min-width: 1200px) {
+  .illust-hero { opacity: 0.12; width: clamp(300px, 35vw, 600px); }
+}
+
+.section--pain { position: relative; }
+
+.illust-pain {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .illust-pain {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(160px, 18vw, 280px);
+    height: auto;
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+}
+
+.illust-contact {
+  display: block;
+  margin: 0 auto 32px;
+  width: clamp(180px, 25vw, 360px);
+  height: auto;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
   position: relative;
   z-index: 1;
 }
@@ -1392,10 +1509,6 @@ const sectionLabels = ['Sound familiar?', 'Health Check', 'Packages', 'Add-on', 
     opacity: 1;
     animation: none;
     transform: none;
-  }
-
-  .marquee-track {
-    animation: none;
   }
 }
 

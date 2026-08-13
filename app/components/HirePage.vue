@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  addon,
   ctas,
   faq,
   finalCta,
@@ -13,8 +12,7 @@ import {
   proofNumbers,
   testimonial,
   trustBar,
-  howIWork,
-  packages
+  howIWork
 } from '~/lib/hire'
 
 useHead({
@@ -220,13 +218,10 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
               rel="noreferrer"
             >{{ healthCheck.ctaLabel }}</a>
           </div>
-          <details
-            class="health-strip-details"
-            open
-          >
-            <summary class="health-strip-toggle">
+          <div class="health-strip-details">
+            <p class="health-strip-toggle">
               What's included
-            </summary>
+            </p>
             <ul class="health-strip-deliverables">
               <li
                 v-for="d in healthCheck.deliverables"
@@ -235,62 +230,23 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
                 {{ d }}
               </li>
             </ul>
-          </details>
+          </div>
         </div>
 
-        <!-- Packages -->
-        <div class="pkg-grid">
-          <article
-            v-for="(p, idx) in packages"
-            :key="p.title"
-            class="pkg-card swiss-reveal"
-            :class="`swiss-reveal--d${idx + 1}`"
-          >
-            <span class="pkg-index">{{ String(idx + 1).padStart(2, '0') }}</span>
-            <div class="pkg-copy">
-              <div class="pkg-top">
-                <h3 class="pkg-title">
-                  {{ p.title }}
-                </h3>
-                <span class="pkg-duration">{{ p.durationLabel }}</span>
-              </div>
-              <p class="pkg-outcome">
-                {{ p.outcomeHint }}
-              </p>
-              <p class="pkg-best">
-                {{ p.bestFor }}
-              </p>
-            </div>
-            <details class="pkg-scope">
-              <summary class="pkg-scope-summary">
-                <span>Scope · {{ p.deliverables.length }} deliverables</span>
-                <span class="pkg-scope-toggle">+</span>
-              </summary>
-              <ul class="pkg-deliverables">
-                <li
-                  v-for="d in p.deliverables"
-                  :key="d"
-                >
-                  {{ d }}
-                </li>
-              </ul>
-            </details>
-            <div class="pkg-footer">
-              <span class="pkg-price">{{ p.priceLabel }}</span>
-              <a
-                :href="ctas.calUrl"
-                class="btn btn--red"
-                target="_blank"
-                rel="noreferrer"
-              >{{ p.ctaLabel }} &rarr;</a>
-            </div>
-          </article>
+        <div class="implementation-note swiss-reveal swiss-reveal--d2">
+          <h3 class="implementation-title">
+            Need implementation too?
+          </h3>
+          <p class="implementation-copy">
+            I also take on focused Nuxt sprints for performance, migrations, and feature delivery. Each engagement targets one measurable outcome, runs 3–10 days, and starts at €4,500.
+          </p>
+          <a
+            :href="ctas.calUrl"
+            class="implementation-link"
+            target="_blank"
+            rel="noreferrer"
+          >Book a 25-min scope call &nearr;</a>
         </div>
-
-        <!-- Add-on footnote -->
-        <p class="addon-footnote swiss-reveal">
-          {{ addon }}
-        </p>
       </section>
 
       <hr class="red-rule">
@@ -1107,7 +1063,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   line-height: 0.9;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: var(--red-ink);
+  color: var(--red);
 }
 
 .health-strip-duration {
@@ -1146,20 +1102,14 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 }
 
 .health-strip-toggle {
+  margin: 0;
   font-family: var(--ff-mono);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  cursor: pointer;
   color: var(--bg);
   opacity: 0.65;
-  list-style: none;
 }
-
-.health-strip-toggle::-webkit-details-marker { display: none; }
-.health-strip-toggle::marker { display: none; content: ''; }
-
-.health-strip-toggle:hover { opacity: 1; }
 
 .health-strip-deliverables {
   list-style: none;
@@ -1182,246 +1132,47 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   content: '\2014';
   position: absolute;
   left: 0;
-  color: var(--red-ink);
+  color: var(--red);
 }
 
-/* ── PACKAGES ── */
-.pkg-grid {
-  display: grid;
-  gap: 0;
+/* ── IMPLEMENTATION NOTE ── */
+.implementation-note {
+  max-width: 720px;
+  margin: clamp(56px, 8vw, 112px) auto 0;
+  text-align: center;
   position: relative;
   z-index: 1;
-  border-top: var(--border);
 }
 
-.pkg-card {
-  border: 0;
-  border-bottom: var(--border);
-  padding: 28px 0;
-  display: grid;
-  gap: 20px;
-  background: transparent;
-  position: relative;
-}
-
-.pkg-card:nth-child(2) {
-  border-left: var(--rule) solid var(--red);
-  background: rgba(230, 30, 30, 0.035);
-}
-
-@media (min-width: 768px) {
-  .pkg-card {
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: 24px;
-    padding: 36px 0;
-  }
-
-  .pkg-copy,
-  .pkg-scope,
-  .pkg-footer {
-    grid-column: 2;
-  }
-}
-
-@media (min-width: 1280px) {
-  .pkg-card {
-    grid-template-columns: 56px minmax(320px, 1.2fr) minmax(240px, 0.9fr) minmax(256px, 0.65fr);
-    column-gap: clamp(32px, 3vw, 56px);
-    align-items: baseline;
-    padding-block: clamp(36px, 2.6vw, 52px);
-  }
-
-  .pkg-copy,
-  .pkg-scope,
-  .pkg-footer {
-    grid-column: auto;
-  }
-}
-
-.pkg-index {
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--red-ink);
-  padding-top: 7px;
-}
-
-.pkg-copy {
-  display: grid;
-  gap: 16px;
-}
-
-.pkg-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.pkg-title {
-  font-family: var(--ff-display);
-  font-weight: 400;
-  font-size: clamp(28px, 2.4vw, 38px);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.1;
+.implementation-title {
   margin: 0;
-}
-
-.pkg-duration {
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  opacity: 0.62;
-}
-
-.pkg-outcome {
-  margin: 0;
-  max-width: 62ch;
   font-family: var(--ff-body);
-  font-size: 17px;
+  font-size: clamp(28px, 3vw, 42px);
   font-weight: 600;
-  line-height: 1.5;
-  color: var(--fg);
+  line-height: 1.2;
 }
 
-.pkg-best {
-  max-width: 62ch;
+.implementation-copy {
+  margin: 16px auto 0;
+  max-width: 60ch;
   font-family: var(--ff-body);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.6;
   opacity: 0.7;
-  margin: 0;
 }
 
-.pkg-scope {
-  border-top: 1px solid rgba(0,0,0,0.14);
-  border-bottom: 1px solid rgba(0,0,0,0.14);
-}
-
-.pkg-scope-summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 0;
-  cursor: pointer;
-  list-style: none;
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.pkg-scope-summary::-webkit-details-marker { display: none; }
-.pkg-scope-summary::marker { display: none; content: ''; }
-
-.pkg-scope-toggle {
-  color: var(--red-ink);
-  font-size: 20px;
-  line-height: 1;
-  transition: transform 180ms var(--ease-out);
-}
-
-.pkg-scope[open] .pkg-scope-toggle { transform: rotate(45deg); }
-
-.pkg-deliverables {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
-  padding: 4px 0 18px;
-}
-
-.pkg-deliverables li {
-  font-family: var(--ff-body);
-  font-size: 14px;
-  line-height: 1.5;
-  padding-left: 20px;
-  position: relative;
-}
-
-.pkg-deliverables li::before {
-  content: '\2014';
-  position: absolute;
-  left: 0;
-  color: var(--red-ink);
-}
-
-.pkg-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.pkg-price {
-  font-family: var(--ff-display);
-  font-size: clamp(38px, 3.4vw, 52px);
-  line-height: 0.95;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.pkg-footer .btn { width: 100%; }
-
-@media (min-width: 768px) and (max-width: 1279px) {
-  .pkg-footer {
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 24px;
-  }
-
-  .pkg-footer .btn { width: auto; }
-}
-
-@media (min-width: 1280px) {
-  .pkg-index { padding-top: 0; }
-
-  .pkg-top {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .pkg-scope {
-    border-top: 0;
-    border-bottom: 0;
-  }
-
-  .pkg-scope-summary {
-    justify-content: flex-start;
-    width: fit-content;
-    gap: 10px;
-    padding-block: 0 14px;
-  }
-
-  .pkg-footer .btn { white-space: nowrap; }
-}
-
-@media (min-width: 1600px) {
-  .pkg-card {
-    grid-template-columns: 56px minmax(400px, 520px) minmax(260px, 380px) minmax(256px, 320px);
-    justify-content: space-between;
-  }
-}
-
-/* ── ADD-ON FOOTNOTE ── */
-.addon-footnote {
-  margin: 32px 0 0;
+.implementation-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: var(--fg);
   font-family: var(--ff-mono);
   font-size: 13px;
-  line-height: 1.6;
-  opacity: 0.62;
-  position: relative;
-  z-index: 1;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-underline-offset: 5px;
 }
+
+.implementation-link:hover { color: var(--red-ink); }
 
 /* ── BUTTONS ── */
 .btn {
@@ -1482,14 +1233,12 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 .proof-link:focus-visible,
 .nav-link:focus-visible,
 .faq-summary:focus-visible,
-.pkg-scope-summary:focus-visible,
-.health-strip-toggle:focus-visible {
+.implementation-link:focus-visible {
   outline: 3px solid var(--red-ink);
   outline-offset: 3px;
 }
 
 .health-strip .btn:focus-visible,
-.health-strip-toggle:focus-visible,
 .section--cta .btn:focus-visible {
   outline-color: var(--bg);
 }

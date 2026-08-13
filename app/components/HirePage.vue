@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   addon,
-  availability,
   ctas,
   faq,
   finalCta,
@@ -12,8 +11,7 @@ import {
   proof,
   proofMetrics,
   proofNumbers,
-  scarcity,
-  testimonials,
+  testimonial,
   trustBar,
   howIWork,
   packages
@@ -42,17 +40,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
           class="watermark"
           aria-hidden="true"
         >00</span>
-        <NuxtImg
-          src="/hire/hero.webp"
-          alt=""
-          aria-hidden="true"
-          class="illust-hero"
-          width="600"
-          height="400"
-          loading="eager"
-          format="webp"
-        />
-        <header class="hero-header">
+        <header class="hero-header hero-enter">
           <a
             href="/"
             class="logo"
@@ -60,55 +48,58 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
           <nav class="hero-nav">
             <a
               :href="`mailto:${ctas.email}`"
-              class="nav-link"
+              class="nav-link nav-link--red"
               target="_blank"
               rel="noreferrer"
             >{{ ctas.email }}</a>
             <a
               :href="ctas.calUrl"
-              class="nav-link nav-link--red"
+              class="nav-link"
               target="_blank"
               rel="noreferrer"
             >Book a call &nearr;</a>
           </nav>
         </header>
-        <ClientOnly>
-          <VueBitsBlurText
-            :text="hero.title"
-            tag="h1"
-            class-name="hero-title"
-            :delay="80"
-            :step-duration="0.4"
-          />
-          <template #fallback>
-            <h1 class="hero-title">
-              {{ hero.title }}
-            </h1>
-          </template>
-        </ClientOnly>
-        <p class="hero-subhead swiss-reveal swiss-reveal--d1">
+        <h1 class="hero-title hero-enter hero-enter--d1">
+          {{ hero.title }}
+        </h1>
+        <p class="hero-subhead hero-enter hero-enter--d2">
           {{ hero.subhead }}
         </p>
-        <div class="hero-ctas swiss-reveal swiss-reveal--d2">
+        <div class="hero-ctas hero-enter hero-enter--d3">
           <a
-            :href="ctas.calUrl"
+            :href="healthCheck.ctaHref"
             class="btn btn--red"
             target="_blank"
             rel="noreferrer"
-          >Book a sprint fit call &rarr;</a>
+          >Request a €990 Health Check &rarr;</a>
           <a
-            :href="`mailto:${ctas.email}`"
+            :href="ctas.calUrl"
             class="btn btn--outline"
             target="_blank"
             rel="noreferrer"
-          >Email {{ ctas.email }}</a>
+          >Book a 25-min scope call &nearr;</a>
         </div>
-        <p class="hero-note swiss-reveal swiss-reveal--d3">
+        <p class="hero-note hero-enter hero-enter--d4">
           {{ hero.note }}
         </p>
+        <figure class="hero-identity hero-enter hero-enter--d4">
+          <img
+            src="/hire/maxi-founder.jpg"
+            alt=""
+            class="hero-portrait"
+            width="1100"
+            height="1100"
+            decoding="async"
+          >
+          <figcaption class="hero-identity-caption">
+            <span class="hero-identity-name">Maxi García</span>
+            <span>Senior Nuxt/Vue engineer</span>
+          </figcaption>
+        </figure>
 
         <!-- TRUST BAR -->
-        <div class="trust-bar swiss-reveal swiss-reveal--d4">
+        <div class="trust-bar hero-enter hero-enter--d5">
           <component
             :is="item.href ? 'a' : 'span'"
             v-for="item in trustBar.items"
@@ -118,6 +109,23 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
             :target="item.href ? '_blank' : undefined"
             :rel="item.href ? 'noreferrer' : undefined"
           >
+            <svg
+              v-if="item.logo"
+              :class="['trust-logo', `trust-logo--${item.logo}`]"
+              :viewBox="item.logo === 'nuxt' ? '0 0 24 24' : '0 0 64 56'"
+              aria-hidden="true"
+            >
+              <path
+                v-if="item.logo === 'nuxt'"
+                fill="currentColor"
+                d="M13.464 19.83h8.922c.283 0 .562-.073.807-.21a1.6 1.6 0 0 0 .591-.574 1.53 1.53 0 0 0 .216-.783 1.53 1.53 0 0 0-.217-.782L17.792 7.414a1.6 1.6 0 0 0-.591-.573 1.65 1.65 0 0 0-.807-.21c-.283 0-.562.073-.807.21a1.6 1.6 0 0 0-.59.573L13.463 9.99 10.47 4.953a1.6 1.6 0 0 0-.591-.573 1.65 1.65 0 0 0-.807-.21c-.284 0-.562.073-.807.21a1.6 1.6 0 0 0-.591.573L.216 17.481a1.53 1.53 0 0 0-.217.782c0 .275.074.545.216.783a1.6 1.6 0 0 0 .59.574c.246.137.525.21.808.21h5.6c2.22 0 3.856-.946 4.982-2.79l2.733-4.593 1.464-2.457 4.395 7.382h-5.859Zm-6.341-2.46-3.908-.002 5.858-9.842 2.923 4.921-1.957 3.29c-.748 1.196-1.597 1.632-2.916 1.632"
+              />
+              <path
+                v-else
+                fill="currentColor"
+                d="M63.3 25.4 50 2.6C49 1 47.2 0 45.3 0H18.7c-1.9 0-3.7 1-4.6 2.6L.7 25.4c-1 1.6-1 3.6 0 5.3L14 53.4c1 1.6 2.7 2.6 4.6 2.6h26.7c1.9 0 3.7-1 4.7-2.6l13.3-22.8c.9-1.6.9-3.6 0-5.2Z"
+              />
+            </svg>
             {{ item.label }}
           </component>
         </div>
@@ -127,43 +135,67 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 
       <!-- 01 SOUND FAMILIAR -->
       <section class="section section--pain">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >01</span>
-        <NuxtImg
-          src="/hire/pain-points.webp"
-          alt=""
-          aria-hidden="true"
-          class="illust-pain"
-          width="400"
-          height="300"
-          loading="lazy"
-          format="webp"
-        />
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[0] }}
         </h2>
         <ul class="pain-list swiss-reveal swiss-reveal--d1">
           <li
-            v-for="t in painPoints.items"
-            :key="t"
+            v-for="(item, idx) in painPoints.items"
+            :key="item.title"
             class="pain-item"
           >
-            <span class="pain-mark">&times;</span>
-            <span>{{ t }}</span>
+            <div class="pain-meta">
+              <span class="pain-mark">{{ String(idx + 1).padStart(2, '0') }}</span>
+              <svg
+                class="pain-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <template v-if="idx === 0">
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                  <path d="M21 3v5h-5m5 4a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                  <path d="M8 16H3v5" />
+                </template>
+                <path
+                  v-else-if="idx === 1"
+                  d="m12 14 4-4M3.34 19a10 10 0 1 1 17.32 0"
+                />
+                <template v-else-if="idx === 2">
+                  <path d="M22 2 2 22" />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                  />
+                </template>
+                <template v-else>
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                  />
+                  <path d="M22 12h-4M6 12H2m10-6V2m0 20v-4" />
+                </template>
+              </svg>
+            </div>
+            <div class="pain-copy">
+              <h3 class="pain-title">
+                {{ item.title }}
+              </h3>
+              <p class="pain-detail">
+                {{ item.body }}
+              </p>
+            </div>
           </li>
         </ul>
       </section>
 
-      <hr class="red-rule">
-
       <!-- 02 WHAT YOU GET -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >02</span>
+      <section class="section section--offers">
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[1] }}
         </h2>
@@ -183,12 +215,15 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
             <span class="health-strip-duration">{{ healthCheck.durationLabel }}</span>
             <a
               :href="healthCheck.ctaHref"
-              class="btn btn--red btn--sm"
+              class="btn btn--red btn--sm health-strip-cta"
               target="_blank"
               rel="noreferrer"
-            >{{ healthCheck.ctaLabel }} &nearr;</a>
+            >{{ healthCheck.ctaLabel }}</a>
           </div>
-          <details class="health-strip-details">
+          <details
+            class="health-strip-details"
+            open
+          >
             <summary class="health-strip-toggle">
               What's included
             </summary>
@@ -205,34 +240,41 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 
         <!-- Packages -->
         <div class="pkg-grid">
-          <VueBitsSpotlightCard
+          <article
             v-for="(p, idx) in packages"
             :key="p.title"
-            spotlight-color="oklch(0.63 0.28 29 / 0.08)"
             class="pkg-card swiss-reveal"
             :class="`swiss-reveal--d${idx + 1}`"
-            :style="{ '--stagger': `${idx * 40}px` }"
           >
-            <div class="pkg-top">
-              <h3 class="pkg-title">
-                {{ p.title }}
-              </h3>
-              <span class="pkg-duration">{{ p.durationLabel }}</span>
+            <span class="pkg-index">{{ String(idx + 1).padStart(2, '0') }}</span>
+            <div class="pkg-copy">
+              <div class="pkg-top">
+                <h3 class="pkg-title">
+                  {{ p.title }}
+                </h3>
+                <span class="pkg-duration">{{ p.durationLabel }}</span>
+              </div>
+              <p class="pkg-outcome">
+                {{ p.outcomeHint }}
+              </p>
+              <p class="pkg-best">
+                {{ p.bestFor }}
+              </p>
             </div>
-            <p class="pkg-outcome">
-              {{ p.outcomeHint }}
-            </p>
-            <p class="pkg-best">
-              {{ p.bestFor }}
-            </p>
-            <ul class="pkg-deliverables">
-              <li
-                v-for="d in p.deliverables"
-                :key="d"
-              >
-                {{ d }}
-              </li>
-            </ul>
+            <details class="pkg-scope">
+              <summary class="pkg-scope-summary">
+                <span>Scope · {{ p.deliverables.length }} deliverables</span>
+                <span class="pkg-scope-toggle">+</span>
+              </summary>
+              <ul class="pkg-deliverables">
+                <li
+                  v-for="d in p.deliverables"
+                  :key="d"
+                >
+                  {{ d }}
+                </li>
+              </ul>
+            </details>
             <div class="pkg-footer">
               <span class="pkg-price">{{ p.priceLabel }}</span>
               <a
@@ -240,9 +282,9 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
                 class="btn btn--red"
                 target="_blank"
                 rel="noreferrer"
-              >{{ p.ctaLabel }} &nearr;</a>
+              >{{ p.ctaLabel }} &rarr;</a>
             </div>
-          </VueBitsSpotlightCard>
+          </article>
         </div>
 
         <!-- Add-on footnote -->
@@ -254,68 +296,58 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
       <hr class="red-rule">
 
       <!-- 03 PROOF -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >03</span>
+      <section class="section section--proof">
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[2] }}
         </h2>
-        <div class="proof-numbers swiss-reveal swiss-reveal--d1">
-          <div
-            v-for="n in proofNumbers"
-            :key="n.label"
-            class="proof-number-item"
-          >
-            <ClientOnly>
-              <span class="proof-number-value">
-                <VueBitsCountUp
-                  :value="n.value"
-                  :font-size="48"
-                  :padding="0"
-                  :gap="2"
-                  :horizontal-padding="0"
-                  :border-radius="0"
-                  text-color="var(--fg)"
-                  font-weight="400"
-                  :gradient-height="0"
-                />
-                <span class="proof-number-suffix">{{ n.suffix }}</span>
-              </span>
-              <template #fallback>
+        <div class="proof-stage">
+          <div class="proof-facts swiss-reveal swiss-reveal--d1">
+            <div class="proof-numbers">
+              <div
+                v-for="n in proofNumbers"
+                :key="n.label"
+                class="proof-number-item"
+              >
                 <span class="proof-number-value">{{ n.value }}{{ n.suffix }}</span>
-              </template>
-            </ClientOnly>
-            <span class="proof-number-label">{{ n.label }}</span>
+                <span class="proof-number-label">{{ n.label }}</span>
+                <a
+                  v-if="'href' in n"
+                  :href="n.href"
+                  class="proof-number-link"
+                  target="_blank"
+                  rel="noreferrer"
+                >prs.onmax.me &nearr;</a>
+              </div>
+            </div>
+
+            <ul class="proof-metrics">
+              <li
+                v-for="m in proofMetrics"
+                :key="m"
+              >
+                <span class="proof-mark">+</span> {{ m }}
+              </li>
+            </ul>
           </div>
-        </div>
 
-        <ul class="proof-metrics swiss-reveal swiss-reveal--d2">
-          <li
-            v-for="m in proofMetrics"
-            :key="m"
-          >
-            <span class="proof-mark">+</span> {{ m }}
-          </li>
-        </ul>
-
-        <div class="testimonials-grid swiss-reveal swiss-reveal--d2">
-          <VueBitsGlareHover
-            v-for="t in testimonials"
-            :key="t.quote"
-            class="testimonial-card"
-            glare-color="#000000"
-            :glare-opacity="0.04"
-            border-radius="0"
-          >
-            <p class="testimonial-quote">
-              "{{ t.quote }}"
-            </p>
-            <p class="testimonial-meta">
-              {{ t.name }} · {{ t.title }} · {{ t.company }}
-            </p>
-          </VueBitsGlareHover>
+          <figure class="testimonial swiss-reveal swiss-reveal--d2">
+            <img
+              :src="testimonial.image"
+              :alt="testimonial.name"
+              class="testimonial-photo"
+              width="640"
+              height="506"
+              loading="lazy"
+              decoding="async"
+            >
+            <blockquote class="testimonial-quote">
+              “{{ testimonial.quote }}”
+            </blockquote>
+            <figcaption class="testimonial-meta">
+              <span class="testimonial-name">{{ testimonial.name }}</span>
+              <span class="testimonial-role">{{ testimonial.role }}</span>
+            </figcaption>
+          </figure>
         </div>
 
         <!-- Static 2-column link grid -->
@@ -338,74 +370,66 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
       <hr class="red-rule">
 
       <!-- 04 HOW IT WORKS -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >04</span>
+      <section class="section section--process">
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[3] }}
         </h2>
-        <ol class="steps-grid">
-          <li
-            v-for="(s, idx) in howIWork.steps"
-            :key="s.title"
-            class="step swiss-reveal"
-            :class="`swiss-reveal--d${idx + 1}`"
-          >
-            <span class="step-num">{{ String(idx + 1).padStart(2, '0') }}</span>
-            <div>
-              <h3 class="step-title">
-                {{ s.title }}
-              </h3>
-              <p class="step-body">
-                {{ s.body }}
-              </p>
-            </div>
-          </li>
-        </ol>
+        <div class="process-content">
+          <ol class="steps-grid">
+            <li
+              v-for="(s, idx) in howIWork.steps"
+              :key="s.title"
+              class="step swiss-reveal"
+              :class="`swiss-reveal--d${idx + 1}`"
+            >
+              <span class="step-num">{{ String(idx + 1).padStart(2, '0') }}</span>
+              <div>
+                <h3 class="step-title">
+                  {{ s.title }}
+                </h3>
+                <p class="step-body">
+                  {{ s.body }}
+                </p>
+              </div>
+            </li>
+          </ol>
 
-        <!-- Fit sub-block -->
-        <div class="fit-block swiss-reveal swiss-reveal--d4">
-          <div class="fit-grid">
-            <div class="fit-col">
-              <h3 class="fit-heading">
-                Good fit
-              </h3>
-              <ul class="fit-list">
-                <li
-                  v-for="t in fit.good"
-                  :key="t"
-                >
-                  <span class="fit-mark fit-mark--good">+</span> {{ t }}
-                </li>
-              </ul>
-            </div>
-            <div class="fit-col">
-              <h3 class="fit-heading">
-                Not a fit
-              </h3>
-              <ul class="fit-list">
-                <li
-                  v-for="t in fit.not"
-                  :key="t"
-                >
-                  <span class="fit-mark fit-mark--not">&times;</span> {{ t }}
-                </li>
-              </ul>
+          <!-- Fit sub-block -->
+          <div class="fit-block swiss-reveal swiss-reveal--d4">
+            <div class="fit-grid">
+              <div class="fit-col">
+                <h3 class="fit-heading">
+                  Good fit
+                </h3>
+                <ul class="fit-list">
+                  <li
+                    v-for="t in fit.good"
+                    :key="t"
+                  >
+                    <span class="fit-mark fit-mark--good">+</span> {{ t }}
+                  </li>
+                </ul>
+              </div>
+              <div class="fit-col">
+                <h3 class="fit-heading">
+                  Not a fit
+                </h3>
+                <ul class="fit-list">
+                  <li
+                    v-for="t in fit.not"
+                    :key="t"
+                  >
+                    <span class="fit-mark fit-mark--not">&times;</span> {{ t }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <hr class="red-rule">
-
       <!-- 05 FAQ -->
-      <section class="section">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >05</span>
+      <section class="section section--faq">
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[4] }}
         </h2>
@@ -427,61 +451,27 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
         </div>
       </section>
 
-      <!-- AVAILABILITY BANNER -->
-      <div class="avail-banner swiss-reveal">
-        <span class="avail-label">{{ availability.label }}</span>
-        <ClientOnly>
-          <VueBitsDecryptedText
-            :text="availability.value"
-            animate-on="view"
-            :sequential="true"
-            reveal-direction="start"
-            characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            :speed="40"
-            class="avail-value"
-          />
-          <template #fallback>
-            <span class="avail-value">{{ availability.value }}</span>
-          </template>
-        </ClientOnly>
-        <span class="avail-scarcity">{{ scarcity }}</span>
-      </div>
-
       <!-- 06 CONTACT -->
       <section class="section section--cta">
-        <span
-          class="watermark"
-          aria-hidden="true"
-        >06</span>
         <h2 class="section-label swiss-reveal">
           {{ sectionLabels[5] }}
         </h2>
-        <NuxtImg
-          src="/hire/contact.webp"
-          alt=""
-          aria-hidden="true"
-          class="illust-contact swiss-reveal"
-          width="500"
-          height="350"
-          loading="lazy"
-          format="webp"
-        />
         <p class="cta-headline swiss-reveal swiss-reveal--d1">
           {{ finalCta.headline }}
         </p>
         <div class="cta-btns swiss-reveal swiss-reveal--d2">
           <a
-            :href="ctas.calUrl"
+            :href="healthCheck.ctaHref"
             class="btn btn--red btn--lg"
             target="_blank"
             rel="noreferrer"
-          >{{ finalCta.ctaLabel }} &nearr;</a>
+          >{{ healthCheck.ctaLabel }} &rarr;</a>
           <a
-            :href="`mailto:${ctas.email}`"
+            :href="ctas.calUrl"
             class="btn btn--outline btn--lg"
             target="_blank"
             rel="noreferrer"
-          >Email {{ ctas.email }}</a>
+          >Book a 25-min scope call &nearr;</a>
         </div>
       </section>
     </div>
@@ -497,13 +487,20 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   --bg: #fff;
   --fg: #000;
   --red: oklch(0.63 0.28 29);
+  --red-ink: oklch(0.55 0.24 29);
+  --gutter: 24px;
   --rule: 4px;
   --border: 2px solid var(--fg);
-  --max-w: 100%;
+  --max-w: 1920px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --surface-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
 
   color-scheme: light;
   min-height: 100dvh;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--surface-grain);
+  background-repeat: repeat;
+  background-size: 160px 160px;
   color: var(--fg);
   font-family: var(--ff-body);
   font-weight: 400;
@@ -511,15 +508,25 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   -webkit-font-smoothing: antialiased;
 }
 
+.swiss :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+.swiss :where(p, li, blockquote) {
+  text-wrap: pretty;
+}
+
 /* ── LAYOUT ── */
 .swiss-inner {
+  counter-reset: hire-section;
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 24px 120px;
+  padding: 0 var(--gutter) 120px;
 }
 
 @media (min-width: 768px) {
-  .swiss-inner { padding: 0 clamp(48px, 6vw, 96px) 160px; }
+  .swiss { --gutter: clamp(48px, 6vw, 96px); }
+  .swiss-inner { padding-bottom: 160px; }
 }
 
 /* ── RED RULE ── */
@@ -527,18 +534,68 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   border: none;
   height: var(--rule);
   background: var(--red);
-  margin: 0 -24px;
-}
-
-@media (min-width: 768px) {
-  .red-rule { margin: 0 calc(-1 * clamp(48px, 6vw, 96px)); }
+  margin: 0 calc(-1 * var(--gutter));
 }
 
 /* ── WATERMARK NUMBERS ── */
 .section,
 .hero-section {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.section { counter-increment: hire-section; }
+
+.section::before,
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--section-pattern, none);
+  background-repeat: no-repeat;
+  background-position: var(--section-pattern-position, center);
+  background-size: clamp(600px, 52vw, 900px) auto;
+  mix-blend-mode: multiply;
+  opacity: var(--section-pattern-opacity, 0.07);
+}
+
+.hero-section,
+.section--proof,
+.section--cta {
+  --section-pattern: url('/hire/patterns/contours.webp');
+}
+
+.section--pain,
+.section--process {
+  --section-pattern: url('/hire/patterns/lattice.webp');
+}
+
+.section--offers,
+.section--faq {
+  --section-pattern: url('/hire/patterns/routes.webp');
+}
+
+.hero-section {
+  --section-pattern-position: right bottom;
+  --section-pattern-opacity: 0.06;
+}
+
+.section--pain,
+.section--process { --section-pattern-position: left center; }
+.section--offers,
+.section--faq { --section-pattern-position: right center; }
+.section--proof { --section-pattern-position: right bottom; }
+.section--cta { --section-pattern-position: center; }
+
+@media (max-width: 767px) {
+  .section::before,
+  .hero-section::before {
+    background-size: 600px auto;
+    opacity: 0.05;
+  }
 }
 
 .watermark {
@@ -598,16 +655,17 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   text-decoration: none;
   color: var(--fg);
   letter-spacing: 0.02em;
+  transition: color 160ms var(--ease-out);
 }
 
 .nav-link:hover { text-decoration: underline; }
 
-.nav-link--red { color: var(--red); }
+.nav-link--red { color: var(--red-ink); }
 
 .hero-title {
   font-family: var(--ff-body);
   font-weight: 600;
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(38px, 11vw, 96px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0;
@@ -640,9 +698,77 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-family: var(--ff-mono);
   font-size: 13px;
   font-weight: 400;
-  opacity: 0.5;
+  opacity: 0.62;
   position: relative;
   z-index: 1;
+}
+
+.hero-identity {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: end;
+  gap: 14px;
+  width: fit-content;
+  margin: 28px 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-portrait {
+  display: block;
+  width: 88px;
+  height: 88px;
+  border: var(--border);
+  object-fit: cover;
+}
+
+.hero-identity-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 22ch;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.hero-identity-name { font-weight: 600; }
+
+@media (min-width: 1280px) {
+  .hero-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+    column-gap: clamp(40px, 4vw, 72px);
+  }
+
+  .hero-header,
+  .trust-bar {
+    grid-column: 1 / -1;
+  }
+
+  .hero-header { grid-row: 1; }
+  .hero-title { grid-column: 1; grid-row: 2; }
+  .hero-subhead { grid-column: 1; grid-row: 3; }
+  .hero-ctas { grid-column: 1; grid-row: 4; }
+  .hero-note { grid-column: 1; grid-row: 5; }
+
+  .hero-identity {
+    grid-template-columns: 136px minmax(0, 1fr);
+    gap: 18px;
+    margin: 0;
+    grid-column: 2;
+    grid-row: 2 / 6;
+    align-self: start;
+  }
+
+  .hero-portrait {
+    width: 136px;
+    height: 136px;
+  }
+
+  .trust-bar { grid-row: 6; }
 }
 
 /* ── TRUST BAR ── */
@@ -669,6 +795,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   text-decoration: none;
   color: var(--fg);
   opacity: 0.9;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
 }
 
 .trust-badge:hover {
@@ -676,33 +803,51 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   color: var(--bg);
 }
 
+.trust-logo {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+
+.trust-logo--nimiq { width: 22px; }
+
 /* ── SECTION ── */
 .section {
-  padding: 80px 0;
+  padding: 72px 0;
 }
 
 @media (min-width: 768px) {
-  .section { padding: 140px 0; }
+  .section { padding: 96px 0; }
 }
 
 @media (min-width: 1200px) {
-  .section { padding: 180px 0; }
+  .section { padding: 88px 0; }
+  .section--offers { padding-block: 64px; }
+  .section--proof { padding-block: 112px; }
+  .section--faq { padding-block: 72px; }
 }
 
 .section-label {
-  font-family: var(--ff-display);
-  font-weight: 400;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: fit-content;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--fg);
+  font-family: var(--ff-mono);
+  font-weight: 600;
   text-transform: uppercase;
-  font-size: clamp(48px, 6vw, 80px);
-  letter-spacing: 0.02em;
+  font-size: 12px;
+  letter-spacing: 0.12em;
   line-height: 1;
-  margin: 0 0 40px;
+  margin: 0 0 32px;
   position: relative;
   z-index: 1;
 }
 
-@media (min-width: 768px) {
-  .section-label { margin-bottom: 72px; }
+.section-label::before {
+  content: counter(hire-section, decimal-leading-zero);
+  color: var(--red-ink);
 }
 
 /* ── PAIN ── */
@@ -711,49 +856,217 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 14px;
-  max-width: 72ch;
+  gap: 12px;
+  max-width: none;
   position: relative;
   z-index: 1;
 }
 
 .pain-item {
+  --pain-art: none;
+  --pain-art-opacity: 0.3;
+  --pain-art-blend: multiply;
+  --pain-line: rgba(0,0,0,0.055);
   display: flex;
-  gap: 12px;
-  align-items: baseline;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(40px, 8vw, 84px);
+  min-height: 240px;
+  padding: clamp(24px, 3vw, 40px);
+  border: 1px solid rgba(0,0,0,0.22);
   font-family: var(--ff-body);
-  font-size: 16px;
-  line-height: 1.5;
-  opacity: 0.85;
+  background-color: rgba(255,255,255,0.88);
+  background-image:
+    linear-gradient(var(--pain-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pain-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  overflow: clip;
+  isolation: isolate;
+  position: relative;
+}
+
+.pain-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--pain-art);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: var(--pain-art-blend);
+  opacity: var(--pain-art-opacity);
+  pointer-events: none;
+}
+
+.pain-item:nth-child(1) {
+  --pain-art: url('/hire/pain/migration.webp');
+  --pain-art-opacity: 0.34;
+}
+
+.pain-item:nth-child(2) {
+  --pain-art: url('/hire/pain/performance.webp');
+  --pain-art-opacity: 0.82;
+  --pain-art-blend: screen;
+  --pain-line: rgba(255,255,255,0.045);
+  color: var(--bg);
+  background-color: var(--fg);
+}
+
+.pain-item:nth-child(3) {
+  --pain-art: url('/hire/pain/capacity.webp');
+  --pain-art-opacity: 0.34;
+}
+
+.pain-item:nth-child(4) {
+  --pain-art: url('/hire/pain/specialist.webp');
+  --pain-art-opacity: 0.38;
+}
+
+.pain-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .pain-mark {
   font-family: var(--ff-mono);
   font-weight: 600;
-  color: var(--red);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--red-ink);
   flex-shrink: 0;
-  width: 20px;
-  text-align: center;
+}
+
+.pain-icon {
+  width: clamp(40px, 4vw, 56px);
+  height: clamp(40px, 4vw, 56px);
+  color: var(--red-ink);
+  stroke-width: 1.25;
+}
+
+.pain-item:nth-child(2) .pain-mark,
+.pain-item:nth-child(2) .pain-icon {
+  color: var(--red);
+}
+
+.pain-copy {
+  max-width: 42ch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.pain-title {
+  max-width: none;
+  margin: 0;
+  font-family: var(--ff-display);
+  font-size: clamp(34px, 3vw, 52px);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.pain-detail {
+  max-width: 40ch;
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.5;
+  opacity: 0.72;
+}
+
+@media (min-width: 760px) {
+  .pain-list {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .pain-item {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1100px) {
+  .pain-list {
+    grid-auto-rows: minmax(250px, auto);
+  }
+
+  .pain-item {
+    min-height: 0;
+    gap: 32px;
+    padding: 32px;
+  }
+
+  .pain-item:first-child {
+    grid-column: span 5;
+    grid-row: span 2;
+    min-height: 520px;
+    padding: 40px;
+  }
+
+  .pain-item:nth-child(2) {
+    grid-column: span 7;
+  }
+
+  .pain-item:nth-child(3) {
+    grid-column: span 3;
+  }
+
+  .pain-item:nth-child(4) {
+    grid-column: span 4;
+  }
+
+  .pain-item:first-child .pain-copy {
+    max-width: 30ch;
+  }
+
+  .pain-item:first-child .pain-title {
+    max-width: 10ch;
+    font-size: clamp(52px, 4.6vw, 76px);
+  }
+
+  .pain-item:nth-child(n + 3) .pain-title {
+    font-size: clamp(30px, 2.2vw, 40px);
+  }
+
+  .pain-item:nth-child(n + 3) .pain-detail {
+    font-size: 16px;
+  }
 }
 
 /* ── HEALTH CHECK STRIP ── */
 .health-strip {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  padding-bottom: 24px;
-  border-bottom: 2px solid var(--red);
-  margin-bottom: 48px;
+  gap: 24px;
+  padding: clamp(28px, 4vw, 56px);
+  margin-bottom: 24px;
   position: relative;
   z-index: 1;
+  background: var(--fg);
+  color: var(--bg);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .health-strip {
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 32px;
-    margin-bottom: 56px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr) minmax(210px, auto);
+    align-items: start;
+    gap: clamp(32px, 4vw, 64px);
+  }
+
+  .health-strip-details {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .health-strip-right {
+    grid-column: 3;
+    grid-row: 1;
   }
 }
 
@@ -766,7 +1079,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 .health-strip-title {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: 28px;
+  font-size: clamp(36px, 4vw, 64px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1.1;
@@ -775,24 +1088,26 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 
 .health-strip-desc {
   font-family: var(--ff-body);
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.5;
-  opacity: 0.7;
+  opacity: 0.72;
   margin: 0;
 }
 
 .health-strip-right {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 16px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
 }
 
 .health-strip-price {
   font-family: var(--ff-display);
-  font-size: 24px;
+  font-size: clamp(48px, 5vw, 72px);
+  line-height: 0.9;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  color: var(--red-ink);
 }
 
 .health-strip-duration {
@@ -801,11 +1116,33 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  opacity: 0.5;
+  opacity: 0.55;
+  margin-bottom: 16px;
 }
 
-.health-strip-details {
-  grid-column: 1 / -1;
+.health-strip-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.health-strip-cta::after {
+  content: '\2192';
+  transition: transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .health-strip .health-strip-cta:hover {
+    color: var(--fg);
+    background: var(--bg);
+    border-color: var(--bg);
+    transform: translateY(-2px);
+  }
+
+  .health-strip-cta:hover::after {
+    transform: translateX(4px);
+  }
 }
 
 .health-strip-toggle {
@@ -814,7 +1151,8 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-weight: 600;
   letter-spacing: 0.02em;
   cursor: pointer;
-  opacity: 0.5;
+  color: var(--bg);
+  opacity: 0.65;
   list-style: none;
 }
 
@@ -837,47 +1175,81 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   line-height: 1.5;
   padding-left: 20px;
   position: relative;
-  opacity: 0.7;
+  opacity: 0.76;
 }
 
 .health-strip-deliverables li::before {
   content: '\2014';
   position: absolute;
   left: 0;
-  color: var(--red);
+  color: var(--red-ink);
 }
 
 /* ── PACKAGES ── */
 .pkg-grid {
   display: grid;
-  gap: 32px;
+  gap: 0;
   position: relative;
   z-index: 1;
-}
-
-@media (min-width: 768px) {
-  .pkg-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-  }
+  border-top: var(--border);
 }
 
 .pkg-card {
-  border: var(--border);
-  border-radius: 0;
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
+  border: 0;
+  border-bottom: var(--border);
+  padding: 28px 0;
+  display: grid;
   gap: 20px;
-  background: var(--bg);
+  background: transparent;
   position: relative;
+}
+
+.pkg-card:nth-child(2) {
+  border-left: var(--rule) solid var(--red);
+  background: rgba(230, 30, 30, 0.035);
 }
 
 @media (min-width: 768px) {
   .pkg-card {
-    padding: 40px 32px;
-    margin-top: var(--stagger, 0px);
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 24px;
+    padding: 36px 0;
   }
+
+  .pkg-copy,
+  .pkg-scope,
+  .pkg-footer {
+    grid-column: 2;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pkg-card {
+    grid-template-columns: 56px minmax(320px, 1.2fr) minmax(240px, 0.9fr) minmax(256px, 0.65fr);
+    column-gap: clamp(32px, 3vw, 56px);
+    align-items: baseline;
+    padding-block: clamp(36px, 2.6vw, 52px);
+  }
+
+  .pkg-copy,
+  .pkg-scope,
+  .pkg-footer {
+    grid-column: auto;
+  }
+}
+
+.pkg-index {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--red-ink);
+  padding-top: 7px;
+}
+
+.pkg-copy {
+  display: grid;
+  gap: 16px;
 }
 
 .pkg-top {
@@ -890,7 +1262,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 .pkg-title {
   font-family: var(--ff-display);
   font-weight: 400;
-  font-size: 28px;
+  font-size: clamp(28px, 2.4vw, 38px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1.1;
@@ -904,21 +1276,21 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   text-transform: uppercase;
   letter-spacing: 0.06em;
   white-space: nowrap;
-  opacity: 0.5;
+  opacity: 0.62;
 }
 
 .pkg-outcome {
   margin: 0;
-  font-family: var(--ff-mono);
-  font-size: 13px;
+  max-width: 62ch;
+  font-family: var(--ff-body);
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.5;
-  border-left: var(--rule) solid var(--red);
-  padding-left: 16px;
   color: var(--fg);
 }
 
 .pkg-best {
+  max-width: 62ch;
   font-family: var(--ff-body);
   font-size: 15px;
   line-height: 1.55;
@@ -926,14 +1298,45 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   margin: 0;
 }
 
+.pkg-scope {
+  border-top: 1px solid rgba(0,0,0,0.14);
+  border-bottom: 1px solid rgba(0,0,0,0.14);
+}
+
+.pkg-scope-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pkg-scope-summary::-webkit-details-marker { display: none; }
+.pkg-scope-summary::marker { display: none; content: ''; }
+
+.pkg-scope-toggle {
+  color: var(--red-ink);
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 180ms var(--ease-out);
+}
+
+.pkg-scope[open] .pkg-scope-toggle { transform: rotate(45deg); }
+
 .pkg-deliverables {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 10px;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  padding-top: 20px;
+  padding: 4px 0 18px;
 }
 
 .pkg-deliverables li {
@@ -948,13 +1351,10 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   content: '\2014';
   position: absolute;
   left: 0;
-  color: var(--red);
+  color: var(--red-ink);
 }
 
 .pkg-footer {
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -962,9 +1362,54 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 
 .pkg-price {
   font-family: var(--ff-display);
-  font-size: 24px;
+  font-size: clamp(38px, 3.4vw, 52px);
+  line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+}
+
+.pkg-footer .btn { width: 100%; }
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .pkg-footer {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .pkg-footer .btn { width: auto; }
+}
+
+@media (min-width: 1280px) {
+  .pkg-index { padding-top: 0; }
+
+  .pkg-top {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .pkg-scope {
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .pkg-scope-summary {
+    justify-content: flex-start;
+    width: fit-content;
+    gap: 10px;
+    padding-block: 0 14px;
+  }
+
+  .pkg-footer .btn { white-space: nowrap; }
+}
+
+@media (min-width: 1600px) {
+  .pkg-card {
+    grid-template-columns: 56px minmax(400px, 520px) minmax(260px, 380px) minmax(256px, 320px);
+    justify-content: space-between;
+  }
 }
 
 /* ── ADD-ON FOOTNOTE ── */
@@ -973,7 +1418,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-family: var(--ff-mono);
   font-size: 13px;
   line-height: 1.6;
-  opacity: 0.5;
+  opacity: 0.62;
   position: relative;
   z-index: 1;
 }
@@ -991,13 +1436,20 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   text-align: center;
   border: var(--border);
   border-radius: 0;
-  transition: background 150ms, color 150ms;
+  transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.btn:active,
+.trust-badge:active,
+.proof-link:active {
+  transform: scale(0.98);
+  transition-duration: 100ms;
 }
 
 .btn--red {
-  background: var(--red);
+  background: var(--red-ink);
   color: #fff;
-  border-color: var(--red);
+  border-color: var(--red-ink);
 }
 
 .btn--red:hover {
@@ -1025,12 +1477,51 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-size: 12px;
 }
 
-/* ── PROOF NUMBERS (CountUp) ── */
+.btn:focus-visible,
+.trust-badge:focus-visible,
+.proof-link:focus-visible,
+.nav-link:focus-visible,
+.faq-summary:focus-visible,
+.pkg-scope-summary:focus-visible,
+.health-strip-toggle:focus-visible {
+  outline: 3px solid var(--red-ink);
+  outline-offset: 3px;
+}
+
+.health-strip .btn:focus-visible,
+.health-strip-toggle:focus-visible,
+.section--cta .btn:focus-visible {
+  outline-color: var(--bg);
+}
+
+/* ── PROOF NUMBERS ── */
+.proof-stage {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1000px) {
+  .proof-stage {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: stretch;
+  }
+}
+
+.proof-facts {
+  padding: clamp(24px, 3vw, 40px);
+  border-top: var(--rule) solid var(--red);
+  border-bottom: 1px solid rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.78);
+}
+
 .proof-numbers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   position: relative;
   z-index: 1;
 }
@@ -1046,14 +1537,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-size: 48px;
   line-height: 1;
   letter-spacing: 0.02em;
-  display: flex;
-  align-items: baseline;
-}
-
-.proof-number-suffix {
-  font-family: var(--ff-display);
-  font-size: 48px;
-  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .proof-number-label {
@@ -1062,8 +1546,18 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  opacity: 0.5;
+  opacity: 0.62;
 }
+
+.proof-number-link {
+  width: fit-content;
+  color: var(--red-ink);
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.proof-number-link:hover { text-decoration: underline; }
 
 @media (max-width: 767px) {
   .proof-numbers { grid-template-columns: 1fr; gap: 20px; }
@@ -1072,7 +1566,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 /* ── PROOF METRICS ── */
 .proof-metrics {
   list-style: none;
-  margin: 0 0 28px;
+  margin: 0;
   padding: 0;
   display: grid;
   gap: 12px;
@@ -1094,62 +1588,90 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 .proof-mark {
   font-family: var(--ff-mono);
   font-weight: 600;
-  color: var(--red);
+  color: var(--red-ink);
   flex-shrink: 0;
   width: 20px;
   text-align: center;
 }
 
-/* ── TESTIMONIALS ── */
-.testimonials-grid {
+/* ── TESTIMONIAL ── */
+.testimonial {
+  margin: 0;
+  padding: clamp(24px, 3vw, 40px);
+  border: 0;
   display: grid;
-  gap: 20px;
-  margin-bottom: 28px;
+  grid-template-columns: 140px 1fr;
+  gap: clamp(24px, 3vw, 40px);
   position: relative;
   z-index: 1;
+  background: var(--fg);
+  color: var(--bg);
 }
 
-@media (min-width: 768px) {
-  .testimonials-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-}
-
-.testimonial-card {
-  border: var(--border);
-  background: var(--bg);
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: stretch;
+.testimonial-photo {
+  width: 140px;
+  height: 140px;
+  grid-row: 1 / span 2;
+  border: 2px solid var(--bg);
+  object-fit: cover;
+  object-position: center 25%;
 }
 
 .testimonial-quote {
-  margin: 0;
+  max-width: 58ch;
+  margin: 0 0 18px;
   font-family: var(--ff-body);
-  font-size: 15px;
-  line-height: 1.55;
-  opacity: 0.85;
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.45;
 }
 
 .testimonial-meta {
-  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
   font-family: var(--ff-mono);
   font-size: 12px;
-  letter-spacing: 0.02em;
   text-transform: uppercase;
-  opacity: 0.55;
+  letter-spacing: 0.04em;
+}
+
+.testimonial-name { font-weight: 600; }
+.testimonial-role { opacity: 0.65; }
+
+@media (max-width: 767px) {
+  .testimonial {
+    padding: 18px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .testimonial-photo {
+    grid-row: auto;
+    width: 64px;
+    height: 64px;
+  }
+
+  .testimonial-quote {
+    margin-bottom: 0;
+    font-size: 19px;
+  }
 }
 
 /* ── PROOF LINK GRID ── */
 .proof-grid {
   display: grid;
   gap: 2px;
+  border: var(--border);
+  background: var(--fg);
   position: relative;
   z-index: 1;
 }
 
 @media (min-width: 768px) {
-  .proof-grid { grid-template-columns: repeat(2, 1fr); }
+  .proof-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .proof-link { grid-column: span 2; }
+  .proof-link:first-child { grid-column: span 4; }
+  .proof-link:first-child .proof-link-title { font-size: 34px; }
 }
 
 .proof-link {
@@ -1157,11 +1679,11 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   flex-direction: column;
   gap: 6px;
   padding: 28px 24px;
-  border: var(--border);
+  border: 0;
   background: var(--bg);
   text-decoration: none;
   color: var(--fg);
-  transition: background 150ms;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
 }
 
 .proof-link:hover {
@@ -1187,11 +1709,16 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 .proof-link-url {
   font-family: var(--ff-mono);
   font-size: 12px;
-  color: var(--red);
+  color: var(--red-ink);
   margin-top: auto;
 }
 
 /* ── STEPS ── */
+.process-content {
+  position: relative;
+  z-index: 1;
+}
+
 .steps-grid {
   list-style: none;
   margin: 0;
@@ -1210,13 +1737,33 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-.step:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+@media (min-width: 1100px) {
+  .steps-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: var(--rule) solid var(--red);
+  }
+
+  .step,
+  .step:first-child {
+    min-height: 200px;
+    padding: 28px 24px 28px 0;
+    border-top: 0;
+    border-right: 1px solid rgba(0,0,0,0.16);
+    border-bottom: 0;
+  }
+
+  .step:last-child { border-right: 0; }
+}
+
+@media (max-width: 1099px) {
+  .step:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+}
 
 .step-num {
   font-family: var(--ff-mono);
   font-size: 13px;
   font-weight: 600;
-  opacity: 0.35;
+  opacity: 0.6;
   padding-top: 3px;
 }
 
@@ -1289,8 +1836,8 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   text-align: center;
 }
 
-.fit-mark--good { color: var(--red); }
-.fit-mark--not { opacity: 0.35; }
+.fit-mark--good { color: var(--red-ink); }
+.fit-mark--not { opacity: 0.6; }
 
 /* ── FAQ ── */
 .faq-list {
@@ -1327,7 +1874,7 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   font-family: var(--ff-mono);
   font-size: 24px;
   font-weight: 600;
-  color: var(--red);
+  color: var(--red-ink);
   flex-shrink: 0;
   transition: transform 200ms;
   line-height: 1;
@@ -1345,67 +1892,45 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   max-width: 60ch;
 }
 
-/* ── AVAILABILITY BANNER ── */
-.avail-banner {
-  background: var(--red);
-  color: #fff;
-  padding: 28px 32px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: baseline;
-  gap: 12px 24px;
-  text-align: center;
-  margin: 0 -24px;
-}
-
-@media (min-width: 768px) {
-  .avail-banner { margin: 0 calc(-1 * clamp(48px, 6vw, 96px)); padding: 32px 48px; }
-}
-
-.avail-label {
-  font-family: var(--ff-mono);
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.75;
-}
-
-.avail-value {
-  font-family: var(--ff-display);
-  font-size: clamp(32px, 5vw, 52px);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-
-.avail-scarcity {
-  width: 100%;
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  opacity: 0.85;
-}
-
 /* ── FINAL CTA ── */
 .section--cta {
-  text-align: center;
-  padding-top: 100px;
+  --section-pattern: none;
+  display: grid;
+  gap: 32px;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 72px var(--gutter);
+  text-align: left;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.section--cta .section-label {
+  border-color: var(--bg);
+}
+
+.section--cta .section-label::before {
+  color: var(--red);
 }
 
 @media (min-width: 768px) {
-  .section--cta { padding-top: 140px; }
+  .section--cta {
+    padding-block: 88px;
+  }
 }
 
 @media (min-width: 1200px) {
-  .section--cta { padding-top: 180px; }
+  .section--cta {
+    grid-template-columns: minmax(160px, 0.35fr) minmax(420px, 1fr) auto;
+    align-items: center;
+    gap: clamp(32px, 4vw, 72px);
+  }
+
+  .section--cta .section-label { margin: 0; }
 }
 
 .cta-headline {
   font-family: var(--ff-display);
-  font-size: clamp(56px, 8vw, 120px);
+  font-size: clamp(52px, 6vw, 92px);
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 0.9;
@@ -1415,76 +1940,29 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
 }
 
 .cta-btns {
-  margin-top: 40px;
+  margin-top: 0;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   gap: 16px;
   position: relative;
   z-index: 1;
 }
 
-/* ── ILLUSTRATIONS ── */
-.illust-hero {
-  position: absolute;
-  right: -2%;
-  bottom: 10%;
-  width: clamp(200px, 30vw, 500px);
-  height: auto;
-  opacity: 0.08;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  mix-blend-mode: multiply;
+.section--cta .btn--outline {
+  color: var(--bg);
+  border-color: var(--bg);
 }
 
-@media (min-width: 768px) {
-  .illust-hero { opacity: 0.1; }
-}
-
-@media (min-width: 1200px) {
-  .illust-hero { opacity: 0.12; width: clamp(300px, 35vw, 600px); }
-}
-
-.section--pain { position: relative; }
-
-.illust-pain {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .illust-pain {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: clamp(160px, 18vw, 280px);
-    height: auto;
-    opacity: 0.08;
-    pointer-events: none;
-    user-select: none;
-    z-index: 0;
-    mix-blend-mode: multiply;
-  }
-}
-
-.illust-contact {
-  display: block;
-  margin: 0 auto 32px;
-  width: clamp(180px, 25vw, 360px);
-  height: auto;
-  opacity: 0.12;
-  mix-blend-mode: multiply;
-  position: relative;
-  z-index: 1;
+.section--cta .btn--outline:hover {
+  color: var(--fg);
+  background: var(--bg);
 }
 
 /* ── SCROLL-TRIGGERED REVEALS ── */
 @keyframes swissReveal {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -1492,29 +1970,53 @@ const sectionLabels = ['Sound familiar?', 'What you get', 'Proof', 'How it works
   }
 }
 
-.swiss-reveal {
+.hero-enter {
   opacity: 0;
-  animation: swissReveal 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 30%;
+  animation: swissReveal 360ms var(--ease-out) both;
 }
 
-.swiss-reveal--d1 { animation-delay: 80ms; }
-.swiss-reveal--d2 { animation-delay: 160ms; }
-.swiss-reveal--d3 { animation-delay: 240ms; }
-.swiss-reveal--d4 { animation-delay: 320ms; }
+.hero-enter--d1 { animation-delay: 40ms; }
+.hero-enter--d2 { animation-delay: 80ms; }
+.hero-enter--d3 { animation-delay: 120ms; }
+.hero-enter--d4 { animation-delay: 160ms; }
+.hero-enter--d5 { animation-delay: 200ms; }
+
+.swiss-reveal {
+  opacity: 0;
+  animation: swissReveal 420ms var(--ease-out) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 24%;
+}
+
+.swiss-reveal--d1 { animation-delay: 50ms; }
+.swiss-reveal--d2 { animation-delay: 100ms; }
+.swiss-reveal--d3 { animation-delay: 150ms; }
+.swiss-reveal--d4 { animation-delay: 200ms; }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-enter,
   .swiss-reveal {
     opacity: 1;
     animation: none;
+    transform: none;
+  }
+
+  .btn,
+  .trust-badge,
+  .proof-link {
+    transition-property: background-color, border-color, color;
+  }
+
+  .btn:active,
+  .trust-badge:active,
+  .proof-link:active {
     transform: none;
   }
 }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 374px) {
-  .swiss-inner { padding: 0 16px 80px; }
-  .hero-title { font-size: 40px; }
+  .swiss { --gutter: 16px; }
+  .swiss-inner { padding-bottom: 80px; }
 }
 </style>

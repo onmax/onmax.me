@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { getHireFaqJsonLd, getHireJsonLd, hero } from '~/lib/hire'
 
-const title = 'Hire a Nuxt Consultant | Sprints (Performance, Migration, Shipping)'
+const title = 'Hire a Nuxt Consultant | Nuxt 4 Upgrades, Performance & Sprints'
 const description = hero.subhead
+const socialImage = 'https://onmax.me/hire-og.png'
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: '/maxi-og-image.png',
+  ogImage: socialImage,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageAlt: 'Senior Nuxt, on demand — focused Nuxt consulting sprints by Onmax',
   twitterCard: 'summary_large_image',
-  twitterImage: '/maxi-og-image.png'
+  twitterImage: socialImage,
+  twitterImageAlt: 'Senior Nuxt, on demand — focused Nuxt consulting sprints by Onmax'
 })
 
 useHead({

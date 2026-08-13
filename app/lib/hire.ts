@@ -1,10 +1,3 @@
-export const availability = {
-  label: 'Next opening',
-  value: 'March 2026'
-} as const
-
-export const scarcity = 'I take 2–3 sprint clients per month to stay focused.' as const
-
 export const ctas = {
   calUrl: 'https://cal.com/onmax',
   email: 'hello@onmax.me'
@@ -12,41 +5,53 @@ export const ctas = {
 
 export const hero = {
   title: 'Senior Nuxt, on demand.',
-  subhead: 'I help you ship a faster Nuxt app in 1–2 week sprints. Measurable results, zero onboarding.',
-  note: 'Native Spanish speaker.'
+  subhead: 'I help agencies and technical teams upgrade, speed up, and ship Nuxt apps in focused 1–2 week sprints. Start with a €990 Nuxt Health Check or choose a fixed-scope sprint.',
+  note: 'English and native Spanish.'
 } as const
 
 export const trustBar = {
   items: [
-    { label: 'Nuxt ecosystem contributor', href: 'https://prs.onmax.me' },
-    { label: '4 years building at Nimiq', href: 'https://nimiq.com' },
-    { label: 'Async-first, PR-based delivery', href: null },
-    { label: 'Fixed-scope sprints, measurable outcomes', href: null }
+    { label: 'Nuxt Ecosystem Team member', href: 'https://nuxters.nuxt.com/onmax', logo: 'nuxt' },
+    { label: '4 years building at Nimiq', href: 'https://nimiq.com', logo: 'nimiq' },
+    { label: 'Async-first, PR-based delivery', href: null, logo: null },
+    { label: 'Fixed-scope sprints, measurable outcomes', href: null, logo: null }
   ]
 } as const
 
 export const painPoints = {
   items: [
-    'Your Nuxt 2 app has no security patches since June 2024. Every month you wait, the migration gets harder.',
-    'Core Web Vitals are red. You know it costs conversions, but nobody on the team owns performance.',
-    'AI-generated code shipped fast. Now every PR breaks something and reviews take twice as long.',
-    'You need a senior Nuxt dev for 2 weeks, not a 6-month hiring pipeline.'
+    {
+      title: 'Nuxt 3 is now EOL.',
+      body: 'Move to Nuxt 4 without stalling product work.'
+    },
+    {
+      title: 'Core Web Vitals are red.',
+      body: 'Your team has no spare cycle to isolate the bottleneck and ship the fix.'
+    },
+    {
+      title: 'A client project is blocked.',
+      body: 'Your senior engineers are already committed elsewhere.'
+    },
+    {
+      title: 'You need a Nuxt specialist.',
+      body: 'For one defined problem—not an open-ended contract or a long hiring cycle.'
+    }
   ]
 } as const
 
 export const healthCheck = {
   title: 'Nuxt Health Check',
   durationLabel: '2–3 hours',
-  bestFor: 'Get a prioritized fix list before committing to a sprint.',
+  bestFor: 'A fast, independent assessment when you need a clear fix or upgrade plan before committing to a sprint.',
   deliverables: [
-    'Quick repo + runtime audit (perf, DX, SSR, SEO basics)',
-    'Top 5 highest-leverage fixes (ordered)',
-    '30-min walkthrough call or Loom-style video',
-    'Follow-up plan: what to do in 1 sprint vs 2–4 weeks'
+    'Repository and runtime audit across performance, SSR, SEO, and developer experience',
+    'The five highest-impact fixes, ranked by effort and value',
+    '30-minute walkthrough call or recorded video',
+    'A scoped recommendation: fix it in-house, book one sprint, or plan a larger upgrade'
   ],
   priceLabel: '€990',
   priceFromEur: 990,
-  ctaLabel: 'Get my health check →',
+  ctaLabel: 'Request a Nuxt Health Check',
   get ctaHref() {
     return `mailto:${ctas.email}?subject=${encodeURIComponent('Nuxt Health Check inquiry')}`
   }
@@ -77,24 +82,24 @@ export const packages: HirePackage[] = [
     ],
     priceLabel: 'From €6,900',
     priceFromEur: 6900,
-    outcomeHint: '40–60% LCP improvement in 5 days.',
-    ctaLabel: 'Fix my performance →'
+    outcomeHint: 'You get before/after LCP measurements and the highest-impact fixes that fit the sprint.',
+    ctaLabel: 'Fix my performance'
   },
   {
-    title: 'Nuxt 2 → Nuxt 3 Assessment',
+    title: 'Nuxt 2/3 → Nuxt 4 Assessment',
     durationLabel: '3–5 days',
-    bestFor: 'For teams planning a migration without stalling shipping.',
+    bestFor: 'For teams that need a safe path to a supported Nuxt version without stalling product work.',
     deliverables: [
       'Compatibility map: modules, build, SSR, routing, auth, content, i18n',
       'Risk register + recommended migration strategy (incremental vs rewrite)',
-      'Timeline + costed plan (including "what we can do in 1 sprint")',
+      'Phased plan with effort ranges, dependencies, and a one-sprint starting point',
       'Optional: first spike PR (one risky area proven in code)'
     ],
     priceLabel: 'From €4,500 (3d) to €6,900 (5d)',
     priceFromEur: 4500,
     priceToEur: 6900,
-    outcomeHint: 'Know exact cost + risk before writing a single line.',
-    ctaLabel: 'Get my migration plan →'
+    outcomeHint: 'Leave with a scoped migration plan and known risks before implementation starts.',
+    ctaLabel: 'Get my migration plan'
   },
   {
     title: 'Shipping Sprint',
@@ -107,13 +112,13 @@ export const packages: HirePackage[] = [
     ],
     priceLabel: 'From €13,900',
     priceFromEur: 13900,
-    outcomeHint: 'Senior velocity without the long-term hire.',
-    ctaLabel: 'Ship my feature →'
+    outcomeHint: 'Get a defined feature to review-ready PRs without adding a permanent hire.',
+    ctaLabel: 'Ship my feature'
   }
 ]
 
 export const proofNumbers = [
-  { value: 680, suffix: '+', label: 'PRs merged' },
+  { value: 680, suffix: '+', label: 'PRs merged', href: 'https://prs.onmax.me' },
   { value: 90, suffix: '+', label: 'repos contributed to' },
   { value: 4, suffix: ' yrs', label: 'building at Nimiq' }
 ] as const
@@ -121,42 +126,26 @@ export const proofNumbers = [
 export const addon = 'Need more than one sprint? Add weeks at €6,500/week, booked one at a time.'
 
 export const proofMetrics = [
-  'Nuxt ecosystem contributor (Nuxt core + modules)',
+  'Nuxt Ecosystem Team member and contributor',
   '4 years building production apps at Nimiq',
-  'Sprints ship as PRs with measurable before/after'
+  'Early contributor to Reka UI’s Vue component foundations'
 ] as const
 
-export const testimonials = [
-  {
-    quote:
-      'In one week, our CWV plan went from "we should look at this" to shipped fixes and a clear backlog. The PRs were clean and the results were measurable.',
-    name: 'Jordan K.',
-    title: 'CTO',
-    company: 'Northwind (B2B SaaS)'
-  },
-  {
-    quote:
-      'The migration assessment saved us weeks. We got a realistic plan, a risk register, and a strategy that let us keep shipping instead of stalling.',
-    name: 'Samira D.',
-    title: 'Engineering Manager',
-    company: 'Contoso (Agency)'
-  },
-  {
-    quote:
-      'I expected "consulting slides." I got production-ready PRs, clear tradeoffs, and a handoff my team could maintain.',
-    name: 'Alex R.',
-    title: 'Founder',
-    company: 'Acme (Startup)'
-  }
-] as const
+export const testimonial = {
+  quote:
+    'Working with Maxi is refreshingly straightforward. You explain the problem once, and he turns it into a clean, well-thought-out solution — fast. No unnecessary back-and-forth, just clear thinking and measurable results.',
+  name: 'Max B.',
+  role: 'Ecosystem Development · Nimiq',
+  image: '/hire/max-burger.jpg'
+} as const
 
 export const proof = {
   items: [
     {
-      title: 'Nuxt ecosystem contributions',
-      description: 'PRs across Nuxt and the ecosystem.',
-      href: 'https://prs.onmax.me',
-      label: 'prs.onmax.me'
+      title: 'Nuxt Ecosystem Team',
+      description: 'Official Nuxt community profile and contribution record.',
+      href: 'https://nuxters.nuxt.com/onmax',
+      label: 'nuxters.nuxt.com/onmax'
     },
     {
       title: 'Open source work',
@@ -177,10 +166,28 @@ export const proof = {
       label: 'nimiq.com'
     },
     {
-      title: 'Now: Quiver on Nuxt 4',
-      description: 'Building fast on the latest Nuxt.',
-      href: 'https://github.com/onmax/quiver',
-      label: 'github.com/onmax/quiver'
+      title: 'Building ViteHub',
+      description: 'Open-source agents and server primitives for Vite and Nuxt.',
+      href: 'https://vitehub.dev',
+      label: 'vitehub.dev'
+    },
+    {
+      title: 'DALION core team',
+      description: 'Recognized as part of DALION’s core team when the project entered Spain’s financial sandbox.',
+      href: 'https://es.linkedin.com/posts/msalgadoi_dalion-alastriaid-activity-6800377250526167040-aK6A',
+      label: 'Public LinkedIn post'
+    },
+    {
+      title: 'Acknowledged by LACChain',
+      description: 'Credited as a Blockchain Developer at Inetum in the official LACChain framework.',
+      href: 'https://lacnet.com/wp-content/uploads/2025/01/LACChain-Framework-for-Permissioned-Public-Blockchain-Networks-From-Blockchain-Technology-to-Blockchain-Networks.pdf',
+      label: 'LACChain framework (PDF)'
+    },
+    {
+      title: 'Built and launched Cactus',
+      description: 'A paid native macOS product with a Nuxt marketing site, owned from product to delivery and support.',
+      href: 'https://usecactus.app',
+      label: 'usecactus.app'
     }
   ]
 } as const
@@ -189,7 +196,7 @@ export const howIWork = {
   steps: [
     { title: 'Scope call (25 min)', body: 'We define goals, constraints, and what "done" looks like.' },
     { title: 'Kickoff (day 1)', body: 'Repo access, environments, tracking doc. I start shipping.' },
-    { title: 'Daily async updates', body: 'Small PRs, clear progress. AI speeds up boilerplate; I review every line.' },
+    { title: 'Daily async updates', body: 'Small, review-ready PRs with clear progress against the agreed outcome.' },
     { title: 'Handoff', body: 'Before/after report, ordered backlog, optional add-on week.' }
   ]
 } as const
@@ -218,7 +225,7 @@ export const faq: HireFaqItem[] = [
   {
     label: 'Do you work with agencies?',
     content:
-      'Yes. I\'m comfortable joining an existing process and shipping PRs with clean handoff to your team.'
+      'Yes. I fit into your existing delivery process and hand over review-ready PRs, written tradeoffs, and clear next steps your team can own.'
   },
   {
     label: 'Can you sign an NDA?',
@@ -230,15 +237,14 @@ export const faq: HireFaqItem[] = [
       'We either add a week (fixed weekly add-on), or stop with a clean handoff: shipped PRs, an ordered backlog, and clear next steps.'
   },
   {
-    label: 'Why not just hire a full-time dev?',
+    label: 'Can we start with the Health Check?',
     content:
-      'A senior Nuxt dev costs €6–8k/month fully loaded, plus months to onboard. A sprint gives you senior output in 5–10 days with zero onboarding overhead.'
+      'Yes. It stands alone, so your team leaves with a prioritized plan even if we do no further work. If a sprint makes sense, the findings become the starting scope.'
   }
 ]
 
 export const finalCta = {
-  headline: 'Ship this month.',
-  ctaLabel: 'Book a 25-min scope call'
+  headline: 'Start with a clear Nuxt plan for €990.'
 } as const
 
 export function getHireJsonLd() {

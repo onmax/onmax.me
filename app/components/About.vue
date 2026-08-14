@@ -1,53 +1,54 @@
 <script setup lang="ts">
-const story = [
-  { icon: 'i-carbon-idea', text: 'Started building products to solve my own problems' },
-  { icon: 'i-carbon-code', text: 'Discovered Nuxt & open source—loved sharing solutions' },
-  { icon: 'i-carbon-bot', text: 'AI unlocked understanding of blocking details' },
-  { icon: 'i-carbon-rocket', text: 'Now: feels unstoppable, building more than ever' }
-]
+const principles = [
+  ['Make it useful', 'Start with the constraint that changes what the user can do next.'],
+  ['Keep the seam small', 'Prefer platform features and existing primitives over another abstraction.'],
+  ['Prove the boundary', 'Separate local checks, browser behavior, previews, and production evidence.']
+] as const
 </script>
 
 <template>
   <section
     id="about"
-    class="py-24"
+    class="border-b border-default py-24 sm:py-32"
   >
-    <div class="flex relative">
-      <div class="mr-4 whitespace-nowrap py-4">
-        <h2 class="sticky top-[calc(50%-12px)] font-bold w-32 text-right text-lg">
-          About
-        </h2>
-      </div>
-      <div class="flex-1 ml-8 flex flex-col md:flex-row gap-12">
-        <div class="flex-1 space-y-6">
-          <p class="text-lg">
-            I'm a fullstack developer driven by <span class="font-semibold">curiosity</span>. What started as solving my own problems evolved into a passion for building products that help others.
+    <UContainer>
+      <div class="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,28rem)] lg:gap-24">
+        <div>
+          <p class="eyebrow">
+            About
           </p>
-          <ul class="space-y-4">
-            <li
-              v-for="item in story"
-              :key="item.text"
-              class="flex items-start gap-3"
-            >
-              <UIcon
-                :name="item.icon"
-                class="size-5 mt-0.5 opacity-60 shrink-0"
-              />
-              <span class="opacity-80">{{ item.text }}</span>
-            </li>
-          </ul>
-          <p class="text-sm opacity-60 italic">
-            Philosophy: learning through building
-          </p>
+          <h2 class="mt-4 max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.05em] text-highlighted sm:text-5xl">
+            I like difficult frontend work and
+            <span class="display-serif font-normal italic">simple outcomes.</span>
+          </h2>
+          <div class="mt-8 max-w-2xl space-y-5 text-base leading-8 text-muted">
+            <p>
+              I’m a full-stack developer who found his home in Nuxt, Vue, and open source. Four years building production software at Nimiq taught me to care equally about interface craft, architecture, and the people maintaining the code next.
+            </p>
+            <p>
+              Today I contribute across the Nuxt ecosystem, build developer tools and small products, and help teams move through upgrades or delivery bottlenecks without creating a second problem.
+            </p>
+          </div>
         </div>
-        <div class="shrink-0">
-          <img
-            src="/me.webp"
-            alt="Maxi"
-            class="size-48 rounded-xl object-cover grayscale hover:grayscale-0 transition-all duration-500"
+
+        <ol class="border-t border-default">
+          <li
+            v-for="(principle, index) in principles"
+            :key="principle[0]"
+            class="grid grid-cols-[2rem_minmax(0,1fr)] gap-4 border-b border-default py-6"
           >
-        </div>
+            <span class="eyebrow pt-1">{{ String(index + 1).padStart(2, '0') }}</span>
+            <div>
+              <h3 class="font-semibold tracking-[-0.02em] text-highlighted">
+                {{ principle[0] }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-muted">
+                {{ principle[1] }}
+              </p>
+            </div>
+          </li>
+        </ol>
       </div>
-    </div>
+    </UContainer>
   </section>
 </template>

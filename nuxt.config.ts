@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/posts/**': { prerender: true },
-    '/hire': { prerender: true }
+    '/hire': { redirect: { to: '/', statusCode: 302 } }
   },
   compatibilityDate: '2025-01-15',
   nitro: { prerender: { crawlLinks: true } },
@@ -15,7 +15,28 @@ export default defineNuxtConfig({
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }
   },
-  icon: { serverBundle: 'remote' },
+  icon: {
+    provider: 'none',
+    serverBundle: false,
+    clientBundle: {
+      scan: {
+        globInclude: ['app/**', 'node_modules/@nuxt/ui/dist/**'],
+        globExclude: ['node_modules']
+      },
+      icons: [
+        'lucide:bot',
+        'lucide:chart-spline',
+        'lucide:copy',
+        'lucide:focus',
+        'lucide:hash',
+        'lucide:menu',
+        'lucide:orbit',
+        'simple-icons:betterauth',
+        'simple-icons:nuxtdotjs',
+        'simple-icons:vite'
+      ]
+    }
+  },
   image: {
     provider: 'cloudflare',
     cloudflare: { baseURL: 'https://onmax.me' },

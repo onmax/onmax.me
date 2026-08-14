@@ -1,31 +1,39 @@
 <script setup lang="ts">
+const year = new Date().getFullYear()
 </script>
 
 <template>
-  <div class="mt-64 flex justify-center w-full gap-8 pb-2">
-    <a
-      href="http://github.com/onmax"
-      target="_blank"
-      class="underline flex gap-2 opacity-50 saturate-0 transition-all hover:saturate-100 hover:opacity-100"
-    >
-      <UIcon
-        name="i-carbon-logo-github"
-        class="size-4"
-      />
-      <span>onmax</span>
-    </a>
-    <NuxtLink
-      to="/hire"
-      class="underline flex gap-2 opacity-50 saturate-0 transition-all hover:saturate-100 hover:opacity-100"
-    >
-      Hire
-    </NuxtLink>
-    <a
-      href="/maxi-garcia_cv.pdf"
-      target="_blank"
-      class="underline flex gap-2 opacity-50 saturate-0 transition-all hover:saturate-100 hover:opacity-100"
-    >
-      CV
-    </a>
-  </div>
+  <footer class="border-t border-default py-8">
+    <UContainer class="flex flex-col justify-between gap-6 text-sm sm:flex-row sm:items-center">
+      <p class="text-muted">
+        © {{ year }} Maxi García. Built with Nuxt.
+      </p>
+      <nav
+        aria-label="Footer navigation"
+        class="flex flex-wrap gap-x-6 gap-y-3"
+      >
+        <a
+          href="https://github.com/onmax"
+          target="_blank"
+          rel="noreferrer"
+          class="text-muted transition-colors hover:text-highlighted"
+        >GitHub</a>
+        <a
+          href="https://prs.onmax.me"
+          target="_blank"
+          rel="noreferrer"
+          class="text-muted transition-colors hover:text-highlighted"
+        >Contributions</a>
+        <a
+          href="/maxi-garcia_cv.pdf"
+          target="_blank"
+          class="text-muted transition-colors hover:text-highlighted"
+        >CV</a>
+        <NuxtLink
+          to="/#contact"
+          class="font-semibold text-highlighted"
+        >Hire me</NuxtLink>
+      </nav>
+    </UContainer>
+  </footer>
 </template>

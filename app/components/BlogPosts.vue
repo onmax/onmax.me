@@ -9,46 +9,55 @@ const { data: posts } = await useAsyncData('recent-posts', () =>
 
 <template>
   <section
-    id="blog"
-    class="py-24"
+    id="writing"
+    class="border-b border-default py-24 sm:py-32"
   >
-    <div class="flex relative">
-      <div class="mr-4 whitespace-nowrap py-4">
-        <h2 class="sticky top-[calc(50%-12px)] font-bold w-32 text-right text-lg">
-          Blog
-        </h2>
-      </div>
-      <div class="flex-1 ml-8">
-        <ul class="space-y-6">
-          <li
-            v-for="post in posts"
-            :key="post.stem"
-            class="group"
-          >
-            <NuxtLink
-              :to="`/${post.stem}`"
-              class="block rounded-lg p-4 -mx-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            >
-              <h3 class="font-semibold text-lg group-hover:text-neutral-900 dark:group-hover:text-white transition-colors">{{ post.title }}</h3>
-              <p class="text-sm opacity-60 mt-1 line-clamp-2">{{ post.description }}</p>
-              <time
-                v-if="post.publishedAt"
-                class="text-xs opacity-40 mt-2 block"
-              >{{ new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) }}</time>
-            </NuxtLink>
-          </li>
-        </ul>
-        <NuxtLink
+    <UContainer>
+      <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <header class="max-w-xl">
+          <p class="eyebrow">
+            Writing
+          </p>
+          <h2 class="mt-4 text-3xl font-semibold tracking-[-0.045em] text-highlighted sm:text-4xl">
+            Notes from building.
+          </h2>
+        </header>
+        <UButton
           to="/posts"
-          class="inline-flex items-center gap-2 mt-8 text-sm opacity-60 hover:opacity-100 transition-opacity"
+          color="neutral"
+          variant="ghost"
+          trailing-icon="i-lucide-arrow-right"
         >
-          View all posts
-          <UIcon
-            name="i-carbon-arrow-right"
-            class="size-4"
-          />
-        </NuxtLink>
+          All writing
+        </UButton>
       </div>
-    </div>
+
+      <ol class="mt-12 border-t border-default">
+        <li
+          v-for="(post, index) in posts"
+          :key="post.stem"
+          class="border-b border-default"
+        >
+          <NuxtLink
+            :to="`/${post.stem}`"
+            class="group grid gap-4 py-7 sm:grid-cols-[3rem_minmax(0,1fr)_10rem_auto] sm:items-center sm:gap-6"
+          >
+            <span class="eyebrow">{{ String(index + 1).padStart(2, '0') }}</span>
+            <span>
+              <span class="block text-lg font-semibold tracking-[-0.025em] text-highlighted">{{ post.title }}</span>
+              <span class="mt-1 block max-w-2xl text-sm leading-6 text-muted">{{ post.description }}</span>
+            </span>
+            <time
+              v-if="post.publishedAt"
+              class="text-sm text-dimmed"
+            >{{ new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) }}</time>
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="size-4 text-dimmed transition-transform group-hover:translate-x-1"
+            />
+          </NuxtLink>
+        </li>
+      </ol>
+    </UContainer>
   </section>
 </template>

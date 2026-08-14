@@ -136,7 +136,7 @@ export const testimonial = {
     'Working with Maxi is refreshingly straightforward. You explain the problem once, and he turns it into a clean, well-thought-out solution — fast. No unnecessary back-and-forth, just clear thinking and measurable results.',
   name: 'Max B.',
   role: 'Ecosystem Development · Nimiq',
-  image: '/hire/max-burger.jpg'
+  image: '/images/hire/max-burger.jpg'
 } as const
 
 export const proof = {
@@ -170,18 +170,6 @@ export const proof = {
       description: 'Open-source agents and server primitives for Vite and Nuxt.',
       href: 'https://vitehub.dev',
       label: 'vitehub.dev'
-    },
-    {
-      title: 'DALION core team',
-      description: 'Recognized as part of DALION’s core team when the project entered Spain’s financial sandbox.',
-      href: 'https://es.linkedin.com/posts/msalgadoi_dalion-alastriaid-activity-6800377250526167040-aK6A',
-      label: 'Public LinkedIn post'
-    },
-    {
-      title: 'Acknowledged by LACChain',
-      description: 'Credited as a Blockchain Developer at Inetum in the official LACChain framework.',
-      href: 'https://lacnet.com/wp-content/uploads/2025/01/LACChain-Framework-for-Permissioned-Public-Blockchain-Networks-From-Blockchain-Technology-to-Blockchain-Networks.pdf',
-      label: 'LACChain framework (PDF)'
     },
     {
       title: 'Built and launched Cactus',

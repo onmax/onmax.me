@@ -3,8 +3,8 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import { z } from 'zod'
 
 const schema = z.object({
-  email: z.string().email('Invalid email'),
-  message: z.string().min(10, 'Message must be at least 10 characters')
+  email: z.string().email('Enter a valid email'),
+  message: z.string().min(10, 'Tell me a little more so I can give you a useful reply')
 })
 
 type Schema = z.output<typeof schema>
@@ -15,10 +15,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   const form = document.createElement('form')
   form.action = 'https://formsubmit.co/maximogarciamtnez@gmail.com'
   form.method = 'POST'
-  Object.entries(event.data).forEach(([k, v]) => {
+  Object.entries(event.data).forEach(([key, value]) => {
     const input = document.createElement('input')
-    input.name = k
-    input.value = v
+    input.name = key
+    input.value = value
     form.appendChild(input)
   })
   document.body.appendChild(form)
@@ -27,50 +27,78 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <div>
-    <div class="mr-4 whitespace-nowrap py-4">
-      <h2 class="sticky top-[calc(50%-12px)] text-lg font-bold w-32 text-right">
-        Contact me
-      </h2>
-    </div>
+  <section
+    id="contact"
+    class="py-24 sm:py-32"
+  >
+    <UContainer>
+      <div class="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,32rem)] lg:gap-24">
+        <div>
+          <p class="eyebrow">
+            Contact
+          </p>
+          <h2 class="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.05em] text-highlighted sm:text-5xl">
+            Have a difficult Nuxt problem?
+            <span class="display-serif font-normal italic">Send the context.</span>
+          </h2>
+          <p class="mt-6 max-w-xl text-base leading-7 text-muted">
+            A repository link, the behavior you want, and the constraint holding the team back are enough for a useful first conversation.
+          </p>
+          <a
+            href="mailto:hello@onmax.me"
+            class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-highlighted underline decoration-muted underline-offset-4 hover:decoration-highlighted"
+          >
+            hello@onmax.me
+            <UIcon
+              name="i-lucide-arrow-up-right"
+              class="size-4"
+            />
+          </a>
+        </div>
 
-    <UForm
-      :schema="schema"
-      :state="state"
-      class="ml-44 mt-3 flex flex-col max-w-4xl gap-y-2"
-      @submit="onSubmit"
-    >
-      <UFormField
-        label="Your email"
-        name="email"
-      >
-        <UInput
-          v-model="state.email"
-          type="email"
-          placeholder="joe@doe.com"
-          class="w-full"
-        />
-      </UFormField>
+        <UForm
+          :schema="schema"
+          :state="state"
+          class="rounded-xl border border-default bg-elevated p-6 sm:p-8"
+          @submit="onSubmit"
+        >
+          <UFormField
+            label="Your email"
+            name="email"
+          >
+            <UInput
+              v-model="state.email"
+              type="email"
+              placeholder="you@company.com"
+              size="lg"
+              class="w-full"
+            />
+          </UFormField>
 
-      <UFormField
-        label="Your message"
-        name="message"
-        class="mt-4"
-      >
-        <UTextarea
-          v-model="state.message"
-          placeholder="Hi, I would like to talk about..."
-          :rows="10"
-          class="w-full"
-        />
-      </UFormField>
+          <UFormField
+            label="What are you trying to ship?"
+            name="message"
+            class="mt-5"
+          >
+            <UTextarea
+              v-model="state.message"
+              placeholder="We have a Nuxt app that…"
+              :rows="6"
+              autoresize
+              class="w-full"
+            />
+          </UFormField>
 
-      <UButton
-        type="submit"
-        class="self-end mt-3"
-      >
-        Send
-      </UButton>
-    </UForm>
-  </div>
+          <UButton
+            type="submit"
+            color="neutral"
+            trailing-icon="i-lucide-arrow-right"
+            class="mt-6"
+          >
+            Send message
+          </UButton>
+        </UForm>
+      </div>
+    </UContainer>
+  </section>
 </template>

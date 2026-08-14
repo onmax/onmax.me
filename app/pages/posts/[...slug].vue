@@ -9,35 +9,51 @@ if (!post.value) {
 }
 
 useSeoMeta({
-  title: post.value.title,
+  title: `${post.value.title} — Maxi García`,
   description: post.value.description
 })
 </script>
 
 <template>
-  <div class="max-w-[644px] mx-auto px-6 py-12">
-    <NuxtLink
-      to="/posts"
-      class="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 mb-8 inline-block"
+  <UContainer class="py-16 sm:py-24">
+    <article
+      v-if="post"
+      class="mx-auto max-w-3xl"
     >
-      &larr; All posts
-    </NuxtLink>
-    <article v-if="post">
-      <header class="mb-8">
-        <h1 class="text-3xl font-bold">
+      <NuxtLink
+        to="/posts"
+        class="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-highlighted"
+      >
+        <UIcon
+          name="i-lucide-arrow-left"
+          class="size-4"
+        />
+        All writing
+      </NuxtLink>
+
+      <header class="page-enter mt-12 border-b border-default pb-10">
+        <p class="eyebrow">
+          Field note
+        </p>
+        <h1 class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.05em] text-highlighted sm:text-6xl">
           {{ post.title }}
         </h1>
+        <p
+          v-if="post.description"
+          class="mt-6 text-lg leading-8 text-muted"
+        >
+          {{ post.description }}
+        </p>
         <time
           v-if="post.publishedAt"
-          class="text-sm text-neutral-500 mt-2 block"
-        >
-          {{ new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-        </time>
+          class="mt-7 block font-mono text-xs uppercase tracking-[0.1em] text-dimmed"
+        >{{ new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time>
       </header>
+
       <ContentRenderer
         :value="post"
-        class="prose dark:prose-invert max-w-none"
+        class="article-body prose prose-neutral dark:prose-invert mt-12 max-w-none prose-headings:font-sans prose-headings:font-semibold prose-a:font-medium prose-pre:border prose-pre:border-default prose-pre:bg-muted"
       />
     </article>
-  </div>
+  </UContainer>
 </template>

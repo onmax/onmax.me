@@ -1,13 +1,15 @@
 <script setup lang="ts">
+useHead({
+  link: [{ rel: 'canonical', href: 'https://onmax.me/' }]
+})
 </script>
 
 <template>
-  <div class="px-6">
+  <div>
     <Hero />
     <Projects />
     <BlogPosts />
     <About />
     <ContactForm />
-    <SiteFooter />
   </div>
 </template>

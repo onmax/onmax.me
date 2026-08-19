@@ -3,9 +3,22 @@ const { data: posts } = await useAsyncData('posts', () =>
   queryCollection('posts').order('publishedAt', 'DESC').all()
 )
 
+const title = 'Writing — Maxi García'
+const description = 'Notes on Nuxt, frontend architecture, open source, and developer tooling.'
+
 useSeoMeta({
-  title: 'Writing — Maxi García',
-  description: 'Notes on Nuxt, frontend architecture, open source, and developer tooling.'
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: 'https://onmax.me/maxi-og-image.png',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: 'https://onmax.me/maxi-og-image.png'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://onmax.me/posts' }]
 })
 </script>
 

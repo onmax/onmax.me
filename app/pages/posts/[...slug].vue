@@ -8,9 +8,23 @@ if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 
+const title = `${post.value.title} — Maxi García`
+const description = post.value.description
+const canonical = `https://onmax.me${post.value.path}`
+
 useSeoMeta({
-  title: `${post.value.title} — Maxi García`,
-  description: post.value.description
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: 'https://onmax.me/maxi-og-image.png',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: 'https://onmax.me/maxi-og-image.png'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: canonical }]
 })
 </script>
 

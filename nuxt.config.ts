@@ -7,10 +7,10 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/posts/**': { prerender: true },
-    '/hire': { redirect: { to: '/', statusCode: 302 } }
+    '/hire': { redirect: { to: '/', statusCode: 301 } }
   },
   compatibilityDate: '2025-01-15',
-  nitro: { prerender: { crawlLinks: true } },
+  nitro: { prerender: { crawlLinks: true, ignore: ['/hire'] } },
   hub: { db: 'sqlite' },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }
@@ -31,6 +31,7 @@ export default defineNuxtConfig({
         'lucide:hash',
         'lucide:menu',
         'lucide:orbit',
+        'lucide:x',
         'simple-icons:betterauth',
         'simple-icons:nuxtdotjs',
         'simple-icons:vite'

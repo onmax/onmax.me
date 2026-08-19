@@ -3,8 +3,8 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const navigation: NavigationMenuItem[] = [
   { label: 'Work', to: '/work' },
-  { label: 'Writing', to: '/#writing' },
-  { label: 'About', to: '/#about' }
+  { label: 'Writing', to: '/#writing', active: false },
+  { label: 'About', to: '/#about', active: false }
 ]
 
 useHead({
@@ -45,6 +45,7 @@ useSeoMeta({
     <UHeader
       title="Hola, I'm Maxi"
       :toggle="{ color: 'neutral', variant: 'ghost' }"
+      :menu="{ title: 'Navigation', description: 'Main navigation' }"
       class="sticky top-0 z-50 border-b border-default bg-default/90 backdrop-blur-xl"
       :ui="{
         container: 'h-16 max-w-6xl',

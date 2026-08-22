@@ -2,6 +2,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const navigation: NavigationMenuItem[] = [
+  { label: 'AI workflows', to: '/ai-workflows' },
   { label: 'Work', to: '/work' },
   { label: 'Writing', to: '/#writing', active: false },
   { label: 'About', to: '/#about', active: false }

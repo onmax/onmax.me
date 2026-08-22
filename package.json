@@ -30,7 +30,8 @@
     "eslint": "^9.39.2",
     "sharp": "^0.34.5",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.1"
+    "vue-tsc": "^3.2.1",
+    "wrangler": "^4.125.0"
   },
   "packageManager": "pnpm@10.26.1",
   "pnpm": {

@@ -6,11 +6,15 @@ export default defineNuxtConfig({
   srcDir: 'app/',
   routeRules: {
     '/': { prerender: true },
+    '/ai-workflows': { prerender: true },
     '/posts/**': { prerender: true },
     '/hire': { redirect: { to: '/', statusCode: 301 } }
   },
   compatibilityDate: '2025-01-15',
-  nitro: { prerender: { crawlLinks: true, ignore: ['/hire'] } },
+  nitro: {
+    preset: 'cloudflare-module',
+    prerender: { crawlLinks: true, ignore: ['/hire'] }
+  },
   hub: { db: 'sqlite' },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }

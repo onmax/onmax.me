@@ -6,8 +6,6 @@ const navigation = [
   { label: 'Contact', to: '/#contact', class: 'hidden sm:inline' }
 ]
 
-const route = useRoute()
-
 useHead({
   meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
   link: [
@@ -19,16 +17,16 @@ useHead({
   htmlAttrs: { lang: 'en' }
 })
 
-const title = 'Maxi García — Senior Nuxt/Vue Engineer'
-const description = 'Senior Nuxt/Vue engineer building production frontend systems, open-source tools, and focused consulting engagements.'
+const title = 'Maxi García — Nuxt & Agent Engineer'
+const description = 'Nuxt and agent engineer in Copenhagen. I build product interfaces, AI agents, and the automations that tie them together.'
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: '/maxi-og-image.png',
-  twitterImage: '/maxi-og-image.png',
+  ogImage: 'https://onmax.me/maxi-og-image.png',
+  twitterImage: 'https://onmax.me/maxi-og-image.png',
   twitterCard: 'summary_large_image'
 })
 </script>
@@ -69,8 +67,7 @@ useSeoMeta({
 
       <main
         id="main-content"
-        class="w-full flex-1"
-        :class="{ 'mx-auto max-w-2xl px-6': !route.meta.wide }"
+        class="mx-auto w-full max-w-2xl flex-1 px-6"
       >
         <NuxtPage />
       </main>

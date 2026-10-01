@@ -50,7 +50,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <UForm
     :schema="schema"
     :state="state"
-    class="w-full max-w-2xl lg:ml-auto"
+    class="space-y-4"
     @error="onError"
     @submit="onSubmit"
   >
@@ -64,7 +64,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       class="absolute -left-[9999px]"
     >
 
-    <div class="grid gap-5 sm:grid-cols-2">
+    <div class="grid gap-4 sm:grid-cols-2">
       <UFormField
         label="Work email"
         name="email"
@@ -75,7 +75,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           placeholder="you@company.com"
           autocomplete="email"
           :spellcheck="false"
-          size="lg"
           class="w-full"
         />
       </UFormField>
@@ -88,7 +87,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           v-model="state.company"
           placeholder="Company name"
           autocomplete="organization"
-          size="lg"
           class="w-full"
         />
       </UFormField>
@@ -97,14 +95,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UFormField
       label="What happens today?"
       name="workflow"
-      class="mt-5"
-      help="Describe the trigger, manual steps, and tools involved."
     >
       <UTextarea
         v-model="state.workflow"
         placeholder="A request arrives by email, then someone…"
         autocomplete="off"
-        :rows="6"
+        :rows="4"
         autoresize
         class="w-full"
       />
@@ -113,31 +109,29 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UButton
       type="submit"
       color="neutral"
-      size="lg"
-      trailing-icon="i-lucide-arrow-right"
       :loading="submitting"
-      class="mt-7 w-full justify-center sm:w-auto"
+      class="transition-transform active:scale-[0.97]"
     >
-      Review one workflow
+      Send
     </UButton>
 
     <p
       v-if="submitted"
       role="status"
-      class="mt-4 text-sm font-medium text-success"
+      class="text-sm text-success"
     >
       Thank you. Your workflow is in my inbox.
     </p>
     <p
       v-else-if="submitError"
       role="alert"
-      class="mt-4 text-sm font-medium text-error"
+      class="text-sm text-error"
     >
       {{ submitError }}
     </p>
     <p
       v-else
-      class="mt-4 text-xs leading-5 text-muted"
+      class="text-xs leading-5 text-dimmed"
     >
       I reply personally. If a standard tool is the better answer, I'll say so.
     </p>

@@ -59,7 +59,7 @@ const selectedProof = proof.items.slice(0, 4)
             </UButton>
           </div>
           <p class="mt-5 text-sm text-dimmed">
-            {{ hero.note }} Based in Sweden, working remotely.
+            {{ hero.note }} Based in Denmark, working remotely.
           </p>
         </div>
 

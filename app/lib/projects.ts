@@ -1,15 +1,15 @@
 export const featuredProjects = [
   {
     title: 'Quiver',
-    description: 'Forecasting and inventory planning software that turns complex operational data into usable decisions.',
+    description: 'Forecasting and inventory planning',
     href: 'https://www.quiver.dk',
-    detail: 'Product engineering',
+    detail: 'Engineer',
     logo: '/logos/quiver.svg',
     icon: 'i-lucide-chart-spline'
   },
   {
     title: 'Nuxt ecosystem',
-    description: 'Framework, module, UI, content, tooling, and documentation work across the official Nuxt organizations.',
+    description: 'Core, UI, Content, and modules',
     href: 'https://nuxters.nuxt.com/onmax',
     detail: '250+ merged PRs',
     logo: null,
@@ -17,15 +17,15 @@ export const featuredProjects = [
   },
   {
     title: 'Better Auth for Nuxt',
-    description: 'A Nuxt-native integration for Better Auth, including route protection and SSR-safe sessions.',
+    description: 'Auth module with SSR-safe sessions',
     href: 'https://better-auth.nuxt.dev',
-    detail: 'Module maintainer',
+    detail: 'Maintainer',
     logo: null,
     icon: 'i-simple-icons-betterauth'
   },
   {
     title: 'ViteHub',
-    description: 'Portable agents and server primitives for Vite applications, composed through one plugin.',
+    description: 'Agents and server primitives for Vite',
     href: 'https://vitehub.dev',
     detail: 'Creator',
     logo: '/logos/vitehub.svg',
@@ -33,17 +33,17 @@ export const featuredProjects = [
   },
   {
     title: 'Nimiq',
-    description: 'Production products and shared frontend foundations built across four years in the Nimiq ecosystem.',
+    description: 'Wallet, payments, and shared UI',
     href: 'https://nimiq.com',
-    detail: 'Frontend engineering',
+    detail: 'Frontend engineer',
     logo: '/logos/nimiq.svg',
     icon: 'i-lucide-orbit'
   },
   {
     title: 'Cactus',
-    description: 'A native macOS focus product, designed and shipped from system enforcement through customer experience.',
+    description: 'Website blocker for macOS',
     href: 'https://usecactus.app',
-    detail: 'Independent product',
+    detail: 'Founder',
     logo: '/logos/cactus.svg',
     icon: 'i-lucide-focus'
   }

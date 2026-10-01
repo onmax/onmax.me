@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-
-const navigation: NavigationMenuItem[] = [
+const navigation = [
   { label: 'AI workflows', to: '/ai-workflows' },
   { label: 'Work', to: '/work' },
-  { label: 'Writing', to: '/#writing', active: false },
-  { label: 'About', to: '/#about', active: false }
+  { label: 'Writing', to: '/posts' },
+  { label: 'Contact', to: '/#contact' }
 ]
 
 useHead({
@@ -14,10 +12,7 @@ useHead({
     { rel: 'icon', href: '/favicon.svg' },
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-    {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap'
-    }
+    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap' }
   ],
   htmlAttrs: { lang: 'en' }
 })
@@ -43,61 +38,40 @@ useSeoMeta({
       class="fixed left-4 top-4 z-[60] -translate-y-24 rounded-md bg-inverted px-4 py-2 text-sm text-inverted transition-transform focus:translate-y-0"
     >Skip to content</a>
 
-    <UHeader
-      title="Hola, I'm Maxi"
-      :toggle="{ color: 'neutral', variant: 'ghost' }"
-      :menu="{ title: 'Navigation', description: 'Main navigation' }"
-      class="sticky top-0 z-50 border-b border-default bg-default/90 backdrop-blur-xl"
-      :ui="{
-        container: 'h-16 max-w-6xl',
-        title: 'font-semibold tracking-[-0.03em]'
-      }"
-    >
-      <template #title>
-        <span>Hola, I'm Maxi</span>
-      </template>
-
-      <UNavigationMenu
-        :items="navigation"
-        color="neutral"
-        variant="link"
-        class="hidden md:flex"
-      />
-
-      <template #right>
-        <UButton
-          to="/#contact"
-          color="neutral"
-          trailing-icon="i-lucide-arrow-up-right"
-          class="hidden sm:inline-flex"
+    <div class="mx-auto flex min-h-svh max-w-2xl flex-col px-6">
+      <header class="flex h-20 items-center justify-between text-sm">
+        <NuxtLink
+          to="/"
+          class="font-medium text-highlighted"
+        >Maxi García</NuxtLink>
+        <nav
+          aria-label="Main navigation"
+          class="flex items-center gap-5"
         >
-          Work with me
-        </UButton>
-      </template>
+          <NuxtLink
+            v-for="item in navigation"
+            :key="item.to"
+            :to="item.to"
+            class="text-muted transition-colors hover:text-highlighted"
+            :active-class="item.to.includes('#') ? '' : 'text-highlighted'"
+          >
+            {{ item.label }}
+          </NuxtLink>
+          <UColorModeButton
+            size="xs"
+            class="-mr-1.5 text-muted"
+          />
+        </nav>
+      </header>
 
-      <template #body>
-        <UNavigationMenu
-          :items="navigation"
-          orientation="vertical"
-          color="neutral"
-          class="-mx-2"
-        />
-        <UButton
-          to="/#contact"
-          color="neutral"
-          trailing-icon="i-lucide-arrow-up-right"
-          block
-          class="mt-6"
-        >
-          Work with me
-        </UButton>
-      </template>
-    </UHeader>
+      <main
+        id="main-content"
+        class="flex-1"
+      >
+        <NuxtPage />
+      </main>
 
-    <main id="main-content">
-      <NuxtPage />
-    </main>
-
-    <SiteFooter />
+      <SiteFooter />
+    </div>
   </UApp>
 </template>

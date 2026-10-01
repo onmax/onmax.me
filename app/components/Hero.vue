@@ -1,94 +1,84 @@
 <template>
-  <section class="relative overflow-hidden border-b border-default">
-    <div
-      aria-hidden="true"
-      class="site-grid absolute inset-0 opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent_88%)]"
-    />
-
-    <UContainer class="relative grid min-h-[calc(100svh-4rem)] items-end gap-16 py-16 lg:grid-cols-[minmax(0,1fr)_17rem] lg:py-24">
-      <div class="page-enter max-w-4xl">
-        <p class="eyebrow mb-8 flex items-center gap-3">
-          <span class="relative flex size-2">
-            <span class="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60" />
-            <span class="relative inline-flex size-2 rounded-full bg-success" />
-          </span>
-          Available for focused projects
-        </p>
-
-        <h1 class="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.06em] text-highlighted sm:text-7xl lg:text-[5.75rem]">
-          I build production
-          <span class="display-serif font-normal italic tracking-[-0.035em]">Nuxt systems</span>
-          and the tools behind them.
+  <section class="pb-6 pt-12 sm:pt-20">
+    <div class="enter flex items-center gap-4">
+      <NuxtImg
+        src="/images/hire/maxi-founder.jpg"
+        alt="Maxi García"
+        width="96"
+        height="96"
+        class="size-12 rounded-full object-cover ring-1 ring-default"
+        preload
+      />
+      <div class="text-sm">
+        <h1 class="font-medium text-highlighted">
+          Maxi García
+          <UPopover :content="{ side: 'top', sideOffset: 6 }">
+            <button
+              type="button"
+              class="ml-1 cursor-help font-normal text-dimmed underline decoration-dotted decoration-1 underline-offset-4 transition-colors hover:text-muted"
+            >
+              ยินดีที่ได้รู้จัก
+            </button>
+            <template #content>
+              <p class="max-w-56 px-3 py-2 text-xs leading-5 text-muted">
+                <span class="text-highlighted">Yin dee tee dai roo jak</span>, "nice to meet you". I'm learning Thai, one word at a time.
+              </p>
+            </template>
+          </UPopover>
         </h1>
-
-        <p class="mt-8 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-          Hola, I’m Maxi García. I help teams untangle frontend architecture, ship difficult migrations, and turn rough product ideas into maintainable software.
+        <p class="text-muted">
+          Nuxt &amp; agent engineer in Copenhagen, Denmark
         </p>
-
-        <div class="mt-10 flex flex-wrap gap-3">
-          <UButton
-            to="#work"
-            color="neutral"
-            size="lg"
-            trailing-icon="i-lucide-arrow-down"
-          >
-            See my work
-          </UButton>
-          <UButton
-            to="/#contact"
-            color="neutral"
-            variant="outline"
-            size="lg"
-            trailing-icon="i-lucide-arrow-up-right"
-          >
-            Work with me
-          </UButton>
-        </div>
       </div>
+    </div>
 
-      <figure class="page-enter page-enter-delay justify-self-start lg:justify-self-end">
-        <div class="relative w-44 overflow-hidden rounded-2xl border border-default bg-elevated p-1 shadow-sm lg:w-56">
-          <NuxtImg
-            src="/images/hire/maxi-founder.jpg"
-            alt="Maxi García"
-            width="440"
-            height="520"
-            class="aspect-[4/4.7] w-full rounded-[calc(var(--ui-radius)*1.35)] object-cover grayscale transition-[filter] duration-500 hover:grayscale-0"
-            preload
-          />
-        </div>
-        <figcaption class="mt-4 flex items-start justify-between gap-6 text-sm">
-          <span class="font-medium text-highlighted">Maxi García</span>
-          <span class="text-right text-muted">Malmö, Sweden<br>หมีน้อย</span>
-        </figcaption>
-      </figure>
-
-      <dl class="col-span-full grid border-t border-default sm:grid-cols-3">
-        <div class="py-5 sm:pr-6">
-          <dt class="eyebrow">
-            Role
-          </dt>
-          <dd class="mt-2 text-sm text-highlighted">
-            Senior Nuxt/Vue engineer
-          </dd>
-        </div>
-        <div class="border-default py-5 sm:border-x sm:px-6">
-          <dt class="eyebrow">
-            Focus
-          </dt>
-          <dd class="mt-2 text-sm text-highlighted">
-            Architecture, migrations, developer tools
-          </dd>
-        </div>
-        <div class="py-5 sm:pl-6">
-          <dt class="eyebrow">
-            Approach
-          </dt>
-          <dd class="mt-2 text-sm text-highlighted">
-            Small PRs, direct evidence, clean handoff
-          </dd>
-        </div>
-      </dl>
-    </UContainer>
+    <div
+      class="enter mt-10 space-y-5 text-[15px] leading-7 text-muted"
+      style="--i: 1"
+    >
+      <p>
+        I build product interfaces, AI agents, and the automations that tie them together, mostly with Nuxt and Vue. Right now I work on forecasting and inventory planning at
+        <a
+          href="https://www.quiver.dk"
+          target="_blank"
+          rel="noreferrer"
+          class="link"
+        >Quiver</a>.
+      </p>
+      <p>
+        I'm part of the
+        <a
+          href="https://nuxters.nuxt.com/onmax"
+          target="_blank"
+          rel="noreferrer"
+          class="link"
+        >Nuxt ecosystem team</a>, maintain
+        <a
+          href="https://better-auth.nuxt.dev"
+          target="_blank"
+          rel="noreferrer"
+          class="link"
+        >Better Auth for Nuxt</a>, and created
+        <a
+          href="https://vitehub.dev"
+          target="_blank"
+          rel="noreferrer"
+          class="link"
+        >ViteHub</a>. Before that I spent four years building products at
+        <a
+          href="https://nimiq.com"
+          target="_blank"
+          rel="noreferrer"
+          class="link"
+        >Nimiq</a>.
+      </p>
+      <p>
+        I also build for hire, and not just Nuxt: websites, servers, internal tools, or an agent that takes a whole process off your plate. If it runs on a computer, I'd love to hear about it.
+        <NuxtLink
+          to="/#contact"
+          class="link"
+        >Get in touch</NuxtLink>.
+      </p>
+    </div>
   </section>
 </template>

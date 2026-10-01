@@ -29,76 +29,65 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <section
     id="contact"
-    class="py-24 sm:py-32"
+    class="enter py-10"
+    style="--i: 4"
   >
-    <UContainer>
-      <div class="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,32rem)] lg:gap-24">
-        <div>
-          <p class="eyebrow">
-            Contact
-          </p>
-          <h2 class="mt-4 max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.05em] text-highlighted sm:text-5xl">
-            Have a difficult Nuxt problem?
-            <span class="display-serif font-normal italic">Send the context.</span>
-          </h2>
-          <p class="mt-6 max-w-xl text-base leading-7 text-muted">
-            A repository link, the behavior you want, and the constraint holding the team back are enough for a useful first conversation.
-          </p>
-          <a
-            href="mailto:hello@onmax.me"
-            class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-highlighted underline decoration-muted underline-offset-4 hover:decoration-highlighted"
-          >
-            hello@onmax.me
-            <UIcon
-              name="i-lucide-arrow-up-right"
-              class="size-4"
-            />
-          </a>
-        </div>
+    <h2 class="mb-3 text-sm text-dimmed">
+      Contact
+    </h2>
+    <p class="text-[15px] leading-7 text-muted">
+      Have something you want built? Email
+      <a
+        href="mailto:hello@onmax.me"
+        class="link"
+      >hello@onmax.me</a>,
+      <a
+        href="https://cal.com/onmax"
+        target="_blank"
+        rel="noreferrer"
+        class="link"
+      >book a call</a>,
+      or leave a note. A few lines about the idea is plenty to start.
+    </p>
 
-        <UForm
-          :schema="schema"
-          :state="state"
-          class="rounded-xl border border-default bg-elevated p-6 sm:p-8"
-          @submit="onSubmit"
-        >
-          <UFormField
-            label="Your email"
-            name="email"
-          >
-            <UInput
-              v-model="state.email"
-              type="email"
-              placeholder="you@company.com"
-              size="lg"
-              class="w-full"
-            />
-          </UFormField>
+    <UForm
+      :schema="schema"
+      :state="state"
+      class="mt-6 space-y-4"
+      @submit="onSubmit"
+    >
+      <UFormField
+        label="Email"
+        name="email"
+      >
+        <UInput
+          v-model="state.email"
+          type="email"
+          placeholder="you@company.com"
+          class="w-full"
+        />
+      </UFormField>
 
-          <UFormField
-            label="What are you trying to ship?"
-            name="message"
-            class="mt-5"
-          >
-            <UTextarea
-              v-model="state.message"
-              placeholder="We have a Nuxt app that…"
-              :rows="6"
-              autoresize
-              class="w-full"
-            />
-          </UFormField>
+      <UFormField
+        label="Message"
+        name="message"
+      >
+        <UTextarea
+          v-model="state.message"
+          placeholder="I want to build…"
+          :rows="4"
+          autoresize
+          class="w-full"
+        />
+      </UFormField>
 
-          <UButton
-            type="submit"
-            color="neutral"
-            trailing-icon="i-lucide-arrow-right"
-            class="mt-6"
-          >
-            Send message
-          </UButton>
-        </UForm>
-      </div>
-    </UContainer>
+      <UButton
+        type="submit"
+        color="neutral"
+        class="active:scale-[0.97] transition-transform"
+      >
+        Send
+      </UButton>
+    </UForm>
   </section>
 </template>

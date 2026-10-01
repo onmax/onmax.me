@@ -1,39 +1,30 @@
 <script setup lang="ts">
 const year = new Date().getFullYear()
+
+const links = [
+  { label: 'GitHub', href: 'https://github.com/onmax' },
+  { label: 'X', href: 'https://x.com/_onmax' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/maximo-garcia-martinez' },
+  { label: 'Contributions', href: 'https://prs.onmax.me' },
+  { label: 'CV', href: '/maxi-garcia_cv.pdf' }
+]
 </script>
 
 <template>
-  <footer class="border-t border-default py-8">
-    <UContainer class="flex flex-col justify-between gap-6 text-sm sm:flex-row sm:items-center">
-      <p class="text-muted">
-        © {{ year }} Maxi García. Built with Nuxt.
-      </p>
-      <nav
-        aria-label="Footer navigation"
-        class="flex flex-wrap gap-x-6 gap-y-3"
-      >
-        <a
-          href="https://github.com/onmax"
-          target="_blank"
-          rel="noreferrer"
-          class="text-muted transition-colors hover:text-highlighted"
-        >GitHub</a>
-        <a
-          href="https://prs.onmax.me"
-          target="_blank"
-          rel="noreferrer"
-          class="text-muted transition-colors hover:text-highlighted"
-        >Contributions</a>
-        <a
-          href="/maxi-garcia_cv.pdf"
-          target="_blank"
-          class="text-muted transition-colors hover:text-highlighted"
-        >CV</a>
-        <NuxtLink
-          to="/#contact"
-          class="font-semibold text-highlighted"
-        >Hire me</NuxtLink>
-      </nav>
-    </UContainer>
+  <footer class="mt-16 flex flex-col gap-3 border-t border-default py-8 text-sm text-dimmed sm:flex-row sm:items-center sm:justify-between">
+    <p>© {{ year }} Maxi García</p>
+    <nav
+      aria-label="Footer navigation"
+      class="flex flex-wrap gap-x-5 gap-y-2"
+    >
+      <a
+        v-for="link in links"
+        :key="link.label"
+        :href="link.href"
+        target="_blank"
+        rel="noreferrer"
+        class="transition-colors hover:text-highlighted"
+      >{{ link.label }}</a>
+    </nav>
   </footer>
 </template>

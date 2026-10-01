@@ -8,6 +8,7 @@
 
 :root {
   --ui-radius: 0.125rem;
+  --ui-container: var(--container-6xl);
   --ui-bg: #fff;
   --ui-bg-muted: oklch(0.97 0 0);
   --ui-bg-elevated: oklch(0.985 0 0);

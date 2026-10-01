@@ -1,7 +1,5 @@
 <script setup lang="ts">
-definePageMeta({
-  colorMode: 'light'
-})
+definePageMeta({ wide: true })
 
 const heroLinks = [
   {
@@ -96,7 +94,7 @@ useHead({
         />
         <figcaption class="mt-4 flex items-start justify-between gap-4 text-sm">
           <span class="font-medium text-highlighted">Maxi García</span>
-          <span class="text-right text-muted">Malmö, Sweden<br>Copenhagen area</span>
+          <span class="text-right text-muted">Copenhagen, Denmark</span>
         </figcaption>
       </figure>
     </UPageHero>

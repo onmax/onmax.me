@@ -29,45 +29,33 @@ useHead({
 </script>
 
 <template>
-  <UContainer class="py-16 sm:py-24">
-    <article
-      v-if="post"
-      class="mx-auto max-w-3xl"
-    >
-      <NuxtLink
-        to="/posts"
-        class="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-highlighted"
-      >
-        <UIcon
-          name="i-lucide-arrow-left"
-          class="size-4"
-        />
-        All writing
-      </NuxtLink>
-
-      <header class="page-enter mt-12 border-b border-default pb-10">
-        <p class="eyebrow">
-          Field note
-        </p>
-        <h1 class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.05em] text-highlighted sm:text-6xl">
-          {{ post.title }}
-        </h1>
-        <p
-          v-if="post.description"
-          class="mt-6 text-lg leading-8 text-muted"
-        >
-          {{ post.description }}
-        </p>
+  <article
+    v-if="post"
+    class="pt-12 sm:pt-20"
+  >
+    <header class="enter">
+      <h1 class="text-2xl font-semibold tracking-tight text-highlighted text-balance">
+        {{ post.title }}
+      </h1>
+      <p class="mt-2 text-sm text-dimmed">
         <time
           v-if="post.publishedAt"
-          class="mt-7 block font-mono text-xs uppercase tracking-[0.1em] text-dimmed"
-        >{{ new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time>
-      </header>
+          class="tabular-nums"
+        >{{ formatDate(post.publishedAt, 'long') }}</time>
+      </p>
+    </header>
 
-      <ContentRenderer
-        :value="post"
-        class="article-body prose prose-neutral dark:prose-invert mt-12 max-w-none prose-headings:font-sans prose-headings:font-semibold prose-a:font-medium prose-pre:border prose-pre:border-default prose-pre:bg-muted"
-      />
-    </article>
-  </UContainer>
+    <ContentRenderer
+      :value="post"
+      class="article-body enter mt-10"
+      style="--i: 1"
+    />
+
+    <NuxtLink
+      to="/posts"
+      class="link mt-12 inline-block text-sm"
+    >
+      All writing
+    </NuxtLink>
+  </article>
 </template>

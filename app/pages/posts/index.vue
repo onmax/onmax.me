@@ -23,48 +23,41 @@ useHead({
 </script>
 
 <template>
-  <UContainer class="py-20 sm:py-28">
-    <header class="page-enter max-w-3xl">
-      <p class="eyebrow">
+  <div class="pt-12 sm:pt-20">
+    <header class="enter">
+      <h1 class="text-sm font-medium text-highlighted">
         Writing
-      </p>
-      <h1 class="mt-5 text-5xl font-semibold tracking-[-0.055em] text-highlighted sm:text-7xl">
-        Notes from
-        <span class="display-serif font-normal italic">building.</span>
       </h1>
-      <p class="mt-6 max-w-xl text-lg leading-8 text-muted">
+      <p class="mt-4 text-[15px] leading-7 text-muted">
         Nuxt, interface systems, open source, and the occasional argument with my own assumptions.
       </p>
     </header>
 
-    <ol class="mt-16 border-t border-default">
+    <ul
+      class="enter mt-8"
+      style="--i: 1"
+    >
       <li
-        v-for="(post, index) in posts"
+        v-for="post in posts"
         :key="post.path"
-        class="border-b border-default"
       >
         <NuxtLink
           :to="post.path"
-          class="group grid gap-4 py-8 sm:grid-cols-[3rem_minmax(0,1fr)_12rem_auto] sm:items-center sm:gap-6"
+          class="row block py-3 text-sm"
         >
-          <span class="eyebrow">{{ String(index + 1).padStart(2, '0') }}</span>
-          <span>
-            <span class="block text-xl font-semibold tracking-[-0.03em] text-highlighted">{{ post.title }}</span>
-            <span
-              v-if="post.description"
-              class="mt-2 block max-w-2xl text-sm leading-6 text-muted"
-            >{{ post.description }}</span>
+          <span class="flex items-baseline justify-between gap-6">
+            <span class="font-medium text-highlighted">{{ post.title }}</span>
+            <time
+              v-if="post.publishedAt"
+              class="shrink-0 tabular-nums text-dimmed"
+            >{{ formatDate(post.publishedAt) }}</time>
           </span>
-          <time
-            v-if="post.publishedAt"
-            class="text-sm text-dimmed"
-          >{{ new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</time>
-          <UIcon
-            name="i-lucide-arrow-right"
-            class="size-4 text-dimmed transition-transform group-hover:translate-x-1"
-          />
+          <span
+            v-if="post.description"
+            class="mt-1 block text-muted"
+          >{{ post.description }}</span>
         </NuxtLink>
       </li>
-    </ol>
-  </UContainer>
+    </ul>
+  </div>
 </template>

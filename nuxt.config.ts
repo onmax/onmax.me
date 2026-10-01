@@ -1,5 +1,7 @@
 export default defineNuxtConfig({
   modules: ['@nuxthub/core', '@nuxt/eslint', '@nuxt/ui', '@nuxt/content', '@nuxt/icon', '@nuxt/image'],
+  // Cloudflare resizing only exists on the deployed domain
+  $development: { image: { provider: 'ipx' } },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   // Source lives in /app (pages, components, app.vue, etc.)
@@ -33,9 +35,9 @@ export default defineNuxtConfig({
         'lucide:copy',
         'lucide:focus',
         'lucide:hash',
-        'lucide:menu',
+        'lucide:moon',
         'lucide:orbit',
-        'lucide:x',
+        'lucide:sun',
         'simple-icons:betterauth',
         'simple-icons:nuxtdotjs',
         'simple-icons:vite'

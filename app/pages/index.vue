@@ -9,7 +9,6 @@ useHead({
     <Hero />
     <Projects />
     <BlogPosts />
-    <About />
     <ContactForm />
   </div>
 </template>

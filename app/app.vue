@@ -43,7 +43,7 @@ useSeoMeta({
         <NuxtLink
           to="/"
           class="shrink-0 font-medium text-highlighted"
-        >Maxi García</NuxtLink>
+        >Hola, I am Maxi!</NuxtLink>
         <nav
           aria-label="Main navigation"
           class="flex items-center gap-4 whitespace-nowrap sm:gap-5"

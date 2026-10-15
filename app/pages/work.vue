@@ -5,8 +5,8 @@ const caseStudies = [
   {
     icon: 'i-lucide-chart-spline',
     logo: '/logos/quiver.svg',
-    image: '/images/work/quiver.svg',
-    imageAlt: 'Isometric planning instrument connecting a forecast curve to inventory bins and purchase risk',
+    image: '/images/work/quiver.webp',
+    imageAlt: 'Detailed mechanical forecasting instrument connecting a demand curve to inventory bins and purchase risk',
     imagePosition: '50% 50%',
     title: 'Quiver',
     summary: 'A planning platform that brings forecasting, purchasing, and inventory risk into one operating surface beyond spreadsheets.',
@@ -18,8 +18,8 @@ const caseStudies = [
   {
     icon: 'i-simple-icons-nuxtdotjs',
     logo: null,
-    image: '/images/work/nuxt-ecosystem.svg',
-    imageAlt: 'Isometric Nuxt core connected to ecosystem modules and developer tools',
+    image: '/images/work/nuxt-ecosystem.webp',
+    imageAlt: 'Detailed modular development workbench with a Nuxt core, framework modules, and developer tools',
     imagePosition: '50% 50%',
     title: 'Nuxt ecosystem',
     summary: 'Improving the framework and tools that production Nuxt teams depend on.',
@@ -31,8 +31,8 @@ const caseStudies = [
   {
     icon: 'i-simple-icons-betterauth',
     logo: null,
-    image: '/images/work/better-auth.svg',
-    imageAlt: 'Isometric authentication gate connecting sessions, route protection, and a secure key',
+    image: '/images/work/better-auth.webp',
+    imageAlt: 'Detailed mechanical authentication gate with a key, session tokens, and route protection',
     imagePosition: '50% 50%',
     title: 'Better Auth for Nuxt',
     summary: 'Making Better Auth feel native inside Nuxt applications.',
@@ -44,8 +44,8 @@ const caseStudies = [
   {
     icon: 'i-simple-icons-vite',
     logo: '/logos/vitehub.svg',
-    image: '/images/work/vitehub.svg',
-    imageAlt: 'Isometric ViteHub runtime connecting one agent hub to multiple deployment hosts',
+    image: '/images/work/vitehub.webp',
+    imageAlt: 'Detailed ViteHub runtime machine routing one agent core to multiple host adapters',
     imagePosition: '50% 50%',
     title: 'ViteHub',
     summary: 'A Vite-native runtime for agents and the server primitives beneath them.',
@@ -57,8 +57,8 @@ const caseStudies = [
   {
     icon: 'i-lucide-orbit',
     logo: '/logos/nimiq.svg',
-    image: '/images/work/nimiq.svg',
-    imageAlt: 'Isometric Nimiq payment network connecting a wallet, coin, and global orbit',
+    image: '/images/work/nimiq.webp',
+    imageAlt: 'Detailed Nimiq payment instrument connecting a wallet, coin rail, merchant terminal, and network globe',
     imagePosition: '50% 50%',
     title: 'Nimiq',
     summary: 'The interfaces and shared systems behind a browser-first crypto payment ecosystem.',
@@ -70,8 +70,8 @@ const caseStudies = [
   {
     icon: 'i-lucide-focus',
     logo: '/logos/cactus.svg',
-    image: '/images/work/cactus.svg',
-    imageAlt: 'Isometric Cactus focus schedule with blocked distractions and a protective cactus',
+    image: '/images/work/cactus.webp',
+    imageAlt: 'Detailed Cactus focus apparatus with a schedule dial, blocking gate, and protective cactus sentinel',
     imagePosition: '50% 50%',
     title: 'Cactus',
     summary: 'A recurring website blocker for macOS, designed to make a focus decision hold automatically.',
@@ -114,12 +114,12 @@ useHead({
       class="enter py-10"
       :style="{ '--i': index + 1 }"
     >
-      <div class="relative aspect-[16/10] overflow-hidden rounded-xl border border-default bg-muted">
+      <div class="group relative aspect-[16/10] overflow-hidden rounded-xl border border-default bg-muted">
         <img
           :src="study.image"
           :alt="study.imageAlt"
           :style="{ objectPosition: study.imagePosition }"
-          class="size-full object-cover"
+          class="size-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.015]"
           loading="lazy"
           decoding="async"
         >

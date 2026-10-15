@@ -5,8 +5,8 @@ const caseStudies = [
   {
     icon: 'i-lucide-chart-spline',
     logo: '/logos/quiver.svg',
-    image: '/images/work/quiver.webp',
-    imageAlt: 'Illustration of a forecast curve moving through inventory',
+    image: '/images/work/quiver.svg',
+    imageAlt: 'Isometric planning instrument connecting a forecast curve to inventory bins and purchase risk',
     imagePosition: '50% 50%',
     title: 'Quiver',
     summary: 'A planning platform that brings forecasting, purchasing, and inventory risk into one operating surface beyond spreadsheets.',
@@ -18,8 +18,8 @@ const caseStudies = [
   {
     icon: 'i-simple-icons-nuxtdotjs',
     logo: null,
-    image: 'https://ipx.nuxt.com/_/assets/landing/deploy.svg',
-    imageAlt: 'Nuxt deployment network connecting hosting providers around the globe',
+    image: '/images/work/nuxt-ecosystem.svg',
+    imageAlt: 'Isometric Nuxt core connected to ecosystem modules and developer tools',
     imagePosition: '50% 50%',
     title: 'Nuxt ecosystem',
     summary: 'Improving the framework and tools that production Nuxt teams depend on.',
@@ -31,8 +31,8 @@ const caseStudies = [
   {
     icon: 'i-simple-icons-betterauth',
     logo: null,
-    image: null,
-    imageAlt: 'Better Auth logo',
+    image: '/images/work/better-auth.svg',
+    imageAlt: 'Isometric authentication gate connecting sessions, route protection, and a secure key',
     imagePosition: '50% 50%',
     title: 'Better Auth for Nuxt',
     summary: 'Making Better Auth feel native inside Nuxt applications.',
@@ -44,8 +44,8 @@ const caseStudies = [
   {
     icon: 'i-simple-icons-vite',
     logo: '/logos/vitehub.svg',
-    image: 'https://vitehub.dev/images/tutorials/agent-layers-flat.png',
-    imageAlt: 'Illustration of ViteHub agent primitives connected to application services',
+    image: '/images/work/vitehub.svg',
+    imageAlt: 'Isometric ViteHub runtime connecting one agent hub to multiple deployment hosts',
     imagePosition: '50% 50%',
     title: 'ViteHub',
     summary: 'A Vite-native runtime for agents and the server primitives beneath them.',
@@ -57,8 +57,8 @@ const caseStudies = [
   {
     icon: 'i-lucide-orbit',
     logo: '/logos/nimiq.svg',
-    image: '/images/work/nimiq-generated.webp',
-    imageAlt: 'Illustration of connected wallet, payment, map, and developer tools in the Nimiq visual language',
+    image: '/images/work/nimiq.svg',
+    imageAlt: 'Isometric Nimiq payment network connecting a wallet, coin, and global orbit',
     imagePosition: '50% 50%',
     title: 'Nimiq',
     summary: 'The interfaces and shared systems behind a browser-first crypto payment ecosystem.',
@@ -70,8 +70,8 @@ const caseStudies = [
   {
     icon: 'i-lucide-focus',
     logo: '/logos/cactus.svg',
-    image: 'https://usecactus.app/_nuxt/cactus-window.BsaOGUmk.webp',
-    imageAlt: 'Cactus protected schedule interface',
+    image: '/images/work/cactus.svg',
+    imageAlt: 'Isometric Cactus focus schedule with blocked distractions and a protective cactus',
     imagePosition: '50% 50%',
     title: 'Cactus',
     summary: 'A recurring website blocker for macOS, designed to make a focus decision hold automatically.',
@@ -115,22 +115,11 @@ useHead({
       :style="{ '--i': index + 1 }"
     >
       <div class="relative aspect-[16/10] overflow-hidden rounded-xl border border-default bg-muted">
-        <div
-          v-if="study.title === 'Better Auth for Nuxt'"
-          class="flex size-full items-center justify-center"
-        >
-          <UIcon
-            name="i-simple-icons-betterauth"
-            class="size-16 text-highlighted"
-          />
-        </div>
         <img
-          v-else
           :src="study.image"
           :alt="study.imageAlt"
           :style="{ objectPosition: study.imagePosition }"
-          class="size-full"
-          :class="study.title === 'Nuxt ecosystem' ? 'object-contain mix-blend-multiply dark:mix-blend-normal' : study.title === 'Cactus' ? 'object-contain p-6' : 'object-cover'"
+          class="size-full object-cover"
           loading="lazy"
           decoding="async"
         >

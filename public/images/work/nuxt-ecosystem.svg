@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img">
+<style>
+:root { --paper:#f7f7f4; --ink:#18212b; --muted:#98a0a8; --line:#d8dde0; --panel:#ffffff; --panel2:#eef1f2; --accent:#00c58e; --accent2:#8a5cf5; }
+@media (prefers-color-scheme: dark) { :root { --paper:#1b1d1f; --ink:#f4f5f2; --muted:#737b83; --line:#394046; --panel:#24282b; --panel2:#30363a; } }
+text { font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing:.08em; }
+.line { fill:none; stroke:var(--line); stroke-width:2; }
+.ink { fill:var(--ink); }
+.muted { fill:var(--muted); }
+</style>
+<defs>
+  <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--paper)"/><stop offset="1" stop-color="var(--panel2)"/></linearGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--panel)"/><stop offset="1" stop-color="var(--panel2)"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#101820" flood-opacity=".14"/></filter>
+  <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" class="line" opacity=".34"/></pattern>
+</defs>
+<rect width="1200" height="750" fill="url(#paper)"/>
+<rect x="36" y="36" width="1128" height="678" rx="24" fill="url(#grid)" opacity=".42"/>
+
+<g opacity=".65"><path d="M300 353c126-234 474-274 632-58 63 86 64 185 23 272" fill="none" stroke="var(--accent)" stroke-width="5" stroke-dasharray="3 18"/><circle cx="300" cy="353" r="8" fill="var(--accent)"/><circle cx="932" cy="567" r="8" fill="var(--accent)"/></g>
+<g filter="url(#shadow)" transform="translate(420 177)">
+  <path d="m0 85 178-74 178 74-178 75Z" fill="var(--panel)" stroke="var(--line)" stroke-width="3"/>
+  <path d="M0 85v228l178 76V160Z" fill="var(--panel2)" stroke="var(--line)" stroke-width="3"/>
+  <path d="m356 85-178 75v229l178-76Z" fill="var(--accent)" opacity=".9" stroke="var(--line)" stroke-width="3"/>
+  <path d="m99 102 80-34 80 34-80 35Z" fill="var(--accent)"/>
+  <path d="m130 100 49-21 49 21-49 21Z" fill="var(--paper)" opacity=".94"/>
+  <path d="M179 79v42" stroke="var(--accent)" stroke-width="6"/>
+  <path d="M157 111 123 250l56 90 56-90-34-139Z" fill="none" stroke="var(--paper)" stroke-width="7" opacity=".95"/>
+  <text x="105" y="373" font-size="17" fill="var(--paper)">NUXT</text>
+</g>
+<g filter="url(#shadow)">
+  <path d="M196 193h158l34 20v110l-34 20H196l-34-20V213Z" fill="var(--panel)" stroke="var(--line)" stroke-width="3"/>
+  <path d="M196 193v20l34 20h158v-20l-34-20Z" fill="var(--accent)" opacity=".82"/>
+  <circle cx="205" cy="270" r="8" fill="var(--accent)"/><path d="M229 270h120M229 291h88" stroke="var(--line)" stroke-width="6" stroke-linecap="round"/>
+</g>
+<g filter="url(#shadow)">
+  <path d="M825 208h178l36 22v118l-36 22H825l-36-22V230Z" fill="var(--panel)" stroke="var(--line)" stroke-width="3"/>
+  <path d="M825 208v22l36 22h178v-22l-36-22Z" fill="var(--accent2)" opacity=".88"/>
+  <path d="M840 284h144M840 306h101" stroke="var(--line)" stroke-width="6" stroke-linecap="round"/><circle cx="817" cy="286" r="8" fill="var(--accent2)"/>
+</g>
+<g transform="translate(250 542)"><path d="M0 20 62 0l62 20-62 21Z" fill="var(--accent)"/><path d="M0 20v74l62 23V41Z" fill="var(--accent)" opacity=".72"/><path d="m124 20-62 21v76l62-23Z" fill="var(--panel2)" stroke="var(--line)" stroke-width="2"/></g>
+<g transform="translate(770 520)"><rect width="260" height="96" rx="12" fill="var(--panel)" stroke="var(--line)" stroke-width="3"/><circle cx="28" cy="28" r="7" fill="var(--accent)"/><path d="M51 28h160M28 56h178" stroke="var(--line)" stroke-width="6" stroke-linecap="round"/><text x="28" y="84" font-size="15" class="muted">CORE / UI / CONTENT</text></g>
+
+</svg>

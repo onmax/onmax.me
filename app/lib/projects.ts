@@ -4,7 +4,7 @@ export const featuredProjects = [
     description: 'Forecasting and inventory planning',
     href: 'https://www.quiver.dk',
     detail: 'Engineer',
-    logo: '/logos/quiver.svg',
+    logo: '/logos/quiver-icon.svg',
     icon: 'i-lucide-chart-spline'
   },
   {

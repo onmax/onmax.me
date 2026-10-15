@@ -4,7 +4,7 @@ import { projectGroups } from '~/lib/projects'
 const caseStudies = [
   {
     icon: 'i-lucide-chart-spline',
-    logo: '/logos/quiver.svg',
+    logo: '/logos/quiver-icon.svg',
     image: '/images/work/quiver.webp',
     imageAlt: 'Quiver dashboard showing a demand forecast, inventory table, stock levels, and stock-out risk',
     imagePosition: '50% 50%',

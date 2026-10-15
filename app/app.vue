@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { TegakiRenderer } from 'tegaki/vue'
+import caveat from 'tegaki/fonts/caveat'
+
 const navigation = [
   { label: 'AI workflows', to: '/ai-workflows' },
   { label: 'Work', to: '/work' },
   { label: 'Writing', to: '/posts' },
   { label: 'Contact', to: '/#contact', class: 'hidden sm:inline' }
 ]
+
+const greeting = 'Hola, I am Maxi!'
+const greetingTime = { mode: 'uncontrolled', duration: 2.2 } as const
 
 useHead({
   meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
@@ -43,7 +49,16 @@ useSeoMeta({
         <NuxtLink
           to="/"
           class="shrink-0 font-medium text-highlighted"
-        >Hola, I am Maxi!</NuxtLink>
+        >
+          <TegakiRenderer
+            :font="caveat"
+            :text="greeting"
+            :time="greetingTime"
+            reduced-motion="user"
+            aria-label="Hola, I am Maxi!"
+            class="inline-block align-middle text-[1.15em]"
+          />
+        </NuxtLink>
         <nav
           aria-label="Main navigation"
           class="flex items-center gap-4 whitespace-nowrap sm:gap-5"

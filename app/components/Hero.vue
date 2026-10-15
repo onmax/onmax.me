@@ -21,7 +21,7 @@
             </button>
             <template #content>
               <p class="max-w-56 px-3 py-2 text-xs leading-5 text-muted">
-                <span class="text-highlighted">Yin dee tee dai roo jak</span>, "nice to meet you". I'm learning Thai, one word at a time.
+                <span class="text-highlighted">Yin dee tee dai roo jak</span>, "nice to meet you".
               </p>
             </template>
           </UPopover>

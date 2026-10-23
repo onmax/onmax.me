@@ -134,7 +134,7 @@ You don't need my tools for this. Two screenshots in the description already cou
 
 ## More than screenshots
 
-I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#md=TdDBasMwDAbge55C-LRBMpI2g9WQ06477LAXUGI1MXOsYKuUrO67j7gr60WX7_-RkNbDhEEusi7UKXOa-56cUyBWHHXqA8NIUeCdvZCX48nBJ1ovsFCABUcqoacjBwL0BvAoFMDhz1o5RmP9CDIRkLHCAZ7m-KyuRco9SPdi-qulIkFVVbBNfZ9FgonnLbQr27caEjRls6szGB5ihkNzg317g97xCAtHyVq_bnp4u9nicB0Dn7yBBG25z9iWTb2x1lqj9ywolv0FpVP_eQWRgqXYqXyvghnDd6cGGwZHCgZ2HDoVyKhr8TXR4yZeyMfHVwQ7TgJ4xrWEyGAFouAaITo-v-QzCq2LXw). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
+I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#preset=charts-performance). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
 
 ## Ask for the beaf
 

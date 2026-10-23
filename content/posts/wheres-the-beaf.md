@@ -5,7 +5,7 @@ publishedAt: 2026-10-23
 image: /images/posts/wheres-the-beaf-og.png
 ---
 
-In January I wrote that [AI writes 100% of my code](https://onmax.me/posts/how-i-use-claude-code). Still true. What changed is my job. These days I'm the designer, the architect, the QA tester and the product manager. Everything except the developer.
+In January I wrote that [AI writes 100% of my code](https://onmax.me/posts/how-i-use-claude-code). Still true. What changed is my job. These days I'm the designer, the architect, the QA tester, the product manager, the tech lead, the release manager, the support desk and, on bad days, the agent's therapist. Everything except the developer.
 
 ## I don't read every line anymore
 

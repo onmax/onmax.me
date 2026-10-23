@@ -11,7 +11,7 @@ In January I wrote that [AI writes 100% of my code](https://onmax.me/posts/how-i
 
 Honestly? I can't. An agent opens a pull request in minutes. If I read every line, I'm the bottleneck.
 
-So I skim, and I ask a lot. Mostly "did you consider doing it this other way?", because an agent usually lands on one solution and stays there. Getting it out of that box is hard. References help a lot too, like how another repo on GitHub already solved the same thing. The better the references, the better the result. And I use a lot of skills, so the agent already knows how I like things before it starts.
+So I skim, and I ask a lot. Mostly "did you consider doing it this other way?", because an agent doesn't have much curiosity. It goes with the first solution it finds, and getting it out of that box is hard. I also read a lot of code from other projects, and I ask my agent about it all the time. Not only to learn, but to bring the good solutions into my own project. And I use a lot of skills, so the agent already knows how I like things before it starts.
 
 When I skim, I look at the big stuff. Is the architecture still OK? Is everything in the right place? Did something weird sneak in? Is it slop? How the code is written, I don't really care anymore. Semicolons or no semicolons, whatever.
 
@@ -22,9 +22,9 @@ What I do care about is what goes in and what comes out:
 - what context the agent gets before it starts
 - what the agent tests with, and what it gets back
 
-If those make sense, the inside usually does too. How do I check them? By trying things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent open a browser with [agent-browser](https://agent-browser.dev) and run scenario after scenario, all the use cases I can think of, and see what breaks. Most runs are boring. Some find bugs. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
+How do I check them? By trying things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent open a browser with [agent-browser](https://agent-browser.dev) and run scenario after scenario, all the use cases I can think of. It runs on my VPS, so I don't watch. I only hear back when something breaks. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
 
-Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. And I hear something else is cooking. *My agents implement new things at insane numbers, every reviewer suffers. Don't expect vacations.*
+Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. My agents implement new things at insane numbers, expecting reviews soon. Delegate everything, verify.
 
 ## A diff is the wrong picture
 
@@ -36,9 +36,9 @@ Forty lines of Tailwind classes won't tell me if the card still fits on a phone.
 
 That's five minutes per pull request when nothing breaks. With ten a day, I end up skipping it.
 
-Screenshots fix that. Put two side by side and I see the problem in a second.
+You know the saying, a picture is worth a thousand words? For UI, two pictures beat the whole diff. Put them side by side and I see the problem in a second.
 
-I got this from Hugo, from the Nuxt team, and his pull requests to [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [one](https://github.com/danielroe/my-bad/pull/18) he shared [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. In [another](https://github.com/danielroe/my-bad/pull/22) he made an interactive before/after design review. And in [this one](https://github.com/danielroe/my-bad/pull/71) his agent put before/after screenshots right in the description. I wanted that on every pull request.
+The first time I saw this was in the work of Hugo, from the Nuxt team, on [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [one pull request](https://github.com/danielroe/my-bad/pull/18) he shared [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. In [another](https://github.com/danielroe/my-bad/pull/22) he made an interactive before/after design review. And in [this one](https://github.com/danielroe/my-bad/pull/71) his agent put before/after screenshots right in the description. I wanted that on every pull request.
 
 ## So, what's a "beaf"?
 
@@ -127,14 +127,14 @@ You don't need my tools for this. Two screenshots in the description already cou
 
 ![Four layers, top to bottom: the pr-evidence skill, comark-annotate, Drop, and ViteHub](/images/posts/beaf-layers.svg)
 
-- The [`pr-evidence`](https://github.com/vite-hub/drop/tree/main/skills/pr-evidence) skill puts it all together. When the agent opens a UI pull request, it takes the screenshots, writes the beaf and comments the link. It comes with Drop's MCP server through the [MCP Skills extension](https://modelcontextprotocol.io/extensions/skills/overview), so a connected agent gets it without installing anything, as long as its client supports skills.
-- [comark-annotate](https://comark.onmax.me/annotate/) draws the boxes, arrows and notes from a few lines of Markdown. I made it for agents first.
+- The [`pr-evidence`](https://github.com/vite-hub/drop/tree/main/skills/pr-evidence) skill puts it all together. When the agent opens a UI pull request, it takes the screenshots, writes the beaf and comments the link. It comes with Drop's MCP server through the [MCP Skills extension](https://modelcontextprotocol.io/extensions/skills/overview).
+- [comark-annotate](https://comark.onmax.me/annotate/) draws the boxes, arrows and notes from a few lines of Markdown. It's one of almost 20 [Comark plugins](https://comark.onmax.me) I've built, mostly for agents to write, like charts, diffs, carousels and file trees. That repo keeps growing, so check it out.
 - [Drop](https://drop.vitehub.dev) is where people comment on the beaf. The agent reads the comments and publishes the next version at the same link.
 - [ViteHub](https://vitehub.dev) is the library under Drop. Drop is [open source](https://github.com/vite-hub/drop), so you can deploy your own and make it your lab.
 
 ## More than screenshots
 
-I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
+I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#md=TdDBasMwDAbge55C-LRBMpI2g9WQ06477LAXUGI1MXOsYKuUrO67j7gr60WX7_-RkNbDhEEusi7UKXOa-56cUyBWHHXqA8NIUeCdvZCX48nBJ1ovsFCABUcqoacjBwL0BvAoFMDhz1o5RmP9CDIRkLHCAZ7m-KyuRco9SPdi-qulIkFVVbBNfZ9FgonnLbQr27caEjRls6szGB5ihkNzg317g97xCAtHyVq_bnp4u9nicB0Dn7yBBG25z9iWTb2x1lqj9ywolv0FpVP_eQWRgqXYqXyvghnDd6cGGwZHCgZ2HDoVyKhr8TXR4yZeyMfHVwQ7TgJ4xrWEyGAFouAaITo-v-QzCq2LXw). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
 
 ## Ask for the beaf
 

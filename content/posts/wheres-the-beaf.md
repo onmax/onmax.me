@@ -11,7 +11,9 @@ In January I wrote that [AI writes 100% of my code](https://onmax.me/posts/how-i
 
 Honestly? I can't. An agent opens a pull request in minutes. If I read every line, I'm the bottleneck.
 
-So I skim. Is the architecture still OK? Is everything in the right place? Did something weird sneak in? Is it slop? That's what I look for. How a function works inside matters way less than it used to. And semicolons are the linter's problem, not mine.
+So I skim, and I ask a lot. Why did you do it like this? What else did you try? What breaks if this is empty? And I use a lot of skills, so the agent already knows how I like things before it starts.
+
+When I skim, I look at the big stuff. Is the architecture still OK? Is everything in the right place? Did something weird sneak in? Is it slop? How the code is written, I don't really care anymore. Semicolons or no semicolons, whatever.
 
 What I do care about is what goes in and what comes out:
 
@@ -20,9 +22,9 @@ What I do care about is what goes in and what comes out:
 - what context the agent gets before it starts
 - what the agent tests with, and what it gets back
 
-If those make sense, the inside usually does too. And to know they make sense, I need tests. Lots of them. The agent writes way more than I ever would. Most are boring. Some find bugs.
+If those make sense, the inside usually does too. And to know they make sense, I need to try things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent run scenario after scenario, all the use cases I can think of, and see what breaks. Most runs are boring. Some find bugs. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
 
-Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster.
+Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. And I hear something else is cooking. Maybe Another Insanely Nice Tool Arrives In Nearly Every Reviewer's Setup.
 
 ## A diff is the wrong picture
 
@@ -36,9 +38,9 @@ Five minutes, if nothing breaks. Ten pull requests a day? Yeah, I skip it. You t
 
 Screenshots fix that. Put two side by side and I see the problem in a second.
 
-I got this from Hugo, from the Nuxt team. Look at his pull requests to [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [this one](https://github.com/danielroe/my-bad/pull/22) he made an interactive before/after design review. In [this one](https://github.com/danielroe/my-bad/pull/71) his agent put before/after screenshots right in the description. I wanted that on every pull request.
+I got this from Hugo, from the Nuxt team, and his pull requests to [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [one](https://github.com/danielroe/my-bad/pull/18) he shared [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. In [another](https://github.com/danielroe/my-bad/pull/22) he made an interactive before/after design review. And in [this one](https://github.com/danielroe/my-bad/pull/71) his agent put before/after screenshots right in the description. I wanted that on every pull request.
 
-## So, what's a beaf?
+## So, what's a "beaf"?
 
 The same screen, (be)fore and (af)ter, side by side, with what changed marked on it. Yes, it's a ["Where's the beef?"](https://www.youtube.com/watch?v=Ug75diEyiA0) pun.
 
@@ -119,24 +121,22 @@ A one-sentence answer per card, each with its doc link.
 
 You get the whole redesign without running anything.
 
-Making one is easy. Take both screenshots the same way, so the only thing that differs is the change. Red box on the problem, green box on the fix. The agent makes it, you just look.
+## How I automated it
 
-Funny thing, it catches the agent too. A green box on something that didn't change? That's a mistake, and I didn't read a single line to find it. And it's cheap. Two screenshots in the description already count.
+You don't need my tools for this. Two screenshots in the description already count. But I got lazy and automated it, in four layers:
 
-## How I make mine
+![Four layers, top to bottom: the pr-evidence skill, comark-annotate, Drop, and ViteHub](/images/posts/beaf-layers.svg)
 
-You don't need my tools for this. But I built some, obviously.
-
-- [comark-annotate](https://comark.onmax.me/annotate/) draws the boxes, arrows and notes from a few lines of Markdown. I made it for agents first ([here's how they use it](https://comark.onmax.me/guide/agents/)).
+- The [`pr-evidence`](https://github.com/vite-hub/drop/tree/main/skills/pr-evidence) skill puts it all together. When the agent opens a UI pull request, it takes the screenshots, writes the beaf and comments the link. It comes with Drop's MCP server through the [MCP Skills extension](https://modelcontextprotocol.io/extensions/skills/overview), so a connected agent gets it without installing anything, as long as its client supports skills.
+- [comark-annotate](https://comark.onmax.me/annotate/) draws the boxes, arrows and notes from a few lines of Markdown. I made it for agents first.
 - [Drop](https://drop.vitehub.dev) is where people comment on the beaf. The agent reads the comments and publishes the next version at the same link.
 - [ViteHub](https://vitehub.dev) is the library under Drop. Drop is [open source](https://github.com/vite-hub/drop), so you can deploy your own and make it your lab.
-- The `pr-evidence` skill puts it all together. When the agent opens a UI pull request, it takes the screenshots, writes the beaf and comments the link.
 
 ## More than screenshots
 
-I'm trying this on other stuff now. A performance fix gets a before/after chart. A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
+I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
 
-## No beaf, no merge (kidding)
+## Ask for the beaf
 
 I still review pull requests without a beaf, don't worry. It's just way easier with one.
 

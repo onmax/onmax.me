@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { Post } from '~~/modules/posts/render'
+
 const route = useRoute()
-const { data: post } = await useFetch(`/api${route.path}`, { key: `post-${route.path}` })
+const { data: post } = await useFetch<Post>(`/api${route.path}`, { key: `post-${route.path}` })
 
 if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })

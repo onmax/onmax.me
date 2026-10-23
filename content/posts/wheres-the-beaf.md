@@ -24,7 +24,7 @@ What I do care about is what goes in and what comes out:
 
 How do I check them? By trying things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent open a browser with [agent-browser](https://agent-browser.dev) and run scenario after scenario, all the use cases I can think of. It runs on my VPS, so I don't watch. I only hear back when something breaks. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
 
-Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. My agents implement new things at insane numbers, expecting reviews soon. Delegate everything, verify.
+Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. My agents implement new things at insane numbers, each requiring scrutiny. Delegation eats vacations.
 
 ## A diff is the wrong picture
 
@@ -38,7 +38,7 @@ That's five minutes per pull request when nothing breaks. With ten a day, I end 
 
 You know the saying, a picture is worth a thousand words? For UI, two pictures beat the whole diff. Put them side by side and I see the problem in a second.
 
-The first time I saw this was in the work of Hugo, from the Nuxt team, on [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [one pull request](https://github.com/danielroe/my-bad/pull/18) he shared [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. In [another](https://github.com/danielroe/my-bad/pull/22) he made an interactive before/after design review. And in [this one](https://github.com/danielroe/my-bad/pull/71) his agent put before/after screenshots right in the description. I wanted that on every pull request.
+The first time I saw this was in the work of Hugo, from the Nuxt team, on [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [one pull request](https://github.com/danielroe/my-bad/pull/18) he shared [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. That's when something clicked for me. I wanted that on every pull request.
 
 ## So, what's a "beaf"?
 

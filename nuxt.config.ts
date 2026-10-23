@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['@nuxthub/core', '@nuxt/eslint', '@nuxt/ui', '@nuxt/content', '@nuxt/icon', '@nuxt/image'],
+  modules: ['@nuxthub/core', '@nuxt/eslint', '@nuxt/ui', '@nuxt/icon', '@nuxt/image'],
   // Cloudflare resizing only exists on the deployed domain
   $development: { image: { provider: 'ipx' } },
   devtools: { enabled: true },

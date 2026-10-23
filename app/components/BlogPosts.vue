@@ -1,10 +1,8 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData('recent-posts', () =>
-  queryCollection('posts')
-    .order('publishedAt', 'DESC')
-    .limit(3)
-    .all()
-)
+const { data: posts } = await useFetch('/api/posts', {
+  key: 'recent-posts',
+  transform: posts => posts.slice(0, 3)
+})
 </script>
 
 <template>

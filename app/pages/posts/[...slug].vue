@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const { data: post } = await useAsyncData(`post-${route.path}`, () =>
-  queryCollection('posts').path(route.path).first()
-)
+const { data: post } = await useFetch(`/api${route.path}`, { key: `post-${route.path}` })
 
 if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
@@ -11,20 +9,24 @@ if (!post.value) {
 const title = `${post.value.title} — Maxi García`
 const description = post.value.description
 const canonical = `https://onmax.me${post.value.path}`
+const image = `https://onmax.me${post.value.image ?? '/maxi-og-image.png'}`
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: 'https://onmax.me/maxi-og-image.png',
+  ogImage: image,
   twitterTitle: title,
   twitterDescription: description,
-  twitterImage: 'https://onmax.me/maxi-og-image.png'
+  twitterImage: image,
+  twitterCard: post.value.image ? 'summary_large_image' : undefined
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: canonical }]
+  link: [{ rel: 'canonical', href: canonical }],
+  // Comark's runtimes for what the post uses, such as annotate's copy button and zoom
+  script: post.value.scripts.map((innerHTML, index) => ({ key: `comark-${index}`, innerHTML, tagPosition: 'bodyClose' }))
 })
 </script>
 
@@ -45,10 +47,10 @@ useHead({
       </p>
     </header>
 
-    <ContentRenderer
-      :value="post"
+    <div
       class="article-body enter mt-10"
       style="--i: 1"
+      v-html="post.html"
     />
 
     <NuxtLink

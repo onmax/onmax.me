@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData('posts', () =>
-  queryCollection('posts').order('publishedAt', 'DESC').all()
-)
+const { data: posts } = await useFetch('/api/posts', { key: 'posts' })
 
 const title = 'Writing — Maxi García'
 const description = 'Notes on Nuxt, frontend architecture, open source, and developer tooling.'

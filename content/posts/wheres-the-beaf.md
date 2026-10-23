@@ -24,7 +24,7 @@ What I do care about is what goes in and what comes out:
 
 How do I check them? By trying things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent open a browser with [agent-browser](https://agent-browser.dev) and run scenario after scenario, all the use cases I can think of. It runs on my VPS, so I don't watch. I only hear back when something breaks. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
 
-Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. My agents implement new things at insane numbers, each requiring scrutiny. Delegation eats vacations.
+Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. My agents implement new things at insane numbers, each requiring scrutiny. Days end verifying.
 
 ## A diff is the wrong picture
 

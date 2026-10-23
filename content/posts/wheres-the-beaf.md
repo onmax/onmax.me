@@ -11,7 +11,7 @@ In January I wrote that [AI writes 100% of my code](https://onmax.me/posts/how-i
 
 Honestly? I can't. An agent opens a pull request in minutes. If I read every line, I'm the bottleneck.
 
-So I skim, and I ask a lot. Why did you do it like this? What else did you try? What breaks if this is empty? And I use a lot of skills, so the agent already knows how I like things before it starts.
+So I skim, and I ask a lot. Mostly "did you consider doing it this other way?", because an agent usually lands on one solution and stays there. Getting it out of that box is hard. References help a lot too, like how another repo on GitHub already solved the same thing. The better the references, the better the result. And I use a lot of skills, so the agent already knows how I like things before it starts.
 
 When I skim, I look at the big stuff. Is the architecture still OK? Is everything in the right place? Did something weird sneak in? Is it slop? How the code is written, I don't really care anymore. Semicolons or no semicolons, whatever.
 
@@ -22,19 +22,19 @@ What I do care about is what goes in and what comes out:
 - what context the agent gets before it starts
 - what the agent tests with, and what it gets back
 
-If those make sense, the inside usually does too. And to know they make sense, I need to try things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent run scenario after scenario, all the use cases I can think of, and see what breaks. Most runs are boring. Some find bugs. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
+If those make sense, the inside usually does too. How do I check them? By trying things. Most of the time that's not a Vitest file or an end-to-end suite. I let the agent open a browser with [agent-browser](https://agent-browser.dev) and run scenario after scenario, all the use cases I can think of, and see what breaks. Most runs are boring. Some find bugs. I'm still picky about which tests get merged and run in CI, though. I don't want test slop either.
 
-Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. And I hear something else is cooking. Maybe Another Insanely Nice Tool Arrives In Nearly Every Reviewer's Setup.
+Reading the diff itself should get easier too. Anthony Fu's [pulls.review](https://pulls.review/) is a cool take on that. It groups and summarizes a pull request's changes so you get through them faster. And I hear something else is cooking. *My agents implement new things at insane numbers, every reviewer suffers. Don't expect vacations.*
 
 ## A diff is the wrong picture
 
-But for UI, even the nicest diff doesn't help much. Forty lines of Tailwind classes won't tell me if the card still fits on a phone. To know, I have to:
+Forty lines of Tailwind classes won't tell me if the card still fits on a phone. To know, I have to:
 
 1. Check out the branch and start the app.
 2. Click to the right page.
 3. Make the window phone-sized.
 
-Five minutes, if nothing breaks. Ten pull requests a day? Yeah, I skip it. You too, I bet.
+That's five minutes per pull request when nothing breaks. With ten a day, I end up skipping it.
 
 Screenshots fix that. Put two side by side and I see the problem in a second.
 

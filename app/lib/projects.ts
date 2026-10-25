@@ -46,6 +46,14 @@ export const featuredProjects = [
     detail: 'Founder',
     logo: '/logos/cactus.svg',
     icon: 'i-lucide-focus'
+  },
+  {
+    title: 'LessonCrate',
+    description: 'TpT store export for Shopify, Etsy, and more',
+    href: 'https://lessoncrate.onmax.me',
+    detail: 'Founder',
+    logo: '/logos/lessoncrate.svg',
+    icon: 'i-lucide-package'
   }
 ] as const
 

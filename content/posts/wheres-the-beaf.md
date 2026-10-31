@@ -134,17 +134,15 @@ You don't need my tools for this. Two screenshots in the description already cou
 
 ## More than screenshots
 
-I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#preset=charts-performance). A support answer gets a little doc with the steps instead of a wall of text. I even asked Opus to teach me my own Nuxt pull request, and it came back with a three-minute video: voiceover, animations synced to every word, and a quiz at the end.
+I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#preset=charts-performance). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me further, so I asked Opus to teach me my own Nuxt pull request. It came back with a three-minute video: voiceover, animations synced to every word, and a quiz at the end.
 
 ::embed{url="https://x.com/_onmax/status/2116191062418997278" title="I asked Opus to teach me my own Nuxt PR"}
 ::
-
-HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
 
 ## Ask for the beaf
 
 I still review pull requests without a beaf, don't worry. It's just way easier with one.
 
-If your agent can open a pull request, it can take two screenshots. Just ask. And next time a UI pull request shows up without any, you know what to say.
+If your agent can open a pull request, it can also take two screenshots, so ask for them in your prompt. And next time a UI pull request shows up without any, you know what to say.
 
 Where's the beaf?

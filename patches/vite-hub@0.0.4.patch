@@ -1,8 +1,19 @@
 diff --git a/dist/nuxt.js b/dist/nuxt.js
-index b5e5694755ddc135ba135432ac10f0b49ea3c317..c7ff13295466ff6ed4b3b4a788c433feb8a82855 100644
+index b5e5694755ddc135ba135432ac10f0b49ea3c317..ef756e13d7f8c8b4a4b9d1548646c608dfbf0c3f 100644
 --- a/dist/nuxt.js
 +++ b/dist/nuxt.js
-@@ -1110,6 +1110,9 @@ const viteHubNuxtModule = async function viteHubNuxtModule(inlineOptions, nuxtIn
+@@ -1100,16 +1100,15 @@ const viteHubNuxtModule = async function viteHubNuxtModule(inlineOptions, nuxtIn
+ 			if (cloudflare.nodeCompat === true) {
+ 				const wrangler = cloudflare.wrangler ??= {};
+ 				const flags = Array.isArray(wrangler.compatibility_flags) ? wrangler.compatibility_flags : [];
+-				if (!flags.includes("no_nodejs_compat_v2")) wrangler.compatibility_flags = [.../* @__PURE__ */ new Set([
+-					...flags,
+-					"nodejs_compat",
+-					"nodejs_compat_v2"
+-				])];
++				if (!flags.includes("no_nodejs_compat_v2")) wrangler.compatibility_flags = [.../* @__PURE__ */ new Set([...flags.filter((flag) => flag !== "nodejs_compat"), "nodejs_compat_v2"])];
+ 			}
+ 		}
  		if (emailPlugin && nuxt.options.dev) installEmailTemplateResolver(config, join(projectRoot, ".vitehub/email/templates"));
  		const alias = config.alias ??= {};
  		for (const [name, path] of Object.entries(generatedAliases)) alias[name] ??= path;

@@ -12,10 +12,11 @@ export default defineNuxtConfig({
     '/posts/**': { prerender: true },
     '/hire': { redirect: { to: '/', statusCode: 301 } }
   },
-  compatibilityDate: '2025-01-15',
+  compatibilityDate: '2026-10-01',
   // The vitehub preset also sets Nitro's preset (cloudflare-module), so nitro.preset stays unset
   nitro: {
-    prerender: { crawlLinks: true, ignore: ['/hire', '/_vitehub'] }
+    // posts/<slug>.html, so Cloudflare serves /posts/<slug> without a trailing-slash redirect, as before
+    prerender: { crawlLinks: true, autoSubfolderIndex: false, ignore: ['/hire', '/_vitehub'] }
   },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }

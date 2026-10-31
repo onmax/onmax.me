@@ -38,7 +38,7 @@ That's five minutes per pull request when nothing breaks. With ten a day, I end 
 
 You know the saying, a picture is worth a thousand words? For UI, two pictures beat the whole diff. Put them side by side and I see the problem in a second.
 
-The first time I saw this was in the work of Hugo, from the Nuxt team, on [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. In [one pull request](https://github.com/danielroe/my-bad/pull/18) he shared [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. That's when something clicked for me. I wanted that on every pull request.
+The first time I saw this was on [my-bad](https://github.com/danielroe/my-bad), a small library for nicer dev-server error pages. [One pull request](https://github.com/danielroe/my-bad/pull/18) came with [a page of error screen ideas](https://my-bad-design-review.vercel.app/) with notes scribbled on top. That's when something clicked for me. I wanted that on every pull request.
 
 ## So, what's a "beaf"?
 
@@ -125,16 +125,21 @@ You get the whole redesign without running anything.
 
 You don't need my tools for this. Two screenshots in the description already count. But I got lazy and automated it, in four layers:
 
-![Four layers, top to bottom: the pr-evidence skill, comark-annotate, Drop, and ViteHub](/images/posts/beaf-layers.svg)
+![Four layers, top to bottom: the before-after-evidence skill, comark-annotate, Drop, and ViteHub](/images/posts/beaf-layers.svg)
 
-- The [`pr-evidence`](https://github.com/vite-hub/drop/tree/main/skills/pr-evidence) skill puts it all together. When the agent opens a UI pull request, it takes the screenshots, writes the beaf and comments the link. It comes with Drop's MCP server through the [MCP Skills extension](https://modelcontextprotocol.io/extensions/skills/overview).
+- The [`before-after-evidence`](https://comark-ui.onmax.me/skills/before-after-evidence/) skill puts it all together. When the agent opens a UI pull request, it takes both screenshots the same way, marks what changed and checks the render. It's one of the [comark-ui skills](https://comark-ui.onmax.me/skills/). Install it with [`npx skills add onmax/comark-ui`](https://github.com/vercel-labs/skills) and pick `before-after-evidence`.
 - [comark-annotate](https://comark.onmax.me/annotate/) draws the boxes, arrows and notes from a few lines of Markdown. It's one of almost 20 [Comark plugins](https://comark.onmax.me) I've built, mostly for agents to write, like charts, diffs, carousels and file trees. That repo keeps growing, so check it out.
 - [Drop](https://drop.vitehub.dev) is where people comment on the beaf. The agent reads the comments and publishes the next version at the same link.
 - [ViteHub](https://vitehub.dev) is the library under Drop. Drop is [open source](https://github.com/vite-hub/drop), so you can deploy your own and make it your lab.
 
 ## More than screenshots
 
-I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#preset=charts-performance). A support answer gets a little doc with the steps instead of a wall of text. HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
+I'm trying this on other stuff now. A performance fix gets a [before/after chart](https://comark.onmax.me/play/#preset=charts-performance). A support answer gets a little doc with the steps instead of a wall of text. I even asked Opus to teach me my own Nuxt pull request, and it came back with a three-minute video: voiceover, animations synced to every word, and a quiz at the end.
+
+::embed{url="https://x.com/_onmax/status/2116191062418997278" title="I asked Opus to teach me my own Nuxt PR"}
+::
+
+HumanLayer's [show-me](https://github.com/humanlayer/skills/tree/main/plugins/show-me) skill pushed me here too. It explains a change with pseudocode and file trees, plain text that GitHub already shows. I feel there's so much more to try.
 
 ## Ask for the beaf
 

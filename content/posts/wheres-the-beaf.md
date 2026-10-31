@@ -125,12 +125,12 @@ You get the whole redesign without running anything.
 
 You don't need my tools for this. Two screenshots in the description already count. But I got lazy and automated it, in four layers:
 
-![Four layers, top to bottom: the before-after-evidence skill, comark-annotate, Drop, and ViteHub](/images/posts/beaf-layers.svg)
+![Four layers, top to bottom: the before-after-evidence skill, Comark UI, Drop, and ViteHub](/images/posts/beaf-layers.svg)
 
 - The [`before-after-evidence`](https://comark-ui.onmax.me/skills/before-after-evidence/) skill puts it all together. When the agent opens a UI pull request, it takes both screenshots the same way, marks what changed and checks the render. It's one of the [comark-ui skills](https://comark-ui.onmax.me/skills/). Install it with [`npx skills add onmax/comark-ui`](https://github.com/vercel-labs/skills) and pick `before-after-evidence`.
-- [comark-annotate](https://comark.onmax.me/annotate/) draws the boxes, arrows and notes from a few lines of Markdown. It's one of almost 20 [Comark plugins](https://comark.onmax.me) I've built, mostly for agents to write, like charts, diffs, carousels and file trees. That repo keeps growing, so check it out.
+- [Comark UI](https://comark-ui.onmax.me) draws the beaf from plain Markdown: the screenshots side by side, the boxes and arrows, the numbered notes. It's a component library for Markdown I built mostly for agents to write, with 40+ blocks for docs, reviews and agent reports, from tabs and charts to diffs and file trees. Install them all with one package, or only the ones you need.
 - [Drop](https://drop.vitehub.dev) is where people comment on the beaf. The agent reads the comments and publishes the next version at the same link.
-- [ViteHub](https://vitehub.dev) is the library under Drop. Drop is [open source](https://github.com/vite-hub/drop), so you can deploy your own and make it your lab.
+- [ViteHub](https://vitehub.dev) gives Drop its server primitives: one API for the database, storage, queues and workflows, on any host ViteHub supports. Drop is [open source](https://github.com/vite-hub/drop), so you can deploy your own wherever you already host things and make it your lab.
 
 ## More than screenshots
 

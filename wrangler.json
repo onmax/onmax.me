@@ -4,6 +4,10 @@
   "compatibility_date": "2026-10-01",
   "main": ".output/server/index.mjs",
   "assets": { "directory": ".output/public" },
+  "vars": {
+    "CF_ACCESS_TEAM_DOMAIN": "onmax.cloudflareaccess.com",
+    "CF_ACCESS_AUD": "89e95ef6e117b7af0de075e89f9122195a9435ea7b7d419b47b7e56e5e915d18"
+  },
   "send_email": [
     {
       "name": "WORKFLOW_REVIEW_EMAIL",

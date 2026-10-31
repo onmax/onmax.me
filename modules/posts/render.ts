@@ -2,11 +2,9 @@
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { renderHtmlFromDocument } from '@comark/html'
-import alert from '@comark/html/plugins/alert'
 import shiki from '@comark/html/plugins/shiki'
 import { parseMarkdown } from 'comark'
-import annotate, { components as annotateComponents } from 'comark-annotate/html'
-import carousel, { components as carouselComponents } from 'comark-carousel/html'
+import comarkUi from 'comark-ui/html'
 import githubDark from 'shiki/themes/github-dark.mjs'
 import githubLight from 'shiki/themes/github-light.mjs'
 
@@ -20,8 +18,12 @@ export interface Post {
   scripts: string[]
 }
 
-const components = { ...annotateComponents, ...carouselComponents }
-const plugins = () => [alert(), annotate(), carousel(), shiki({ themes: { light: githubLight, dark: githubDark } })]
+// Every comark-ui block, minus the plugins that restyle plain Markdown the posts already have: app/assets/css/main.css
+// styles the article text (typeset), code keeps the site's own Shiki output (code), and @mentions, link favicons and
+// heading anchors stay plain (chips, github references, links).
+const ui = () => comarkUi({ typeset: false, chips: false, code: false, links: false, github: { references: false } })
+const { components } = ui()
+const plugins = () => [shiki({ themes: { light: githubLight, dark: githubDark } }), ...ui().plugins]
 
 // Comark's runtimes (zoom, carousel, annotate's copy button) come inline as <script> tags, which v-html never runs.
 // They're pulled out here and the page adds them to its head; each one starts once per page and ignores a second run.

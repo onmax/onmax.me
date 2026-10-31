@@ -15,8 +15,10 @@ const posts = documents({
   },
   // Nuxt Content lowercased paths, and modules/posts keeps them that way
   url: ({ id }) => `/posts/${id.toLowerCase()}`,
-  // The comark blocks posts use, so the Console's rich editor keeps them instead of turning read-only
+  // The comark-ui blocks posts use, so the Console's rich editor keeps them instead of turning read-only
   components: {
+    // comark-embed, from comark-ui: a video or app player, or a link card for other https:// links
+    embed: { label: 'Embed', props: { url: { type: 'string' }, title: { type: 'string' }, start: { type: 'number' } } },
     carousel: { label: 'Carousel', props: { title: { type: 'string' } } },
     compare: { label: 'Before/after' },
     screenshot: {

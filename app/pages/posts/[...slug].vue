@@ -27,7 +27,7 @@ defineOgImage('Post', {
   description,
   publishedAt: post.value.publishedAt,
   cover: post.value.cover
-}, { alt: post.value.title })
+}, { alt: post.value.title, cacheKey: `${post.value.path}@${post.value.ogVersion}` })
 
 useHead({
   link: [{ rel: 'canonical', href: canonical }],

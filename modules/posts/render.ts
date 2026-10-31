@@ -1,4 +1,5 @@
 // Renders content/posts/*.md to HTML with Comark at build time, so the Worker ships HTML strings and no parser or Shiki.
+import { createHash } from 'node:crypto'
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { renderHtmlFromDocument } from '@comark/html'
@@ -15,6 +16,8 @@ export interface Post {
   publishedAt?: string
   // Shown under the title in the post's OG image; posts without one get the default OG design
   cover?: string
+  // Changes when the OG template or the cover does, see ogVersion below
+  ogVersion: string
   html: string
   scripts: string[]
 }
@@ -54,15 +57,27 @@ export async function renderPost(source: string, slug: string): Promise<Post> {
     description: typeof description === 'string' ? description : undefined,
     publishedAt: date(publishedAt),
     cover: typeof cover === 'string' ? cover : undefined,
+    ogVersion: '',
     html: body,
     scripts
   }
 }
 
+// nuxt-og-image names each OG image after its props, and Cloudflare caches /_og/s/ for a year, so a new template
+// design or a replaced cover would keep serving the old image. The page passes this hash as the image's cacheKey,
+// which goes into the name.
+async function ogVersion(root: string, post: Post) {
+  const hash = createHash('sha256').update(await readFile(join(root, 'app/components/OgImage/Post.takumi.vue')))
+  if (post.cover) hash.update(await readFile(join(root, 'public', post.cover)))
+  return hash.digest('hex').slice(0, 12)
+}
+
 export async function renderPosts(dir: string): Promise<Post[]> {
+  const root = join(dir, '../..')
   const files = (await readdir(dir)).filter(file => file.endsWith('.md'))
-  const posts = await Promise.all(
-    files.map(async file => renderPost(await readFile(join(dir, file), 'utf8'), file.slice(0, -3)))
-  )
+  const posts = await Promise.all(files.map(async (file) => {
+    const post = await renderPost(await readFile(join(dir, file), 'utf8'), file.slice(0, -3))
+    return { ...post, ogVersion: await ogVersion(root, post) }
+  }))
   return posts.sort((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''))
 }

@@ -268,6 +268,23 @@ section[id] {
   color: var(--ui-text-dimmed);
 }
 
+/* comark-details grows the height with interpolate-size, which only Chromium has. Safari and Firefox fade the content in
+   instead of popping it open; they don't transition ::details-content, so this is a keyframe on the children */
+@supports not (interpolate-size: allow-keywords) {
+  @media (prefers-reduced-motion: no-preference) {
+    .article-body .cdt[open] > :not(summary) {
+      animation: details-in 200ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+  }
+}
+
+@keyframes details-in {
+  from {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+}
+
 @keyframes enter {
   from {
     opacity: 0;

@@ -48,7 +48,7 @@ This is safe only because you check the work, and the checking is yours. Reading
 
 ## Why I wrote it
 
-Projects like rsts changed what I think is worth trying. Cloudflare rewrote the TypeScript compiler in Rust with agents. A year ago that sounded impossible. Now it takes weeks.
+Projects like [tsrs](https://blog.cloudflare.com/typescript-rust-port/) changed what I think is worth trying. Cloudflare and VoidZero are porting the TypeScript compiler to Rust. A year ago that sounded impossible. Now frontier models do ports like that almost on their own, in days.
 
 Opus 5.5 is the best model I've used at understanding intent. I explain what's in my head, badly, over a few prompts, and it gets it.
 

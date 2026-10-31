@@ -10,6 +10,5 @@
       "destination_address": "maximogarciamtnez@gmail.com",
       "allowed_sender_addresses": ["hello@onmax.me"]
     }
-  ],
-  "d1_databases": [{ "binding": "DB", "database_name": "onmax-new-db", "database_id": "5a113631-37db-48a6-8520-e93358d2889d" }]
+  ]
 }

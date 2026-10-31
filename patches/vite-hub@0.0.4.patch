@@ -1,0 +1,14 @@
+diff --git a/dist/nuxt.js b/dist/nuxt.js
+index b5e5694755ddc135ba135432ac10f0b49ea3c317..c7ff13295466ff6ed4b3b4a788c433feb8a82855 100644
+--- a/dist/nuxt.js
++++ b/dist/nuxt.js
+@@ -1110,6 +1110,9 @@ const viteHubNuxtModule = async function viteHubNuxtModule(inlineOptions, nuxtIn
+ 		if (emailPlugin && nuxt.options.dev) installEmailTemplateResolver(config, join(projectRoot, ".vitehub/email/templates"));
+ 		const alias = config.alias ??= {};
+ 		for (const [name, path] of Object.entries(generatedAliases)) alias[name] ??= path;
++		const kv = resolvedKVFromPlugin(retainedKVPlugin, viteConfig.kv);
++		if (!kv) (config.virtual ??= {})["#vitehub/kv/config"] ??= "export const kv = false\nexport default { kv }\n";
++		if (!(kv && Object.values(kv.stores || { default: kv.store }).some((store) => store.driver === "upstash"))) alias["@vite-hub/kv/runtime/upstash-driver"] ??= fileURLToPath(import.meta.resolve("vite-hub/_internal/kv/runtime/disabled-upstash"));
+ 		if (options.kv) addNitroImports(config, "vite-hub/kv", ["kv"]);
+ 		if (options.blob) addNitroImports(config, "vite-hub/blob", ["blob"]);
+ 		if (options.database) addNitroImports(config, "vite-hub/database/drizzle", ["db", "schema"]);

@@ -29,3 +29,7 @@ proof-*.png
 .env.*
 !.env.example
 .wrangler
+
+# ViteHub generated files and local data
+.vitehub
+.pnpm-store

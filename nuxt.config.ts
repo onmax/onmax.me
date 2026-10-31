@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['@nuxthub/core', '@nuxt/eslint', '@nuxt/ui', '@nuxt/icon', '@nuxt/image'],
+  modules: ['vite-hub/nuxt', '@nuxt/eslint', '@nuxt/ui', '@nuxt/icon', '@nuxt/image'],
   // Cloudflare resizing only exists on the deployed domain
   $development: { image: { provider: 'ipx' } },
   devtools: { enabled: true },
@@ -13,11 +13,10 @@ export default defineNuxtConfig({
     '/hire': { redirect: { to: '/', statusCode: 301 } }
   },
   compatibilityDate: '2025-01-15',
+  // The vitehub preset also sets Nitro's preset (cloudflare-module), so nitro.preset stays unset
   nitro: {
-    preset: 'cloudflare-module',
-    prerender: { crawlLinks: true, ignore: ['/hire'] }
+    prerender: { crawlLinks: true, ignore: ['/hire', '/_vitehub'] }
   },
-  hub: { db: 'sqlite' },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }
   },
@@ -49,5 +48,14 @@ export default defineNuxtConfig({
     cloudflare: { baseURL: 'https://onmax.me' },
     quality: 80,
     format: ['webp', 'avif']
+  },
+  vitehub: {
+    // The Worker's name, which ViteHub would otherwise take from package.json
+    name: 'onmax',
+    preset: 'cloudflare',
+    // The D1 database NuxtHub used. Content keeps editor sessions in it.
+    database: { driver: 'd1', binding: 'DB', databaseName: 'onmax-new-db', databaseId: '5a113631-37db-48a6-8520-e93358d2889d' },
+    // Cloudflare Access guards /_vitehub on the Worker; the dev server has no Access edge and lets every request in
+    console: { auth: { provider: 'cloudflare-access' } }
   }
 })

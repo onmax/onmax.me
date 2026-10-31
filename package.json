@@ -11,40 +11,41 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@comark/html": "0.7.0",
-    "@iconify-json/lucide": "^1.2.82",
-    "@iconify-json/simple-icons": "^1.2.63",
-    "@libsql/client": "^0.17.0",
-    "@nuxt/icon": "^2.2.0",
-    "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.3.0",
-    "@nuxthub/core": "^0.10.4",
-    "better-sqlite3": "^12.6.2",
-    "comark": "0.7.0",
-    "comark-annotate": "0.2.0",
-    "comark-carousel": "0.2.0",
-    "comark-zoom": "0.2.0",
-    "drizzle-kit": "^0.31.8",
-    "drizzle-orm": "^0.45.1",
-    "nuxt": "^4.2.2",
+    "@comark/html": "0.8.1",
+    "@iconify-json/lucide": "^1.2.149",
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/simple-icons": "^1.2.101",
+    "@nuxt/icon": "^2.6.2",
+    "@nuxt/image": "^2.2.1",
+    "@nuxt/ui": "^4.12.0",
+    "comark": "0.8.1",
+    "comark-annotate": "0.7.6",
+    "comark-carousel": "0.7.6",
+    "comark-content": "0.4.1",
+    "comark-zoom": "0.7.6",
+    "nuxt": "^4.6.3",
     "shiki": "^4.5.0",
-    "tegaki": "^1.1.0"
+    "tegaki": "^1.1.0",
+    "vite-hub": "https://pkg.pr.new/vite-hub/vitehub/vite-hub@e445899",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@google/genai": "^1.41.0",
-    "@nuxt/eslint": "^1.12.1",
+    "@nuxt/eslint": "^1.17.0",
     "eslint": "^9.39.2",
     "sharp": "^0.34.5",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.1",
-    "wrangler": "^4.125.0"
+    "vue-tsc": "^3.3.14",
+    "wrangler": "^4.156.0"
   },
   "packageManager": "pnpm@10.26.1",
   "pnpm": {
     "onlyBuiltDependencies": [
-      "better-sqlite3",
       "sharp",
       "protobufjs"
-    ]
+    ],
+    "patchedDependencies": {
+      "vite-hub@0.0.4": "patches/vite-hub@0.0.4.patch"
+    }
   }
 }

@@ -1,0 +1,111 @@
+diff --git a/dist/client-ClbX-Sju.mjs b/dist/client-ClbX-Sju.mjs
+index d03ffd1f00a31d618c8eb7a64e443a4889e69c37..210e3afb65f2222fd3590dd69a63d4537e3a4257 100644
+--- a/dist/client-ClbX-Sju.mjs
++++ b/dist/client-ClbX-Sju.mjs
+@@ -63,7 +63,7 @@ function theme(selector) {
+ */
+ const css = `@layer comark{${[
+ 	theme(".ce,.ce-card"),
+-	":where(.ce){--ce-app-height:30rem;--ce-short-width:20rem}",
++	":where(.ce){--ce-app-height:30rem;--ce-short-width:20rem;--ce-post-width:550px;--ce-post-height:30rem}",
+ 	".ce{margin:1.5rem 0;font-family:var(--_comark-font)}",
+ 	".ce-frame{overflow:hidden;border:1px solid var(--_comark-border);border-radius:var(--_comark-radius);background:color-mix(in srgb,var(--_comark-foreground) 4%,transparent)}",
+ 	".ce-frame iframe{display:block;width:100%;height:100%;border:0;color-scheme:light}",
+@@ -72,8 +72,10 @@ const css = `@layer comark{${[
+ 	".ce[data-size='compact'] .ce-frame{height:152px;border:0;background:none}",
+ 	".ce[data-size='list'] .ce-frame{height:352px;border:0;background:none}",
+ 	".ce[data-size='app'] .ce-frame{height:var(--ce-app-height)}",
++	".ce[data-size='post'] .ce-frame{max-width:var(--ce-post-width);margin-inline:auto;border:0;background:none}",
++	".ce[data-size='post'] iframe{height:var(--ce-post-height)}",
+ 	".ce figcaption{margin-top:.75rem;color:var(--_comark-muted);font-size:.875rem;line-height:1.25rem;overflow-wrap:anywhere}",
+-	".ce[data-size='short'] figcaption{text-align:center}",
++	".ce:is([data-size='short'],[data-size='post']) figcaption{text-align:center}",
+ 	".ce figcaption a{border-radius:calc(var(--_comark-radius) - 4px);color:inherit;text-decoration:none;text-underline-offset:4px;transition:color .15s}",
+ 	".ce figcaption a:hover{color:var(--_comark-foreground);text-decoration:underline}",
+ 	".ce figcaption svg{display:inline-block;width:.875rem;height:.875rem;margin-inline-start:.375rem;vertical-align:-.125em}",
+@@ -107,5 +109,32 @@ const icons = {
+ 	external: "M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6",
+ 	globe: "M2 12a10 10 0 1 0 20 0 10 10 0 1 0-20 0M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"
+ };
++/** Sizes every X post on the page to the height its player reports. Self-contained: html.mjs inlines its source. */
++function start() {
++	const running = window.__comarkEmbed;
++	if (running) {
++		running.users++;
++		return running.stop;
++	}
++	const listeners = new AbortController();
++	window.addEventListener("message", (event) => {
++		if (event.origin !== "https://platform.twitter.com") return;
++		const message = Object(event.data)["twttr.embed"];
++		if (message?.method !== "twttr.private.resize" || !Array.isArray(message.params)) return;
++		const height = Number(message.params[0]?.height);
++		if (!(height > 0)) return;
++		for (const frame of document.querySelectorAll(".ce[data-provider='x'] iframe")) if (frame.contentWindow === event.source) frame.style.height = `${Math.ceil(height)}px`;
++	}, { signal: listeners.signal });
++	const state = {
++		users: 1,
++		stop: () => {
++			if (--state.users > 0) return;
++			listeners.abort();
++			window.__comarkEmbed = void 0;
++		}
++	};
++	window.__comarkEmbed = state;
++	return state.stop;
++}
+ //#endregion
+-export { css as a, referrerPolicy as i, allow as n, icons as r, addStyles as t };
++export { start as s, css as a, referrerPolicy as i, allow as n, icons as r, addStyles as t };
+diff --git a/dist/html.mjs b/dist/html.mjs
+index 6580d6cc8ae5ca1f8f770837c0ca6c4f0ca56f81..0addbbbe80285a74afef2416271ee5902161e7b2 100644
+--- a/dist/html.mjs
++++ b/dist/html.mjs
+@@ -1,8 +1,9 @@
+ import { t as src_default } from "./src-Blv6060Z.mjs";
+-import { a as css, i as referrerPolicy, n as allow, r as icons } from "./client-ClbX-Sju.mjs";
++import { a as css, i as referrerPolicy, n as allow, r as icons, s as start } from "./client-ClbX-Sju.mjs";
+ import { escapeHtml } from "comark/utils";
+ //#region src/html.ts
+ const styled = /* @__PURE__ */ new WeakSet();
++const started = /* @__PURE__ */ new WeakSet();
+ const text = (value) => value === void 0 || value === null || value instanceof Object ? "" : String(value);
+ const attr = (value) => escapeHtml(text(value), { "\"": "&quot;" });
+ const icon = (d) => `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"></path></svg>`;
+@@ -11,8 +12,10 @@ const embed = ([, attrs], state) => {
+ 	if (!href) return "";
+ 	const styles = styled.has(state.context) ? "" : `<style data-comark-embed>${css}</style>`;
+ 	styled.add(state.context);
++	const script = provider === "x" && !started.has(state.context) ? `<script>(${start.toString()})()<\/script>` : "";
++	if (script) started.add(state.context);
+ 	if (!src) return `${styles}<a class="ce-card" href="${attr(href)}">${icon(icons.globe)}<strong>${attr(title)}</strong> <span>${attr(host)}</span></a>`;
+-	return `${styles}<figure class="ce" data-provider="${attr(provider)}" data-size="${attr(size)}"><div class="ce-frame"><iframe src="${attr(src)}" title="${attr(label)}" loading="lazy" allow="${allow}" allowfullscreen referrerpolicy="${referrerPolicy}"></iframe></div><figcaption><a href="${attr(href)}">${attr(title)}${icon(icons.external)}</a></figcaption></figure>`;
++	return `${styles}${script}<figure class="ce" data-provider="${attr(provider)}" data-size="${attr(size)}"><div class="ce-frame"><iframe src="${attr(src)}" title="${attr(label)}" loading="lazy" allow="${allow}" allowfullscreen referrerpolicy="${referrerPolicy}"></iframe></div><figcaption><a href="${attr(href)}">${attr(title)}${icon(icons.external)}</a></figcaption></figure>`;
+ };
+ /** The HTML renderer for `::embed`. Pass it as `components`; it inlines the styles once per document. */
+ const components = { embed };
+diff --git a/dist/src-Blv6060Z.mjs b/dist/src-Blv6060Z.mjs
+index 4f1134b25b8e524ac7b036d2e3f29a686c73fe5a..fbe59de7e1f532dbc159b03932793f8da124cdd6 100644
+--- a/dist/src-Blv6060Z.mjs
++++ b/dist/src-Blv6060Z.mjs
+@@ -121,6 +121,20 @@ const PROVIDERS = {
+ 				size: "app"
+ 			};
+ 		}
++	},
++	x: {
++		hosts: ["x.com", "twitter.com", "mobile.x.com", "mobile.twitter.com"],
++		holds: "a post ID",
++		read(url) {
++			const id = match(/^\/(?:\w+|i\/web)\/status(?:es)?\/(\d+)(?:\/(?:photo|video)\/\d+)?\/?$/, url.pathname)?.[1];
++			if (!id) return { hint: "Use an x.com/<user>/status/<id> link." };
++			return {
++				provider: "x",
++				src: `https://platform.twitter.com/embed/Tweet.html?id=${id}&dnt=true`,
++				label: "X post",
++				size: "post"
++			};
++		}
+ 	}
+ };
+ /** Hostnames as people paste them, so `www.` and `m.` don't hide a provider. */

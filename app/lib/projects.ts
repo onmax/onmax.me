@@ -48,11 +48,11 @@ export const featuredProjects = [
     icon: 'i-lucide-focus'
   },
   {
-    title: 'LessonCrate',
-    description: 'TpT store export for Shopify, Etsy, and more',
-    href: 'https://lessoncrate.onmax.me',
-    detail: 'Founder',
-    logo: '/logos/lessoncrate.svg',
+    title: 'Comark UI',
+    description: 'Markdown components for docs and reports',
+    href: 'https://comark-ui.onmax.me',
+    detail: 'Creator',
+    logo: '/logos/comark-ui.svg',
     icon: 'i-lucide-package'
   }
 ] as const

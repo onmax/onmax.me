@@ -11,19 +11,23 @@ if (!post.value) {
 const title = `${post.value.title} — Maxi García`
 const description = post.value.description
 const canonical = `https://onmax.me${post.value.path}`
-const image = `https://onmax.me${post.value.image ?? '/maxi-og-image.png'}`
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: image,
   twitterTitle: title,
-  twitterDescription: description,
-  twitterImage: image,
-  twitterCard: post.value.image ? 'summary_large_image' : undefined
+  twitterDescription: description
 })
+
+// Rendered at build time from app/components/OgImage/Post.takumi.vue
+defineOgImage('Post', {
+  title: post.value.title,
+  description,
+  publishedAt: post.value.publishedAt,
+  cover: post.value.cover
+}, { alt: post.value.title })
 
 useHead({
   link: [{ rel: 'canonical', href: canonical }],

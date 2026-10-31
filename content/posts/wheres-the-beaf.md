@@ -2,7 +2,7 @@
 title: "Where's the beaf?"
 description: "Agents write my code, so reviewing it is my job. I review with my eyes, and a before/after doc makes that way easier. I call it a beaf."
 publishedAt: 2026-10-23
-image: /images/posts/wheres-the-beaf-og.png
+cover: /images/posts/wheres-the-beaf-cover.png
 ---
 
 In January I wrote that [AI writes 100% of my code](https://onmax.me/posts/how-i-use-claude-code). Still true. But my job changed. Now I'm the designer, the architect, the QA tester, the product manager, the tech lead, the release manager, the support desk and, on bad days, the agent's therapist. Everything except the developer.

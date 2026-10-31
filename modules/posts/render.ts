@@ -13,7 +13,8 @@ export interface Post {
   title: string
   description?: string
   publishedAt?: string
-  image?: string
+  // Shown under the title in the post's OG image; posts without one get the default OG design
+  cover?: string
   html: string
   scripts: string[]
 }
@@ -41,7 +42,7 @@ const date = (value: unknown) =>
 
 export async function renderPost(source: string, slug: string): Promise<Post> {
   const document = await parseMarkdown(source, { plugins: plugins() })
-  const { title, description, publishedAt, image } = document.frontmatter as Record<string, unknown>
+  const { title, description, publishedAt, cover } = document.frontmatter as Record<string, unknown>
   if (typeof title !== 'string') throw new Error(`content/posts/${slug}.md needs a title in its frontmatter.`)
   const issues = (document.meta as { issues?: string[] }).issues ?? []
   if (issues.length) throw new Error(`content/posts/${slug}.md:\n${issues.join('\n')}`)
@@ -52,7 +53,7 @@ export async function renderPost(source: string, slug: string): Promise<Post> {
     title,
     description: typeof description === 'string' ? description : undefined,
     publishedAt: date(publishedAt),
-    image: typeof image === 'string' ? image : undefined,
+    cover: typeof cover === 'string' ? cover : undefined,
     html: body,
     scripts
   }

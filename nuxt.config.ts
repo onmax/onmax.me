@@ -1,9 +1,10 @@
 export default defineNuxtConfig({
-  modules: ['vite-hub/nuxt', '@nuxt/eslint', '@nuxt/ui', '@nuxt/icon', '@nuxt/image'],
+  modules: ['vite-hub/nuxt', '@nuxt/eslint', '@nuxt/ui', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts', 'nuxt-og-image'],
   // Cloudflare resizing only exists on the deployed domain
   $development: { image: { provider: 'ipx' } },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
+  site: { url: 'https://onmax.me', name: 'Maxi García' },
   // Source lives in /app (pages, components, app.vue, etc.)
   srcDir: 'app/',
   routeRules: {
@@ -20,6 +21,10 @@ export default defineNuxtConfig({
   },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }
+  },
+  // Geist comes from @nuxt/fonts so the OG image renderer can use it too
+  fonts: {
+    families: [{ name: 'Geist', weights: [400, 500, 600], global: true }]
   },
   icon: {
     provider: 'none',
@@ -49,6 +54,11 @@ export default defineNuxtConfig({
     cloudflare: { baseURL: 'https://onmax.me' },
     quality: 80,
     format: ['webp', 'avif']
+  },
+  // Every post is prerendered, so OG images render at build time and the Worker ships no renderer
+  ogImage: {
+    zeroRuntime: true,
+    defaults: { height: 630 }
   },
   vitehub: {
     // The Worker's name, which ViteHub would otherwise take from package.json

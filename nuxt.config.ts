@@ -11,13 +11,16 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/ai-workflows': { prerender: true },
     '/posts/**': { prerender: true },
-    '/hire': { redirect: { to: '/', statusCode: 301 } }
+    '/hire': { redirect: { to: '/', status: 301 } }
   },
   compatibilityDate: '2026-10-01',
   // The vitehub preset also sets Nitro's preset (cloudflare-module), so nitro.preset stays unset
   nitro: {
     // posts/<slug>.html, so Cloudflare serves /posts/<slug> without a trailing-slash redirect, as before
-    prerender: { crawlLinks: true, autoSubfolderIndex: false, ignore: ['/hire', '/_vitehub'] }
+    prerender: { crawlLinks: true, autoSubfolderIndex: false, ignore: ['/hire', '/_vitehub'] },
+    // Workers have no import.meta.url, and Nitro 3 no longer replaces it as Nitro 2 did. tegaki's font module calls
+    // new URL('./caveat.ttf', import.meta.url) when it loads, so every page that the Worker renders failed with a 500.
+    replace: { 'import.meta.url': JSON.stringify('file:///_entry.js') }
   },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }

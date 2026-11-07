@@ -1,3 +1,4 @@
+import { defineEventHandler } from 'nuxt/server'
 import posts from '#posts'
 
 export default defineEventHandler(() =>

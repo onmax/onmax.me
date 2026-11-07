@@ -1,3 +1,5 @@
+import { createError, defineEventHandler, getRequestHeader, getRequestURL, readBody, setResponseStatus } from 'nuxt/server'
+
 interface WorkflowReviewBody {
   email?: unknown
   company?: unknown
@@ -21,30 +23,30 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function requiredText(value: unknown, field: string, maxLength: number) {
   if (typeof value !== 'string') {
-    throw createError({ statusCode: 400, statusMessage: `Invalid ${field}` })
+    throw createError({ status: 400, statusText: `Invalid ${field}` })
   }
 
   const text = value.trim()
   if (!text || text.length > maxLength) {
-    throw createError({ statusCode: 400, statusMessage: `Invalid ${field}` })
+    throw createError({ status: 400, statusText: `Invalid ${field}` })
   }
 
   return text
 }
 
 export default defineEventHandler(async (event) => {
-  if (!getHeader(event, 'content-type')?.toLowerCase().startsWith('application/json')) {
-    throw createError({ statusCode: 415, statusMessage: 'JSON required' })
+  if (!getRequestHeader(event, 'content-type')?.toLowerCase().startsWith('application/json')) {
+    throw createError({ status: 415, statusText: 'JSON required' })
   }
 
-  const contentLength = Number(getHeader(event, 'content-length') || 0)
+  const contentLength = Number(getRequestHeader(event, 'content-length') || 0)
   if (contentLength > 8_192) {
-    throw createError({ statusCode: 413, statusMessage: 'Request too large' })
+    throw createError({ status: 413, statusText: 'Request too large' })
   }
 
-  const origin = getHeader(event, 'origin')
+  const origin = getRequestHeader(event, 'origin')
   if (origin && origin !== getRequestURL(event).origin) {
-    throw createError({ statusCode: 403, statusMessage: 'Invalid origin' })
+    throw createError({ status: 403, statusText: 'Invalid origin' })
   }
 
   const body = await readBody<WorkflowReviewBody>(event)
@@ -60,12 +62,14 @@ export default defineEventHandler(async (event) => {
   const workflow = requiredText(body.workflow, 'workflow', 5_000)
 
   if (!emailPattern.test(email) || workflow.length < 20) {
-    throw createError({ statusCode: 400, statusMessage: 'Invalid workflow review' })
+    throw createError({ status: 400, statusText: 'Invalid workflow review' })
   }
 
-  const emailBinding = event.context.cloudflare?.env?.WORKFLOW_REVIEW_EMAIL as SendEmailBinding | undefined
+  // Nitro 3 puts the Worker bindings on the request, not on event.context.
+  const { runtime } = event.req as Request & { runtime?: { cloudflare?: { env?: { WORKFLOW_REVIEW_EMAIL?: SendEmailBinding } } } }
+  const emailBinding = runtime?.cloudflare?.env?.WORKFLOW_REVIEW_EMAIL
   if (!emailBinding) {
-    throw createError({ statusCode: 503, statusMessage: 'Email service unavailable' })
+    throw createError({ status: 503, statusText: 'Email service unavailable' })
   }
 
   try {
@@ -83,10 +87,10 @@ export default defineEventHandler(async (event) => {
     })
   } catch (error) {
     console.error('Workflow review email failed', error instanceof Error ? error.message : 'Unknown error')
-    throw createError({ statusCode: 502, statusMessage: 'Could not send workflow review' })
+    throw createError({ status: 502, statusText: 'Could not send workflow review' })
   }
 
-  setHeader(event, 'cache-control', 'no-store')
+  event.res.headers.set('cache-control', 'no-store')
   setResponseStatus(event, 201)
   return { ok: true }
 })

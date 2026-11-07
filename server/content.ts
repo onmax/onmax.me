@@ -1,4 +1,4 @@
-import cms from 'vite-hub/content/presets/cms'
+import { cms } from 'vite-hub/cms'
 import { defineContent, documents } from 'vite-hub/content'
 import { z } from 'zod'
 

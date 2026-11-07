@@ -1,0 +1,16 @@
+diff --git a/dist/access.js b/dist/access.js
+index 6cfe134d405917afce5901e2e018e730153baea2..585525a4f7dcaef16d838ac59a5883cad165190c 100644
+--- a/dist/access.js
++++ b/dist/access.js
+@@ -1,5 +1,9 @@
+-import { createAccessControl } from "better-auth/plugins/access";
+-import { adminAc, defaultStatements, userAc } from "better-auth/plugins/admin/access";
++import * as betterAuthAccess from "better-auth/plugins/access";
++import * as betterAuthAdminAccess from "better-auth/plugins/admin/access";
++//#region src/access.ts
++const { createAccessControl } = betterAuthAccess;
++const { adminAc, defaultStatements, userAc } = betterAuthAdminAccess;
++//#endregion
+ //#region src/access.ts
+ /** The statements of `cmsAc`. */
+ const cmsStatements = {

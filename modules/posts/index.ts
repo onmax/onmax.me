@@ -1,5 +1,5 @@
 import { addServerTemplate, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
-import { renderPosts } from './render'
+import { renderPosts } from './render.ts'
 
 // Posts are Markdown in content/posts, rendered with Comark when the app builds and served as `#posts` to the
 // server routes. Editing a post restarts the dev server so it renders again.

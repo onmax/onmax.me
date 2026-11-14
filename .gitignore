@@ -33,3 +33,4 @@ proof-*.png
 # ViteHub generated files and local data
 .vitehub
 .pnpm-store
+.playwright-mcp

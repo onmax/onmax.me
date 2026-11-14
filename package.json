@@ -26,7 +26,6 @@
     "@vite-hub/forms": "https://pkg.pr.new/vite-hub/vitehub/@vite-hub/forms@d0f66e67e942bc1101f0c9ec886bc658de62c99a",
     "@vite-hub/workspace": "https://pkg.pr.new/vite-hub/vitehub/@vite-hub/workspace@d0f66e67e942bc1101f0c9ec886bc658de62c99a",
     "comark": "0.9.2",
-    "comark-content": "0.4.1",
     "comark-ui": "0.12.1",
     "drizzle-orm": "1.0.0-rc.5",
     "nuxt": "npm:nuxt-nightly@5.0.0-2611052317-a04317f",
@@ -37,7 +36,6 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@google/genai": "^1.41.0",
     "@nuxt/eslint": "^1.17.0",
     "@takumi-rs/core": "^2.19.0",
     "drizzle-kit": "1.0.0-rc.5",

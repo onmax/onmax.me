@@ -1,60 +1,28 @@
-# Nuxt Starter Template
+# onmax.me
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+Maxi García's site: the homepage, work, AI workflows, and the posts in `content/posts`. Nuxt 5 on Cloudflare Workers, with [ViteHub](https://vitehub.dev) for Content, Forms, Email and the Console.
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+- **Posts** are Markdown in `content/posts`. `modules/posts` renders them with [Comark](https://comark.dev) and [Comark UI](https://comark-ui.onmax.me) at build time, so the Worker ships HTML and no parser. Every page is prerendered, OG images too.
+- **Editing** happens in the hosted [ViteHub Console](https://console.vitehub.dev). `server/content.ts` defines the `posts` collection, and a publish commits to `main`.
+- **The request form** on `/ai-workflows` is `server/forms/workflow-review.ts`. A request lands in the Console's Forms inbox and is mailed through the `EMAIL` binding in `wrangler.json`.
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
-
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-  </picture>
-</a>
-
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
-
-## Quick Start
-
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
-```
-
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
-
-## Setup
-
-Make sure to install the dependencies:
+## Develop
 
 ```bash
 pnpm install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
 pnpm dev
 ```
 
-## Production
+CI runs `pnpm lint` and `pnpm typecheck`.
 
-Build the application for production:
+## Deploy
 
 ```bash
 pnpm build
+npx wrangler d1 migrations apply onmax-new-db --remote -c .output/server/wrangler.json
+npx wrangler deploy -c .output/server/wrangler.json
 ```
 
-Locally preview production build:
+Apply D1 migrations only when `server/databases/default/migrations` has a new folder. `vitehub database generate` writes it, and `d1-migrations.json` keeps the names D1 already applied.
 
-```bash
-pnpm preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+The Console signs each call to the Worker with the key in a `VITEHUB_CONSOLE_KEY_CONSOLE_<ID>` secret.

@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     '/hire': { redirect: { to: '/', status: 301 } }
   },
   compatibilityDate: '2026-10-01',
-  // The vitehub preset also sets Nitro's preset (cloudflare-module), so nitro.preset stays unset
+  // The vitehub host also sets Nitro's preset (cloudflare-module), so nitro.preset stays unset
   nitro: {
     // posts/<slug>.html, so Cloudflare serves /posts/<slug> without a trailing-slash redirect, as before
     prerender: { crawlLinks: true, autoSubfolderIndex: false, ignore: ['/hire', '/_vitehub'] },
@@ -66,10 +66,12 @@ export default defineNuxtConfig({
   vitehub: {
     // The Worker's name, which ViteHub would otherwise take from package.json
     name: 'onmax',
-    preset: 'cloudflare',
+    host: 'cloudflare',
     // The D1 database NuxtHub used. Content keeps editor sessions in it.
     database: { driver: 'd1', binding: 'DB', databaseName: 'onmax-new-db', databaseId: '5a113631-37db-48a6-8520-e93358d2889d' },
-    // Cloudflare Access guards /_vitehub on the Worker; the dev server has no Access edge and lets every request in
-    console: { auth: { provider: 'cloudflare-access' } }
+    // server/forms/workflow-review.ts mails each request through the EMAIL send_email binding in wrangler.json
+    email: true,
+    // Linked at console.vitehub.dev, which signs each call with the key in VITEHUB_CONSOLE_KEY_CONSOLE_<ID>
+    console: true
   }
 })

@@ -1,5 +1,6 @@
 import { cms } from 'vite-hub/cms'
-import { defineContent, documents } from 'vite-hub/content'
+import { defineContent } from 'vite-hub/content'
+import { documents } from 'vite-hub/content/collections'
 import { z } from 'zod'
 
 // Posts stay Markdown files in content/posts on main. The Console edits them on the vitehub/content branch and a
@@ -40,9 +41,9 @@ const posts = documents({
   }
 })
 
-export const content = defineContent({
+export default defineContent({
   extends: [cms, { repo: 'onmax/onmax.me', branch: 'main' }],
   collections: { posts },
-  // Only Maxi reaches the Console: Cloudflare Access guards it on the Worker, and it passes no user (null)
+  // Only the hosted Console reaches the editor: it signs each call, and only Maxi's team has the app linked
   authorize: () => true
 })

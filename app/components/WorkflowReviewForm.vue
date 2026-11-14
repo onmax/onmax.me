@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
+import { submitForm } from 'vite-hub/forms/client'
 import { z } from 'zod'
+import { WorkflowReviewSchema } from '~~/shared/workflow-review'
 
-const schema = z.object({
-  email: z.string().email('Enter a valid work email'),
-  company: z.string().min(2, 'Enter your company name'),
-  workflow: z.string().min(20, 'Describe the current process in a little more detail'),
-  website: z.string().max(0).optional()
-})
+// website is the honeypot that server/forms/workflow-review.ts drops: people leave it empty, bots fill it
+const schema = WorkflowReviewSchema.extend({ website: z.string().max(0).optional() })
 
 type Schema = z.output<typeof schema>
 
@@ -28,21 +26,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   submitted.value = false
   submitError.value = ''
 
-  try {
-    await $fetch('/api/workflow-review', {
-      method: 'POST',
-      body: event.data
-    })
-
-    state.email = ''
-    state.company = ''
-    state.workflow = ''
-    submitted.value = true
-  } catch {
+  const [error] = await submitForm('workflow-review', event.data)
+  submitting.value = false
+  if (error) {
     submitError.value = 'I could not send this request. Please email me at hello@onmax.me.'
-  } finally {
-    submitting.value = false
+    return
   }
+
+  state.email = ''
+  state.company = ''
+  state.workflow = ''
+  submitted.value = true
 }
 </script>
 

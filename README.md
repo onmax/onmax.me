@@ -17,12 +17,13 @@ CI runs `pnpm lint` and `pnpm typecheck`.
 
 ## Deploy
 
+Workers Builds deploys every push to `main`.
+
+Apply D1 migrations when `server/databases/default/migrations` has a new folder. `vitehub database generate` writes it, and `d1-migrations.json` keeps the names D1 already applied:
+
 ```bash
 pnpm build
 npx wrangler d1 migrations apply onmax-new-db --remote -c .output/server/wrangler.json
-npx wrangler deploy -c .output/server/wrangler.json
 ```
 
-Apply D1 migrations only when `server/databases/default/migrations` has a new folder. `vitehub database generate` writes it, and `d1-migrations.json` keeps the names D1 already applied.
-
-The Console signs each call to the Worker with the key in a `VITEHUB_CONSOLE_KEY_CONSOLE_<ID>` secret.
+The Console signs each call to the Worker. Its public key is `VITEHUB_CONSOLE_KEY_CONSOLE_347EFC90` in the `vars` of `wrangler.json`.

@@ -22,7 +22,7 @@ About a year and a half ago, after working at Nimiq for 6 months, I tried to sol
 
 The idea was to have each icon as a JSON object in its own [file](https://github.com/onmax/nimiq-icons/tree/main/public/icons). Then the [Icons Explorer](https://onmax.github.io/nimiq-icons/) would crawl the folder and display the icons. Easy peasy _icons_ squeezy.
 
-![The first version of the Icons Explorer was a copy of Heroicons.](/nimiq-icon-explorer-heroicons.webp)
+![The first version of the Icons Explorer was a copy of Heroicons.](/images/posts/nimiq-icon-explorer-heroicons.webp)
 
 > In my defence, Picasso said: "Good artists borrow, great artists steal."
 

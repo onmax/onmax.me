@@ -1,7 +1,7 @@
 import { defineForm } from 'vite-hub/forms'
 import { WorkflowReviewSchema } from '../../shared/workflow-review'
 
-// POST /_vitehub/forms/workflow-review. The request lands in the Console's Forms inbox, then mails Maxi through
+// POST /api/_vitehub/forms/workflow-review. The request lands in the Console's Forms inbox, then mails Maxi through
 // the EMAIL binding of wrangler.json, which only sends to his address. A reply goes to the sender.
 export default defineForm({
   schema: WorkflowReviewSchema,

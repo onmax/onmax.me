@@ -1,28 +1,41 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { z } from 'zod'
+import type { z } from 'zod'
+import { submitForm } from 'vite-hub/forms/client'
+import { FormHoneypot } from 'vite-hub/forms/vue'
+import { ContactSchema } from '~~/shared/contact'
 
-const schema = z.object({
-  email: z.string().email('Enter a valid email'),
-  message: z.string().min(10, 'Tell me a little more so I can give you a useful reply')
-})
-
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof ContactSchema>
 
 const state = reactive({ email: '', message: '' })
+// The honeypot that server/forms/contact.ts checks: people leave it empty, bots fill it
+const website = ref('')
+const submitting = ref(false)
+const submitted = ref(false)
+const submitError = ref('')
+
+async function onError() {
+  await nextTick()
+  setTimeout(() => {
+    document.querySelector<HTMLElement>('#contact [aria-invalid="true"]')?.focus()
+  }, 0)
+}
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  const form = document.createElement('form')
-  form.action = 'https://formsubmit.co/maximogarciamtnez@gmail.com'
-  form.method = 'POST'
-  Object.entries(event.data).forEach(([key, value]) => {
-    const input = document.createElement('input')
-    input.name = key
-    input.value = value
-    form.appendChild(input)
-  })
-  document.body.appendChild(form)
-  form.submit()
+  submitting.value = true
+  submitted.value = false
+  submitError.value = ''
+
+  const [error] = await submitForm('contact', { ...event.data, website: website.value })
+  submitting.value = false
+  if (error) {
+    submitError.value = 'I could not send this note. Please email me at hello@onmax.me.'
+    return
+  }
+
+  state.email = ''
+  state.message = ''
+  submitted.value = true
 }
 </script>
 
@@ -51,11 +64,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </p>
 
     <UForm
-      :schema="schema"
+      :schema="ContactSchema"
       :state="state"
       class="mt-6 space-y-4"
+      @error="onError"
       @submit="onSubmit"
     >
+      <FormHoneypot v-model="website" />
+
       <UFormField
         label="Email"
         name="email"
@@ -64,6 +80,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           v-model="state.email"
           type="email"
           placeholder="you@company.com"
+          autocomplete="email"
+          :spellcheck="false"
           class="w-full"
         />
       </UFormField>
@@ -84,10 +102,26 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <UButton
         type="submit"
         color="neutral"
+        :loading="submitting"
         class="active:scale-[0.97] transition-transform"
       >
         Send
       </UButton>
+
+      <p
+        v-if="submitted"
+        role="status"
+        class="text-sm text-success"
+      >
+        Thank you. Your note is in my inbox.
+      </p>
+      <p
+        v-else-if="submitError"
+        role="alert"
+        class="text-sm text-error"
+      >
+        {{ submitError }}
+      </p>
     </UForm>
   </section>
 </template>

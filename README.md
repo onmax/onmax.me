@@ -4,7 +4,7 @@ Maxi García's site: the homepage, work, AI workflows, and the posts in `content
 
 - **Posts** are Markdown in `content/posts`. `modules/posts` renders them with [Comark](https://comark.dev) and [Comark UI](https://comark-ui.onmax.me) at build time, so the Worker ships HTML and no parser. Every page is prerendered, OG images too.
 - **Editing** happens in the hosted [ViteHub Console](https://console.vitehub.dev). `server/content.ts` defines the `posts` collection, and a publish commits to `main`.
-- **The request form** on `/ai-workflows` is `server/forms/workflow-review.ts`. A request lands in the Console's Forms inbox and is mailed through the `EMAIL` binding in `wrangler.json`.
+- **Two forms**: the request form on `/ai-workflows` is `server/forms/workflow-review.ts`, and the contact form on the homepage is `server/forms/contact.ts`. Each message lands in the Console's Forms inbox and is mailed through the `EMAIL` binding in `wrangler.json`.
 
 ## Develop
 

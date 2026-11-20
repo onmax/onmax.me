@@ -77,7 +77,7 @@ export default defineNuxtConfig({
     name: 'onmax',
     host: 'cloudflare',
     // The D1 database NuxtHub used. Content keeps editor sessions in it.
-    database: { driver: 'd1', binding: 'DB', databaseName: 'onmax-new-db', databaseId: '5a113631-37db-48a6-8520-e93358d2889d' },
+    database: { driver: 'cloudflare', binding: 'DB', databaseName: 'onmax-new-db', databaseId: '5a113631-37db-48a6-8520-e93358d2889d' },
     // server/forms/workflow-review.ts mails each request through the EMAIL send_email binding in wrangler.json
     email: true,
     // Linked at console.vitehub.dev, which signs each call. wrangler.json vars holds the public key of the link.

@@ -4,6 +4,9 @@
   "compatibility_date": "2026-10-01",
   "main": ".output/server/index.mjs",
   "assets": { "directory": ".output/public" },
+  "vars": {
+    "VITEHUB_CONSOLE_KEY_CONSOLE_347EFC90": "se_Ll51QUQbUg6Lm8WXLNiW0ydX5POB3oeyZ7nR2lKs"
+  },
   "send_email": [
     {
       "name": "EMAIL",

@@ -17,10 +17,19 @@ export default defineNuxtConfig({
   // The vitehub host also sets Nitro's preset (cloudflare-module), so nitro.preset stays unset
   nitro: {
     // posts/<slug>.html, so Cloudflare serves /posts/<slug> without a trailing-slash redirect, as before
-    prerender: { crawlLinks: true, autoSubfolderIndex: false, ignore: ['/hire', '/_vitehub'] },
+    prerender: { crawlLinks: true, autoSubfolderIndex: false, ignore: ['/hire'] },
     // Workers have no import.meta.url, and Nitro 3 no longer replaces it as Nitro 2 did. tegaki's font module calls
     // new URL('./caveat.ttf', import.meta.url) when it loads, so every page that the Worker renders failed with a 500.
-    replace: { 'import.meta.url': JSON.stringify('file:///_entry.js') }
+    // Only tegaki gets the fixed URL: a global nitro.replace also rewrites import.meta.url inside other packages' strings.
+    rolldownConfig: {
+      plugins: [{
+        name: 'tegaki-import-meta-url',
+        transform: {
+          filter: { id: /[\\/]tegaki[\\/]/, code: 'import.meta.url' },
+          handler: code => ({ code: code.replaceAll('import.meta.url', JSON.stringify('file:///_entry.js')), map: null })
+        }
+      }]
+    }
   },
   eslint: {
     config: { stylistic: { commaDangle: 'never', braceStyle: '1tbs' } }
@@ -68,10 +77,10 @@ export default defineNuxtConfig({
     name: 'onmax',
     host: 'cloudflare',
     // The D1 database NuxtHub used. Content keeps editor sessions in it.
-    database: { driver: 'd1', binding: 'DB', databaseName: 'onmax-new-db', databaseId: '5a113631-37db-48a6-8520-e93358d2889d' },
+    database: { driver: 'cloudflare', binding: 'DB', databaseName: 'onmax-new-db', databaseId: '5a113631-37db-48a6-8520-e93358d2889d' },
     // server/forms/workflow-review.ts mails each request through the EMAIL send_email binding in wrangler.json
     email: true,
-    // Linked at console.vitehub.dev, which signs each call with the key in VITEHUB_CONSOLE_KEY_CONSOLE_<ID>
+    // Linked at console.vitehub.dev, which signs each call. wrangler.json vars holds the public key of the link.
     console: true
   }
 })

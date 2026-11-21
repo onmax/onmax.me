@@ -44,6 +44,8 @@ const posts = documents({
 export default defineContent({
   extends: [cms, { repo: 'onmax/onmax.me', branch: 'main' }],
   collections: { posts },
-  // Only the hosted Console reaches the editor: it signs each call, and only Maxi's team has the app linked
+  // Posts are public, so the readers skip authorize and keep their cache headers
+  access: 'public',
+  // Only the hosted Console writes and publishes: it signs each call, and only Maxi's team has the app linked
   authorize: () => true
 })
